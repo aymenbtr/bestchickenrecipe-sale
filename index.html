@@ -45,48 +45,34 @@
         .video-container {
             position: relative;
             width: 100%;
-            min-height: 100vh;
-            min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            height: 100vh;
+            height: 100svh; /* Small viewport height for mobile browsers */
             overflow: hidden;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
         }
         
         .video-container video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
         
-        /* Alternative approach for better mobile compatibility */
-        @media (max-width: 768px) {
-            .video-container video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-        
         .video-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            padding: 2rem 1rem;
+            position: relative;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4) 50%, transparent);
+            padding: 3rem 1rem 2rem;
             z-index: 10;
         }
         
         @media (max-width: 640px) {
             .video-overlay {
-                padding: 1.5rem 1rem;
+                padding: 2rem 1rem 1.5rem;
             }
         }
         
