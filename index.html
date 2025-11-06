@@ -42,30 +42,18 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
-        /* Fixed video container for all devices */
         .video-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
+            min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
             overflow: hidden;
-        }
-        
-        @media (max-width: 768px) {
-            .video-container {
-                height: 70vh; /* Slightly smaller on mobile for better UX */
-            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .video-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Ensure video covers entire container while maintaining aspect ratio */
-            object-position: center;
-        }
-        
-        /* Force video to show full width and height */
-        .video-container .full-video {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -74,19 +62,32 @@
             min-height: 100%;
             width: auto;
             height: auto;
+            object-fit: cover;
+        }
+        
+        /* Alternative approach for better mobile compatibility */
+        @media (max-width: 768px) {
+            .video-container video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
         
         .video-overlay {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            padding: 3rem 1rem;
+            padding: 2rem 1rem;
+            z-index: 10;
+        }
+        
+        @media (max-width: 640px) {
+            .video-overlay {
+                padding: 1.5rem 1rem;
+            }
         }
         
         @keyframes pulse {
@@ -101,39 +102,24 @@
         .pulse-animation {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-        
-        /* Fallback image in case video doesn't load */
-        .video-fallback {
-            display: none;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Show fallback if video fails to load */
-        .video-container.fallback .video-fallback {
-            display: block;
-        }
-        
-        .video-container.fallback video {
-            display: none;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Video Header Section -->
-    <div class="video-container" id="videoContainer">
-        <video autoplay muted loop playsinline onerror="showFallback()" class="full-video">
+    <div class="video-container">
+        <video autoplay muted loop playsinline>
             <source src="Video_Generated_With_Chicken_Recipe_Offer.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <!-- Fallback image in case video doesn't load -->
-        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Chicken Recipe" class="video-fallback">
         <div class="video-overlay">
-            <div class="max-w-6xl mx-auto text-center text-white">
-                <h1 class="text-4xl md:text-7xl font-bold mb-4">BestChickenRecipe.com</h1>
-                <p class="text-xl md:text-3xl font-light mb-6">Premium Domain For Sale</p>
-                <div class="inline-block bg-white text-gray-900 px-6 py-3 md:px-8 md:py-4 rounded-full text-2xl md:text-4xl font-bold pulse-animation">
+            <div class="max-w-6xl mx-auto text-center text-white px-4">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 sm:mb-4 leading-tight">
+                    BestChickenRecipe.com
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-4 sm:mb-6">
+                    Premium Domain For Sale
+                </p>
+                <div class="inline-block bg-white text-gray-900 px-6 py-3 sm:px-8 sm:py-4 rounded-full text-2xl sm:text-3xl md:text-4xl font-bold pulse-animation">
                     $370
                 </div>
             </div>
@@ -141,129 +127,108 @@
     </div>
 
     <!-- Stats Section -->
-    <section class="py-20 bg-white">
+    <section class="py-12 sm:py-16 md:py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text">Why This Domain Is Valuable</h2>
-            <p class="text-center text-gray-600 mb-16 text-lg">Proven traffic and earning potential</p>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4 gradient-text">
+                Why This Domain Is Valuable
+            </h2>
+            <p class="text-center text-gray-600 mb-10 sm:mb-12 md:mb-16 text-base sm:text-lg px-4">
+                Proven traffic and earning potential
+            </p>
             
-            <div class="grid md:grid-cols-2 gap-8 mb-16">
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
                 <!-- Visits Card -->
-                <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-3xl border-2 border-blue-200">
+                <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 sm:p-8 rounded-3xl border-2 border-blue-200">
                     <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-chart-line text-6xl text-blue-600"></i>
+                        <i class="fas fa-chart-line text-5xl sm:text-6xl text-blue-600"></i>
                     </div>
-                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-2">Monthly Visits</h3>
-                    <p class="text-5xl font-bold text-center text-blue-600">22,000+</p>
-                    <p class="text-center text-gray-600 mt-4">Established organic traffic ready to monetize</p>
+                    <h3 class="text-xl sm:text-2xl font-semibold text-center text-gray-800 mb-2">Monthly Visits</h3>
+                    <p class="text-4xl sm:text-5xl font-bold text-center text-blue-600">22,000+</p>
+                    <p class="text-center text-gray-600 mt-4 text-sm sm:text-base">Established organic traffic ready to monetize</p>
                 </div>
                 
                 <!-- CPC Card -->
-                <div class="stat-card bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-3xl border-2 border-green-200">
+                <div class="stat-card bg-gradient-to-br from-green-50 to-green-100 p-6 sm:p-8 rounded-3xl border-2 border-green-200">
                     <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-dollar-sign text-6xl text-green-600"></i>
+                        <i class="fas fa-dollar-sign text-5xl sm:text-6xl text-green-600"></i>
                     </div>
-                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-2">Cost Per Click</h3>
-                    <p class="text-5xl font-bold text-center text-green-600">$1.27</p>
-                    <p class="text-center text-gray-600 mt-4">High-value niche with excellent monetization potential</p>
+                    <h3 class="text-xl sm:text-2xl font-semibold text-center text-gray-800 mb-2">Cost Per Click</h3>
+                    <p class="text-4xl sm:text-5xl font-bold text-center text-green-600">$1.27</p>
+                    <p class="text-center text-gray-600 mt-4 text-sm sm:text-base">High-value niche with excellent monetization potential</p>
                 </div>
             </div>
 
             <!-- Features -->
-            <div class="grid md:grid-cols-3 gap-6 mb-16">
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12 sm:mb-16">
                 <div class="text-center p-6">
                     <div class="inline-block p-4 bg-purple-100 rounded-full mb-4">
-                        <i class="fas fa-utensils text-3xl text-purple-600"></i>
+                        <i class="fas fa-utensils text-2xl sm:text-3xl text-purple-600"></i>
                     </div>
-                    <h4 class="font-semibold text-xl mb-2">Perfect Niche</h4>
-                    <p class="text-gray-600">Chicken recipes are consistently searched worldwide</p>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-2">Perfect Niche</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">Chicken recipes are consistently searched worldwide</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="inline-block p-4 bg-orange-100 rounded-full mb-4">
-                        <i class="fas fa-search text-3xl text-orange-600"></i>
+                        <i class="fas fa-search text-2xl sm:text-3xl text-orange-600"></i>
                     </div>
-                    <h4 class="font-semibold text-xl mb-2">SEO Friendly</h4>
-                    <p class="text-gray-600">Memorable, keyword-rich domain name</p>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-2">SEO Friendly</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">Memorable, keyword-rich domain name</p>
                 </div>
                 
-                <div class="text-center p-6">
+                <div class="text-center p-6 sm:col-span-2 md:col-span-1">
                     <div class="inline-block p-4 bg-red-100 rounded-full mb-4">
-                        <i class="fas fa-fire text-3xl text-red-600"></i>
+                        <i class="fas fa-fire text-2xl sm:text-3xl text-red-600"></i>
                     </div>
-                    <h4 class="font-semibold text-xl mb-2">Monetization Ready</h4>
-                    <p class="text-gray-600">High CPC means strong revenue potential</p>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-2">Monetization Ready</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">High CPC means strong revenue potential</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="py-20 gradient-bg">
+    <section class="py-12 sm:py-16 md:py-20 gradient-bg">
         <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Get In Touch</h2>
-            <p class="text-center text-white text-lg mb-12 opacity-90">Ready to own this premium domain? Contact me now!</p>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4 text-white">
+                Get In Touch
+            </h2>
+            <p class="text-center text-white text-base sm:text-lg mb-8 sm:mb-12 opacity-90">
+                Ready to own this premium domain? Contact me now!
+            </p>
             
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <!-- Email -->
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=BestChickenRec@gmail.com&su=Interested%20in%20BestChickenRecipe.com%20Domain" target="_blank" class="contact-btn bg-white p-6 rounded-2xl text-center block hover:bg-gray-50">
-                    <i class="fas fa-envelope text-4xl text-purple-600 mb-3"></i>
-                    <h3 class="font-semibold text-lg mb-2">Email</h3>
-                    <p class="text-gray-600 text-sm break-all">BestChickenRec@gmail.com</p>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=BestChickenRec@gmail.com&su=Interested%20in%20BestChickenRecipe.com%20Domain" target="_blank" class="contact-btn bg-white p-5 sm:p-6 rounded-2xl text-center block hover:bg-gray-50">
+                    <i class="fas fa-envelope text-3xl sm:text-4xl text-purple-600 mb-3"></i>
+                    <h3 class="font-semibold text-base sm:text-lg mb-2">Email</h3>
+                    <p class="text-gray-600 text-xs sm:text-sm break-all">BestChickenRec@gmail.com</p>
                 </a>
                 
                 <!-- Telegram -->
-                <a href="https://t.me/+213697251047" target="_blank" class="contact-btn bg-white p-6 rounded-2xl text-center block hover:bg-gray-50">
-                    <i class="fab fa-telegram text-4xl text-blue-500 mb-3"></i>
-                    <h3 class="font-semibold text-lg mb-2">Telegram</h3>
-                    <p class="text-gray-600 text-sm">+213 697 251 047</p>
+                <a href="https://t.me/+213697251047" target="_blank" class="contact-btn bg-white p-5 sm:p-6 rounded-2xl text-center block hover:bg-gray-50">
+                    <i class="fab fa-telegram text-3xl sm:text-4xl text-blue-500 mb-3"></i>
+                    <h3 class="font-semibold text-base sm:text-lg mb-2">Telegram</h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">+213 697 251 047</p>
                 </a>
                 
                 <!-- WhatsApp -->
-                <a href="https://wa.me/213697251047" target="_blank" class="contact-btn bg-white p-6 rounded-2xl text-center block hover:bg-gray-50">
-                    <i class="fab fa-whatsapp text-4xl text-green-500 mb-3"></i>
-                    <h3 class="font-semibold text-lg mb-2">WhatsApp</h3>
-                    <p class="text-gray-600 text-sm">+213 697 251 047</p>
+                <a href="https://wa.me/213697251047" target="_blank" class="contact-btn bg-white p-5 sm:p-6 rounded-2xl text-center block hover:bg-gray-50 sm:col-span-2 md:col-span-1">
+                    <i class="fab fa-whatsapp text-3xl sm:text-4xl text-green-500 mb-3"></i>
+                    <h3 class="font-semibold text-base sm:text-lg mb-2">WhatsApp</h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">+213 697 251 047</p>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
+    <footer class="bg-gray-900 text-white py-6 sm:py-8">
         <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-lg font-semibold mb-2">BestChickenRecipe.com</p>
-            <p class="text-gray-400">Premium Domain • 22,000+ Monthly Visits • $1.27 CPC</p>
-            <p class="text-gray-500 mt-4 text-sm">© 2024 All Rights Reserved</p>
+            <p class="text-base sm:text-lg font-semibold mb-2">BestChickenRecipe.com</p>
+            <p class="text-gray-400 text-sm sm:text-base">Premium Domain • 22,000+ Monthly Visits • $1.27 CPC</p>
+            <p class="text-gray-500 mt-4 text-xs sm:text-sm">© 2024 All Rights Reserved</p>
         </div>
     </footer>
-
-    <script>
-        // Function to show fallback image if video fails to load
-        function showFallback() {
-            document.getElementById('videoContainer').classList.add('fallback');
-        }
-        
-        // Check if video can play and show fallback if not
-        document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('video');
-            
-            // Check if video is supported and can play
-            if (video && video.canPlayType) {
-                // For mobile devices, we might need to handle autoplay restrictions
-                video.play().catch(function(error) {
-                    console.log('Video autoplay failed:', error);
-                    // If autoplay fails, show fallback
-                    showFallback();
-                });
-            }
-            
-            // Additional mobile video optimization
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // Force video to play inline on mobile
-                video.setAttribute('playsinline', '');
-                video.setAttribute('webkit-playsinline', '');
-            }
-        });
-    </script>
 </body>
 </html>
