@@ -42,17 +42,17 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
-        /* Fixed video container for mobile */
+        /* Fixed video container for all devices */
         .video-container {
             position: relative;
             width: 100%;
-            height: 70vh; /* Reduced height for mobile */
+            height: 100vh;
             overflow: hidden;
         }
         
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .video-container {
-                height: 100vh; /* Full height for desktop */
+                height: 70vh; /* Slightly smaller on mobile for better UX */
             }
         }
         
@@ -60,8 +60,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Ensure video covers entire container */
+            /* Ensure video covers entire container while maintaining aspect ratio */
             object-position: center;
+        }
+        
+        /* Force video to show full width and height */
+        .video-container .full-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
         }
         
         .video-overlay {
@@ -111,7 +123,7 @@
 <body class="bg-gray-50">
     <!-- Video Header Section -->
     <div class="video-container" id="videoContainer">
-        <video autoplay muted loop playsinline onerror="showFallback()">
+        <video autoplay muted loop playsinline onerror="showFallback()" class="full-video">
             <source src="Video_Generated_With_Chicken_Recipe_Offer.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -243,6 +255,13 @@
                     // If autoplay fails, show fallback
                     showFallback();
                 });
+            }
+            
+            // Additional mobile video optimization
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // Force video to play inline on mobile
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
             }
         });
     </script>
