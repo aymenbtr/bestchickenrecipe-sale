@@ -873,20 +873,27 @@ button {
     margin-bottom: 2rem;
 }
 
-.featured-wrapper, .top-rated-wrapper {
+.featured-wrapper,
+.top-rated-wrapper {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 1rem 0.5rem;
+    scroll-snap-type: x mandatory;
+    padding: 0.5rem 0;
     margin: 0 -0.5rem;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch; /* Crucial for iOS momentum */
+    overscroll-behavior-x: contain;
+    transform: translateZ(0); /* Force GPU */
+    backface-visibility: hidden;
 }
 
 .featured-wrapper::-webkit-scrollbar,
 .top-rated-wrapper::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -906,15 +913,12 @@ button {
 
 .recipe-card {
     flex: 0 0 auto;
-    width: 300px;
-    background-color: var(--bg-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    transition: all var(--transition-normal);
-    border: 1px solid var(--border-color);
+    width: calc(100vw - 2rem);
     scroll-snap-align: start;
-    position: relative;
+    touch-action: pan-x; /* Allows horizontal swipe, blocks vertical interference */
+    user-select: none;
+    -webkit-user-drag: none;
+    transform: translateZ(0);
 }
 
 @media (max-width: 767px) {
@@ -927,7 +931,7 @@ button {
 
 @media (min-width: 768px) and (max-width: 1023px) {
     .recipe-card {
-        width: calc(50vw - 3rem);
+        width: 300px;
         min-width: calc(50vw - 3rem);
     }
 }
@@ -2536,213 +2540,54 @@ function addMobileOptimizations() {
 function initCarouselScrolling(section) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
     if (!wrapper) return;
-    
-    let isDragging = false;
-    let startX;
-    let scrollLeft;
-    let isTouch = false;
-    let touchStartTime;
-    const touchThreshold = 10; // pixels to consider it a scroll
-    const timeThreshold = 200; // ms to consider it a tap
-    
-    // Touch events with proper handling
-    wrapper.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 1) return; // Ignore multi-touch
-        
-        isTouch = true;
-        touchStartTime = Date.now();
-        startX = e.touches[0].clientX;
-        scrollLeft = wrapper.scrollLeft;
-        
-        // Mark as dragging immediately for better performance
-        isDragging = true;
-        carouselStates[section].isDragging = true;
-        carouselStates[section].touchStartX = startX;
-        carouselStates[section].touchStartY = e.touches[0].clientY;
-        
-        // Stop auto-scroll while interacting
-        if (carouselStates[section].autoScrollInterval) {
-            clearInterval(carouselStates[section].autoScrollInterval);
-            carouselStates[section].autoScrollInterval = null;
-        }
-        
-        wrapper.classList.add('dragging');
-        wrapper.style.scrollBehavior = 'auto';
-        
-        e.preventDefault();
-    }, { passive: false });
-    
-    wrapper.addEventListener('touchmove', (e) => {
-        if (!isDragging || e.touches.length > 1) return;
-        
-        const currentX = e.touches[0].clientX;
-        const walk = (currentX - startX);
-        
-        // Only scroll if movement exceeds threshold
-        if (Math.abs(walk) > touchThreshold) {
-            wrapper.scrollLeft = scrollLeft - walk;
-            e.preventDefault(); // Prevent default only when actually scrolling
-        }
-        
-        updateNavButtons(section);
-    }, { passive: false });
-    
-    wrapper.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        
-        const touchEndTime = Date.now();
-        const touchDuration = touchEndTime - touchStartTime;
-        const currentX = e.changedTouches[0].clientX;
-        const walk = Math.abs(currentX - startX);
-        
-        // Determine if it was a tap or scroll
-        const wasTap = walk < touchThreshold && touchDuration < timeThreshold;
-        
-        if (!wasTap) {
-            // It was a scroll, apply momentum
-            const velocity = (currentX - startX) / touchDuration;
-            if (Math.abs(velocity) > 0.1) {
-                applyMomentum(wrapper, velocity);
-            }
-        }
-        
-        // Reset states
-        isDragging = false;
-        carouselStates[section].isDragging = false;
-        wrapper.classList.remove('dragging');
-        wrapper.style.scrollBehavior = 'smooth';
-        isTouch = false;
-        
-        // Restart auto-scroll after delay (desktop only)
-        if (!isMobile()) {
-            setTimeout(() => {
-                if (!carouselStates[section].autoScrollInterval && !carouselStates[section].isHovering) {
-                    startAutoScroll(section);
-                }
-            }, 2000);
-        }
-        
-        updateNavButtons(section);
-    }, { passive: true });
-    
-    // Mouse events for desktop
-    if (!isMobile()) {
-        wrapper.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return; // Only left click
-            
-            isTouch = false;
-            startX = e.pageX;
-            scrollLeft = wrapper.scrollLeft;
-            
-            isDragging = true;
-            carouselStates[section].isDragging = true;
-            
-            if (carouselStates[section].autoScrollInterval) {
-                clearInterval(carouselStates[section].autoScrollInterval);
-                carouselStates[section].autoScrollInterval = null;
-            }
-            
-            wrapper.style.scrollBehavior = 'auto';
-            wrapper.style.cursor = 'grabbing';
-            wrapper.classList.add('dragging');
-            
-            e.preventDefault();
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
-            const currentX = e.pageX;
-            const walk = (currentX - startX);
-            wrapper.scrollLeft = scrollLeft - walk;
-            
-            updateNavButtons(section);
-            
-            e.preventDefault();
-        });
-        
-        document.addEventListener('mouseup', (e) => {
-            if (!isDragging) return;
-            
-            isDragging = false;
-            carouselStates[section].isDragging = false;
-            wrapper.classList.remove('dragging');
-            wrapper.style.scrollBehavior = 'smooth';
-            wrapper.style.cursor = 'grab';
-            
-            // Apply momentum
-            const velocity = (e.pageX - startX) / 100;
-            if (Math.abs(velocity) > 0.5) {
-                applyMomentum(wrapper, velocity);
-            }
-            
-            // Restart auto-scroll
-            setTimeout(() => {
-                if (!carouselStates[section].autoScrollInterval && !carouselStates[section].isHovering) {
-                    startAutoScroll(section);
-                }
-            }, 2000);
-            
-            updateNavButtons(section);
-        });
-        
-        // Wheel events
-        wrapper.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            wrapper.scrollLeft += e.deltaY * 0.5;
-            updateNavButtons(section);
-        }, { passive: false });
-        
-        // Hover events
-        wrapper.addEventListener('mouseenter', () => {
-            carouselStates[section].isHovering = true;
-            if (carouselStates[section].autoScrollInterval) {
-                clearInterval(carouselStates[section].autoScrollInterval);
-                carouselStates[section].autoScrollInterval = null;
-            }
-        });
-        
-        wrapper.addEventListener('mouseleave', () => {
-            carouselStates[section].isHovering = false;
-            if (!carouselStates[section].autoScrollInterval && !carouselStates[section].isDragging) {
-                startAutoScroll(section);
-            }
-        });
-    }
-    
-    // Click through prevention - IMPORTANT FIX
-    wrapper.addEventListener('click', (e) => {
-        // If we were dragging, prevent click
-        if (isDragging || carouselStates[section].isDragging) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    }, true); // Use capture phase
-    
-    function applyMomentum(element, initialVelocity) {
-        if (Math.abs(initialVelocity) < 0.1) return;
-        
-        const friction = 0.95;
-        let velocity = initialVelocity;
-        let animationId;
-        
-        function animate() {
-            if (Math.abs(velocity) < 0.1 || !element) {
-                cancelAnimationFrame(animationId);
-                return;
-            }
-            
-            element.scrollLeft -= velocity * 16;
-            velocity *= friction;
-            
-            updateNavButtons(section);
-            animationId = requestAnimationFrame(animate);
-        }
-        
-        animationId = requestAnimationFrame(animate);
-    }
-}
 
+    // Remove ALL custom touch/mouse handlers — let browser handle scrolling!
+    wrapper.style.touchAction = 'pan-x';
+    wrapper.style.scrollBehavior = 'smooth';
+
+    // Only add minimal enhancements
+    let isScrolling = false;
+
+    wrapper.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                updateNavButtons(section);
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
+
+    // Optional: enhance momentum on very fast swipes
+    let startX = 0;
+    wrapper.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 100) { // fast swipe
+            const velocity = diff > 0 ? 1 : -1;
+            wrapper.scrollBy({
+                left: velocity * window.innerWidth * 0.7,
+                behavior: 'smooth'
+            });
+        }
+    }, { passive: true });
+}
+// Add this once after cards are created
+document.querySelectorAll('.recipe-card').forEach(card => {
+    // Only prevent click if it was part of a scroll
+    let touchMoved = false;
+    card.addEventListener('touchstart', () => touchMoved = false, { passive: true });
+    card.addEventListener('touchmove', () => touchMoved = true, { passive: true });
+    card.addEventListener('touchend', e => {
+        if (touchMoved) {
+            e.stopPropagation(); // Only block if user was scrolling
+        }
+    }, { passive: true });
+});
 function updateCardSizes() {
     const cards = document.querySelectorAll('.recipe-card');
     const screenWidth = window.innerWidth;
@@ -3900,10 +3745,8 @@ if (newsletterPopup) {
         if (e.target === newsletterPopup) newsletterPopup.classList.remove('show');
     });
 }
-
 // ===== SHARED RECIPES DATA =====
-// Add this at the end of your JavaScript
-const SHARED_RECIPES =[
+const SHARED_RECIPES = [
   {
     "id": 1,
     "title": "Creamy Cajun Chicken Pasta",
