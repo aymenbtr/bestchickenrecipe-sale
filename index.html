@@ -2374,7 +2374,9 @@
         </div>
     </div>
 <script>
-    const SHARED_RECIPES =[
+    // ===== ADD ALL YOUR RECIPES HERE =====
+// Copy your JSON recipes into this array
+const SHARED_RECIPES =[
   {
     "id": 1,
     "title": "Creamy Cajun Chicken Pasta",
@@ -5894,8 +5896,8 @@
   "saved": false
 }
 ];
-    // ===== CONFIGURATION & INITIALIZATION =====
-let recipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+// ===== CONFIGURATION =====
+let recipes = [];
 let recipeRatings = JSON.parse(localStorage.getItem('recipeRatings')) || {};
 let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
 
@@ -5946,6 +5948,7 @@ const scrollNextTopRated = document.getElementById('scrollNextTopRated');
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Initializing website...');
     loadRecipes();
     loadFeaturedRecipes();
     loadTopRatedRecipes();
@@ -5969,30 +5972,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initializeKeyboardNavigation();
     initializeAutoScroll();
+    
+    console.log(`✅ Loaded ${recipes.length} recipes (${SHARED_RECIPES.length} shared)`);
 });
 
 // ===== RECIPE MANAGEMENT =====
 function loadRecipes() {
-    const storedRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
-    const sampleTitles = ['Crispy Fried Chicken', 'Garlic Butter Baked Chicken', 'Spicy Grilled Chicken', 'Creamy Chicken Soup', 'Honey Mustard Chicken', 'Chicken Tikka Masala'];
+    console.log('📦 Loading recipes...');
     
-    recipes = storedRecipes.filter(recipe => !sampleTitles.includes(recipe.title));
+    // 1. Get user's imported recipes from localStorage
+    const userRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
     
-    recipes = recipes.map(recipe => {
-        if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
-            if (recipe.badges && !recipe.badges.includes('krabby-patty')) {
-                recipe.badges.push('krabby-patty');
-            } else if (!recipe.badges) {
-                recipe.badges = ['krabby-patty', 'funny'];
-            }
+    // 2. Combine with shared recipes (everyone sees these)
+    const allRecipesCombined = [...SHARED_RECIPES, ...userRecipes];
+    
+    // 3. Remove duplicates (keep user version if same ID)
+    const uniqueRecipes = [];
+    const seenIds = new Set();
+    
+    allRecipesCombined.forEach(recipe => {
+        if (!seenIds.has(recipe.id)) {
+            seenIds.add(recipe.id);
+            uniqueRecipes.push(recipe);
         }
-        return recipe;
     });
     
+    recipes = uniqueRecipes;
+    
+    console.log(`🍗 Total recipes: ${recipes.length} (${SHARED_RECIPES.length} shared + ${userRecipes.length} user)`);
+    
+    // Save combined recipes
     localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
 }
 
 function loadFeaturedRecipes() {
+    console.log('🎯 Loading featured recipes...');
     featuredRecipesWrapper.innerHTML = '';
     
     if (recipes.length === 0) {
@@ -6062,6 +6076,7 @@ function loadFeaturedRecipes() {
 }
 
 function loadTopRatedRecipes() {
+    console.log('⭐ Loading top rated recipes...');
     topRatedRecipesWrapper.innerHTML = '';
     const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
     
@@ -6206,6 +6221,84 @@ function createRecipeCard(recipe, section) {
     return card;
 }
 
+// ===== IMPORT FUNCTION =====
+function importRecipesFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            let importedRecipes = Array.isArray(importedData) ? importedData : [importedData];
+            if (!importedRecipes.length) {
+                showNotification('No recipes found in the file.', 'error');
+                return;
+            }
+            
+            const validRecipes = [];
+            importedRecipes.forEach((recipe, index) => {
+                if (!recipe.title || !recipe.description || !recipe.image) {
+                    console.warn(`Recipe ${index + 1} skipped: Missing required fields`);
+                    return;
+                }
+                if (!recipe.id) recipe.id = Date.now() + index;
+                if (!recipe.badges || !Array.isArray(recipe.badges)) recipe.badges = ['traditional'];
+                if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
+                    if (!recipe.badges.includes('krabby-patty')) recipe.badges.push('krabby-patty');
+                    if (!recipe.badges.includes('funny')) recipe.badges.push('funny');
+                }
+                if (recipe.saved === undefined) recipe.saved = false;
+                if (recipe.rating === undefined) recipe.rating = 4.5;
+                validRecipes.push(recipe);
+            });
+            
+            if (validRecipes.length === 0) {
+                showNotification('No valid recipes found in the file.', 'error');
+                return;
+            }
+            
+            // Get existing user recipes
+            const existingUserRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+            
+            // Filter out shared recipes that might already be in SHARED_RECIPES
+            const newUserRecipes = validRecipes.filter(newRecipe => 
+                !SHARED_RECIPES.some(sharedRecipe => sharedRecipe.id === newRecipe.id)
+            );
+            
+            // Combine with existing
+            const updatedUserRecipes = [...existingUserRecipes, ...newUserRecipes];
+            localStorage.setItem('chickenRecipes', JSON.stringify(updatedUserRecipes));
+            
+            // Reload everything
+            loadRecipes();
+            loadFeaturedRecipes();
+            loadTopRatedRecipes();
+            populateCategoriesMenu();
+            
+            const hasKrabbyPatty = validRecipes.some(recipe => 
+                recipe.title && recipe.title.toLowerCase().includes('krabby patty')
+            );
+            if (hasKrabbyPatty) {
+                showNotification(`${validRecipes.length} recipes imported successfully! 🍔 SECRET FORMULA ADDED!`, 'success');
+            } else {
+                showNotification(`${validRecipes.length} recipes imported successfully!`, 'success');
+            }
+            
+            event.target.value = '';
+        } catch (error) {
+            console.error('Import error:', error);
+            showNotification(`Error importing recipes: ${error.message}`, 'error');
+        }
+    };
+    
+    reader.onerror = function() {
+        showNotification('Error reading the file.', 'error');
+    };
+    
+    reader.readAsText(file);
+}
+
 // ===== RATING SYSTEM =====
 function selectStar(recipeId, rating, event) {
     event.stopPropagation();
@@ -6289,19 +6382,23 @@ function initializeAdSystem() {
     recipeAdVideoElement = document.getElementById('recipeAdVideo');
     const recipeSkipButton = document.getElementById('recipeSkipButton');
     
-    recipeAdVideoElement.addEventListener('loadeddata', function() {
-        document.getElementById('recipeAdLoading').style.display = 'none';
-    });
+    if (recipeAdVideoElement) {
+        recipeAdVideoElement.addEventListener('loadeddata', function() {
+            document.getElementById('recipeAdLoading').style.display = 'none';
+        });
+        
+        recipeAdVideoElement.addEventListener('error', function() {
+            skipRecipeAd();
+        });
+        
+        recipeAdVideoElement.addEventListener('ended', function() {
+            hideRecipeAd();
+        });
+    }
     
-    recipeAdVideoElement.addEventListener('error', function() {
-        skipRecipeAd();
-    });
-    
-    recipeAdVideoElement.addEventListener('ended', function() {
-        hideRecipeAd();
-    });
-    
-    recipeSkipButton.addEventListener('click', skipRecipeAd);
+    if (recipeSkipButton) {
+        recipeSkipButton.addEventListener('click', skipRecipeAd);
+    }
 }
 
 function handleRecipeClick(recipeId, event) {
@@ -6340,25 +6437,32 @@ function showRecipeAd() {
     const recipeSkipButton = document.getElementById('recipeSkipButton');
     const recipeSkipTimerElement = document.getElementById('recipeSkipTimer');
     
+    if (!recipeAdOverlay) return;
+    
     recipeAdOverlay.classList.add('show');
     document.body.style.overflow = 'hidden';
     
     recipeSkipCountdown = 8;
-    recipeSkipTimerElement.textContent = recipeSkipCountdown;
-    recipeSkipButton.disabled = true;
-    recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
+    if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
+    if (recipeSkipButton) {
+        recipeSkipButton.disabled = true;
+        recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
+    }
     
-    document.getElementById('recipeAdLoading').style.display = 'flex';
+    const adLoading = document.getElementById('recipeAdLoading');
+    if (adLoading) adLoading.style.display = 'flex';
     
     recipeSkipTimer = setInterval(() => {
         recipeSkipCountdown--;
-        recipeSkipTimerElement.textContent = recipeSkipCountdown;
-        recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
+        if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
+        if (recipeSkipButton) recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
         if (recipeSkipCountdown <= 0) {
             clearInterval(recipeSkipTimer);
-            recipeSkipButton.disabled = false;
-            recipeSkipTimerElement.textContent = 'Skip';
-            recipeSkipButton.setAttribute('aria-label', 'Skip ad now');
+            if (recipeSkipButton) {
+                recipeSkipButton.disabled = false;
+                recipeSkipTimerElement.textContent = 'Skip';
+                recipeSkipButton.setAttribute('aria-label', 'Skip ad now');
+            }
         }
     }, 1000);
 }
@@ -6378,13 +6482,14 @@ function hideRecipeAd() {
         recipeAdVideoElement.pause();
         recipeAdVideoElement.currentTime = 0;
     }
-    recipeAdOverlay.classList.remove('show');
+    if (recipeAdOverlay) recipeAdOverlay.classList.remove('show');
     document.body.style.overflow = '';
     if (targetRecipeUrl) window.location.href = targetRecipeUrl;
 }
 
 // ===== FILTERS & SEARCH =====
 function populateCategoriesMenu() {
+    if (!categoriesMenu) return;
     categoriesMenu.innerHTML = '';
     const counts = {};
     allCategories.forEach(cat => counts[cat.id] = 0);
@@ -6430,6 +6535,7 @@ function toggleCategoryFilter(categoryId) {
 }
 
 function updateFilterTags() {
+    if (!filterTagsContainer) return;
     filterTagsContainer.innerHTML = '';
     if (currentFilters.length === 0 && !currentSearchTerm) return;
     
@@ -6485,21 +6591,23 @@ function updateFilterTags() {
 function clearFilters() {
     currentFilters = [];
     currentSearchTerm = '';
-    searchInput.value = '';
-    searchSuggestionsContainer.classList.remove('active');
+    if (searchInput) searchInput.value = '';
+    if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
     updateFilterTags();
     loadFeaturedRecipes();
 }
 
 function clearSearch() {
     currentSearchTerm = '';
-    searchInput.value = '';
-    searchSuggestionsContainer.classList.remove('active');
+    if (searchInput) searchInput.value = '';
+    if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
     updateFilterTags();
     loadFeaturedRecipes();
 }
 
 function updateSectionTitle() {
+    if (!sectionTitle || !sectionSubtitle) return;
+    
     if (currentFilters.length === 0 && !currentSearchTerm) {
         sectionTitle.textContent = recipes.length > 0 ? 'Featured Recipes' : 'No Recipes Yet';
         sectionSubtitle.textContent = recipes.length > 0 ? 'Handpicked by our culinary experts' : 'Import your first recipe to get started';
@@ -6522,6 +6630,8 @@ function updateSectionTitle() {
 }
 
 function initializeSearch() {
+    if (!searchInput) return;
+    
     searchInput.addEventListener('input', function() {
         currentSearchTerm = this.value.trim();
         if (currentSearchTerm.length > 0) {
@@ -6530,10 +6640,9 @@ function initializeSearch() {
                 recipe.title.toLowerCase().includes(searchLower) ||
                 recipe.description.toLowerCase().includes(searchLower)
             );
-            // Show more results - increased from 8 to 20
             displaySearchSuggestions(filteredRecipes.slice(0, 20));
         } else {
-            searchSuggestionsContainer.classList.remove('active');
+            if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
             currentSearchTerm = '';
             updateFilterTags();
             loadFeaturedRecipes();
@@ -6546,13 +6655,14 @@ function initializeSearch() {
             if (currentSearchTerm) {
                 updateFilterTags();
                 loadFeaturedRecipes();
-                searchSuggestionsContainer.classList.remove('active');
+                if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
             }
         }
     });
     
     document.addEventListener('click', function(e) {
-        if (!searchInput.contains(e.target) && !searchSuggestionsContainer.contains(e.target)) {
+        if (searchInput && searchSuggestionsContainer && 
+            !searchInput.contains(e.target) && !searchSuggestionsContainer.contains(e.target)) {
             searchSuggestionsContainer.classList.remove('active');
         }
     });
@@ -6560,13 +6670,15 @@ function initializeSearch() {
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
-            searchInput.focus();
+            if (searchInput) searchInput.focus();
         }
     });
 }
 
 function displaySearchSuggestions(filteredRecipes) {
+    if (!searchSuggestionsContainer) return;
     searchSuggestionsContainer.innerHTML = '';
+    
     if (filteredRecipes.length > 0) {
         filteredRecipes.forEach(recipe => {
             const item = document.createElement('div');
@@ -6585,7 +6697,7 @@ function displaySearchSuggestions(filteredRecipes) {
                 </div>
             `;
             item.addEventListener('click', function() {
-                searchInput.value = recipe.title;
+                if (searchInput) searchInput.value = recipe.title;
                 currentSearchTerm = recipe.title;
                 updateFilterTags();
                 loadFeaturedRecipes();
@@ -6594,7 +6706,7 @@ function displaySearchSuggestions(filteredRecipes) {
             item.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    searchInput.value = recipe.title;
+                    if (searchInput) searchInput.value = recipe.title;
                     currentSearchTerm = recipe.title;
                     updateFilterTags();
                     loadFeaturedRecipes();
@@ -6619,85 +6731,22 @@ function displaySearchSuggestions(filteredRecipes) {
     }
 }
 
-// ===== IMPORT FUNCTIONALITY =====
-function importRecipesFromFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            let importedRecipes = Array.isArray(importedData) ? importedData : [importedData];
-            if (!importedRecipes.length) {
-                showNotification('No recipes found in the file.', 'error');
-                return;
-            }
-            
-            const validRecipes = [];
-            importedRecipes.forEach((recipe, index) => {
-                if (!recipe.title || !recipe.description || !recipe.image) {
-                    console.warn(`Recipe ${index + 1} skipped: Missing required fields`);
-                    return;
-                }
-                if (!recipe.id) recipe.id = Date.now() + index;
-                if (!recipe.badges || !Array.isArray(recipe.badges)) recipe.badges = ['traditional'];
-                if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
-                    if (!recipe.badges.includes('krabby-patty')) recipe.badges.push('krabby-patty');
-                    if (!recipe.badges.includes('funny')) recipe.badges.push('funny');
-                }
-                if (recipe.saved === undefined) recipe.saved = false;
-                validRecipes.push(recipe);
-            });
-            
-            if (validRecipes.length === 0) {
-                showNotification('No valid recipes found in the file.', 'error');
-                return;
-            }
-            
-            recipes = [...recipes, ...validRecipes];
-            localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-            loadFeaturedRecipes();
-            loadTopRatedRecipes();
-            populateCategoriesMenu();
-            
-            const hasKrabbyPatty = validRecipes.some(recipe => 
-                recipe.title && recipe.title.toLowerCase().includes('krabby patty')
-            );
-            if (hasKrabbyPatty) {
-                showNotification(`${validRecipes.length} recipes imported successfully! 🍔 SECRET FORMULA ADDED!`, 'success');
-            } else {
-                showNotification(`${validRecipes.length} recipes imported successfully!`, 'success');
-            }
-            
-            event.target.value = '';
-        } catch (error) {
-            console.error('Import error:', error);
-            showNotification(`Error importing recipes: ${error.message}`, 'error');
-        }
-    };
-    
-    reader.onerror = function() {
-        showNotification('Error reading the file.', 'error');
-    };
-    
-    reader.readAsText(file);
-}
-
 // ===== CAROUSEL NAVIGATION =====
 function initializeScrollNavigation() {
-    scrollPrevFeatured.addEventListener('click', () => scrollRecipes('featured', 'prev'));
-    scrollNextFeatured.addEventListener('click', () => scrollRecipes('featured', 'next'));
-    scrollPrevTopRated.addEventListener('click', () => scrollRecipes('topRated', 'prev'));
-    scrollNextTopRated.addEventListener('click', () => scrollRecipes('topRated', 'next'));
+    if (scrollPrevFeatured) scrollPrevFeatured.addEventListener('click', () => scrollRecipes('featured', 'prev'));
+    if (scrollNextFeatured) scrollNextFeatured.addEventListener('click', () => scrollRecipes('featured', 'next'));
+    if (scrollPrevTopRated) scrollPrevTopRated.addEventListener('click', () => scrollRecipes('topRated', 'prev'));
+    if (scrollNextTopRated) scrollNextTopRated.addEventListener('click', () => scrollRecipes('topRated', 'next'));
     
     [scrollPrevFeatured, scrollNextFeatured, scrollPrevTopRated, scrollNextTopRated].forEach(button => {
-        button.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
+        if (button) {
+            button.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        }
     });
     
     setTimeout(() => {
@@ -6708,6 +6757,8 @@ function initializeScrollNavigation() {
 
 function calculateCarouselMetrics(section) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || !wrapper.parentElement) return null;
+    
     const container = wrapper.parentElement;
     if (!wrapper || wrapper.children.length === 0) return null;
     const card = wrapper.querySelector('.recipe-card');
@@ -6760,6 +6811,8 @@ function updateNavButtons(section) {
     const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
     const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
     const metrics = calculateCarouselMetrics(section);
+    
+    if (!prevButton || !nextButton) return;
     
     if (!metrics) {
         prevButton.style.opacity = '0.5';
@@ -6851,6 +6904,8 @@ function startAutoScroll(section) {
 
 // ===== UI INTERACTIONS =====
 function initializeThemeToggle() {
+    if (!themeToggle) return;
+    
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeIcon(currentTheme);
@@ -6873,6 +6928,7 @@ function initializeThemeToggle() {
 }
 
 function updateThemeIcon(theme) {
+    if (!themeToggle) return;
     const icon = themeToggle.querySelector('i');
     if (theme === 'light') {
         icon.className = 'fas fa-moon';
@@ -6885,31 +6941,35 @@ function updateThemeIcon(theme) {
 
 function initializeScrollEvents() {
     window.addEventListener('scroll', function() {
+        if (!backToTop) return;
         if (window.pageYOffset > 300) backToTop.classList.add('show');
         else backToTop.classList.remove('show');
     });
     
-    backToTop.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    backToTop.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
+    if (backToTop) {
+        backToTop.addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
+        });
+        
+        backToTop.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
 }
 
 function closeFloatingAd() {
-    floatingAd.classList.remove('show');
+    if (floatingAd) floatingAd.classList.remove('show');
 }
 
 function initializeKeyboardNavigation() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (newsletterPopup.classList.contains('show')) newsletterPopup.classList.remove('show');
-            if (document.getElementById('recipeAdOverlay').classList.contains('show')) skipRecipeAd();
+            if (newsletterPopup && newsletterPopup.classList.contains('show')) newsletterPopup.classList.remove('show');
+            const recipeAdOverlay = document.getElementById('recipeAdOverlay');
+            if (recipeAdOverlay && recipeAdOverlay.classList.contains('show')) skipRecipeAd();
         }
     });
 }
@@ -6942,20 +7002,24 @@ function showNotification(message, type = 'info') {
 }
 
 // ===== NEWSLETTER POPUP =====
-closePopup.addEventListener('click', function() {
-    newsletterPopup.classList.remove('show');
-});
+if (closePopup) {
+    closePopup.addEventListener('click', function() {
+        if (newsletterPopup) newsletterPopup.classList.remove('show');
+    });
+    
+    closePopup.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+        }
+    });
+}
 
-newsletterPopup.addEventListener('click', function(e) {
-    if (e.target === newsletterPopup) newsletterPopup.classList.remove('show');
-});
-
-closePopup.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.click();
-    }
-});
+if (newsletterPopup) {
+    newsletterPopup.addEventListener('click', function(e) {
+        if (e.target === newsletterPopup) newsletterPopup.classList.remove('show');
+    });
+}
 
 // ===== PERFORMANCE OPTIMIZATION =====
 if ('IntersectionObserver' in window) {
@@ -6974,4 +7038,3 @@ if ('IntersectionObserver' in window) {
 </script>
 </body>
 </html>
-
