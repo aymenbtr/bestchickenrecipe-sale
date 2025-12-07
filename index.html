@@ -2813,8 +2813,18 @@ let currentFilters = [];
 let currentSearchTerm = '';
 
 const carouselStates = {
-    featured: { currentPosition: 0, autoScrollInterval: null, isHovering: false },
-    topRated: { currentPosition: 0, autoScrollInterval: null, isHovering: false }
+    featured: { 
+        currentPosition: 0, 
+        autoScrollInterval: null, 
+        isHovering: false,
+        isScrolling: false
+    },
+    topRated: { 
+        currentPosition: 0, 
+        autoScrollInterval: null, 
+        isHovering: false,
+        isScrolling: false
+    }
 };
 
 // ===== DOM ELEMENTS =====
@@ -2847,21 +2857,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeThemeToggle();
     initializeScrollEvents();
     initializeAdSystem();
-    initializeScrollNavigation();
     
-    // Initialize touch scrolling
-    initTouchScrolling();
-    
-    // Update card sizes for responsive design
-    updateCardSizes();
-    
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        clearTimeout(this.resizeTimer);
-        this.resizeTimer = setTimeout(function() {
-            updateCardSizes();
-        }, 250);
-    });
+    // Initialize scrolling AFTER content is loaded
+    setTimeout(() => {
+        updateCardSizes();
+        initializeScrollNavigation();
+        initSmoothScrolling();
+        updateNavButtons('featured');
+        updateNavButtons('topRated');
+    }, 300);
     
     setTimeout(() => {
         if (floatingAd) floatingAd.classList.add('show');
@@ -2881,68 +2885,140 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAutoScroll();
     
     console.log(`✅ Loaded ${recipes.length} recipes`);
+    
+    // Handle window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            updateCardSizes();
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
+        }, 250);
+    });
 });
 
-// ===== TOUCH SCROLLING =====
-function initTouchScrolling() {
-    const carousels = document.querySelectorAll('.featured-wrapper');
+// ===== SMOOTH SCROLLING SYSTEM =====
+function initSmoothScrolling() {
+    initCarouselScrolling('featured');
+    initCarouselScrolling('topRated');
+}
+
+function initCarouselScrolling(section) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper) return;
     
-    carousels.forEach(carousel => {
-        let isScrolling = false;
-        let startX;
-        let scrollLeft;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let scrollTimeout;
+    
+    // Add CSS class for hardware acceleration
+    wrapper.style.transform = 'translateZ(0)';
+    wrapper.style.willChange = 'transform';
+    
+    // Touch events for mobile
+    wrapper.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX;
+        scrollLeft = wrapper.scrollLeft;
+        carouselStates[section].isScrolling = true;
         
-        // Touch events
-        carousel.addEventListener('touchstart', (e) => {
-            isScrolling = true;
-            startX = e.touches[0].pageX;
-            scrollLeft = carousel.scrollLeft;
-            carousel.style.scrollBehavior = 'auto';
-            e.preventDefault();
-        }, { passive: false });
+        // Disable auto-scroll while user is scrolling
+        if (carouselStates[section].autoScrollInterval) {
+            clearInterval(carouselStates[section].autoScrollInterval);
+        }
         
-        carousel.addEventListener('touchmove', (e) => {
-            if (!isScrolling) return;
-            const x = e.touches[0].pageX;
-            const walk = (x - startX) * 1.5;
-            carousel.scrollLeft = scrollLeft - walk;
-            e.preventDefault();
-        }, { passive: false });
+        // Add active class for visual feedback
+        wrapper.classList.add('scrolling-active');
         
-        carousel.addEventListener('touchend', () => {
-            isScrolling = false;
-            carousel.style.scrollBehavior = 'smooth';
-        });
+        e.preventDefault();
+    }, { passive: false });
+    
+    wrapper.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
         
-        // Mouse events for desktop
-        carousel.addEventListener('mousedown', (e) => {
-            isScrolling = true;
-            startX = e.pageX;
-            scrollLeft = carousel.scrollLeft;
-            carousel.style.cursor = 'grabbing';
-            carousel.style.scrollBehavior = 'auto';
-            e.preventDefault();
-        });
+        const x = e.touches[0].pageX;
+        const walk = (x - startX) * 2; // Multiply for faster response
+        wrapper.scrollLeft = scrollLeft - walk;
         
-        document.addEventListener('mousemove', (e) => {
-            if (!isScrolling) return;
-            const x = e.pageX;
-            const walk = (x - startX) * 1.5;
-            carousel.scrollLeft = scrollLeft - walk;
-            e.preventDefault();
-        });
+        e.preventDefault();
+    }, { passive: false });
+    
+    wrapper.addEventListener('touchend', () => {
+        isDown = false;
+        wrapper.classList.remove('scrolling-active');
         
-        document.addEventListener('mouseup', () => {
-            isScrolling = false;
-            if (carousel) {
-                carousel.style.cursor = 'grab';
-                carousel.style.scrollBehavior = 'smooth';
+        // Re-enable auto-scroll after a delay
+        setTimeout(() => {
+            carouselStates[section].isScrolling = false;
+            if (!carouselStates[section].autoScrollInterval && !carouselStates[section].isHovering) {
+                startAutoScroll(section);
             }
-        });
-        
-        // Initialize cursor
-        carousel.style.cursor = 'grab';
+        }, 1000);
     });
+    
+    // Mouse events for desktop
+    wrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX;
+        scrollLeft = wrapper.scrollLeft;
+        carouselStates[section].isScrolling = true;
+        wrapper.style.cursor = 'grabbing';
+        
+        // Disable auto-scroll
+        if (carouselStates[section].autoScrollInterval) {
+            clearInterval(carouselStates[section].autoScrollInterval);
+        }
+        
+        e.preventDefault();
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.pageX;
+        const walk = (x - startX) * 2;
+        wrapper.scrollLeft = scrollLeft - walk;
+        e.preventDefault();
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isDown = false;
+        if (wrapper) {
+            wrapper.style.cursor = 'grab';
+        }
+        carouselStates[section].isScrolling = false;
+        
+        // Update position based on scroll
+        updateCarouselPosition(section);
+        
+        // Re-enable auto-scroll after a delay
+        setTimeout(() => {
+            if (!carouselStates[section].autoScrollInterval && !carouselStates[section].isHovering) {
+                startAutoScroll(section);
+            }
+        }, 1500);
+    });
+    
+    // Update cursor
+    wrapper.style.cursor = 'grab';
+    
+    // Listen to scroll events for navigation buttons
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateCarouselPosition(section);
+        }, 100);
+    });
+}
+
+function updateCarouselPosition(section) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper) return;
+    
+    // Update current position based on actual scroll
+    carouselStates[section].currentPosition = wrapper.scrollLeft;
+    updateNavButtons(section);
 }
 
 function updateCardSizes() {
@@ -2950,24 +3026,137 @@ function updateCardSizes() {
     const screenWidth = window.innerWidth;
     
     cards.forEach(card => {
-        // Reset styles first
+        // Reset styles
         card.style.minWidth = '';
         card.style.flexBasis = '';
+        card.style.marginRight = '';
         
         if (screenWidth <= 480) {
-            // Small phones
+            // Mobile phones
             card.style.minWidth = 'calc(100vw - 60px)';
             card.style.flexBasis = 'calc(100vw - 60px)';
+            card.style.marginRight = '20px';
         } else if (screenWidth <= 768) {
             // Tablets
-            card.style.minWidth = 'calc(50vw - 60px)';
-            card.style.flexBasis = 'calc(50vw - 60px)';
+            card.style.minWidth = 'calc(50vw - 70px)';
+            card.style.flexBasis = 'calc(50vw - 70px)';
+            card.style.marginRight = '20px';
         } else {
             // Desktop
             card.style.minWidth = '320px';
             card.style.flexBasis = '320px';
+            card.style.marginRight = '24px';
         }
     });
+}
+
+// ===== CAROUSEL NAVIGATION ARROWS =====
+function initializeScrollNavigation() {
+    // Featured recipes navigation
+    if (scrollPrevFeatured) {
+        scrollPrevFeatured.addEventListener('click', () => scrollCarousel('featured', 'prev'));
+        scrollPrevFeatured.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollCarousel('featured', 'prev');
+            }
+        });
+    }
+    
+    if (scrollNextFeatured) {
+        scrollNextFeatured.addEventListener('click', () => scrollCarousel('featured', 'next'));
+        scrollNextFeatured.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollCarousel('featured', 'next');
+            }
+        });
+    }
+    
+    // Top rated recipes navigation
+    if (scrollPrevTopRated) {
+        scrollPrevTopRated.addEventListener('click', () => scrollCarousel('topRated', 'prev'));
+        scrollPrevTopRated.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollCarousel('topRated', 'prev');
+            }
+        });
+    }
+    
+    if (scrollNextTopRated) {
+        scrollNextTopRated.addEventListener('click', () => scrollCarousel('topRated', 'next'));
+        scrollNextTopRated.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollCarousel('topRated', 'next');
+            }
+        });
+    }
+}
+
+function scrollCarousel(section, direction) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || !wrapper.children.length) return;
+    
+    const card = wrapper.querySelector('.recipe-card');
+    if (!card) return;
+    
+    // Get card width including margin
+    const cardStyle = window.getComputedStyle(card);
+    const cardWidth = card.offsetWidth + 
+                     parseInt(cardStyle.marginLeft || 0) + 
+                     parseInt(cardStyle.marginRight || 0);
+    
+    // Calculate scroll amount (2 cards at a time)
+    const scrollAmount = cardWidth * 2;
+    
+    // Calculate new position
+    let newPosition;
+    if (direction === 'prev') {
+        newPosition = Math.max(0, wrapper.scrollLeft - scrollAmount);
+    } else {
+        newPosition = wrapper.scrollLeft + scrollAmount;
+    }
+    
+    // Use smooth scrolling
+    wrapper.scrollTo({
+        left: newPosition,
+        behavior: 'smooth'
+    });
+    
+    // Update state after scrolling
+    setTimeout(() => {
+        carouselStates[section].currentPosition = wrapper.scrollLeft;
+        updateNavButtons(section);
+    }, 300);
+}
+
+function updateNavButtons(section) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
+    const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
+    
+    if (!wrapper || !prevButton || !nextButton) return;
+    
+    // Check if at start
+    if (wrapper.scrollLeft <= 10) { // Small tolerance
+        prevButton.classList.add('disabled');
+        prevButton.setAttribute('aria-disabled', 'true');
+    } else {
+        prevButton.classList.remove('disabled');
+        prevButton.setAttribute('aria-disabled', 'false');
+    }
+    
+    // Check if at end (with tolerance)
+    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+    if (wrapper.scrollLeft >= maxScroll - 10) {
+        nextButton.classList.add('disabled');
+        nextButton.setAttribute('aria-disabled', 'true');
+    } else {
+        nextButton.classList.remove('disabled');
+        nextButton.setAttribute('aria-disabled', 'false');
+    }
 }
 
 // ===== RECIPE MANAGEMENT =====
@@ -3063,10 +3252,13 @@ function loadFeaturedRecipes() {
     updateFilterTags();
     updateSectionTitle();
     
+    // Initialize scrolling after cards are loaded
     setTimeout(() => {
-        carouselStates.featured.currentPosition = 0;
+        updateCardSizes();
         updateNavButtons('featured');
-        startAutoScroll('featured');
+        if (!carouselStates.featured.autoScrollInterval) {
+            startAutoScroll('featured');
+        }
     }, 100);
 }
 
@@ -3103,10 +3295,13 @@ function loadTopRatedRecipes() {
         topRatedRecipesWrapper.appendChild(recipeCard);
     });
     
+    // Initialize scrolling after cards are loaded
     setTimeout(() => {
-        carouselStates.topRated.currentPosition = 0;
+        updateCardSizes();
         updateNavButtons('topRated');
-        startAutoScroll('topRated');
+        if (!carouselStates.topRated.autoScrollInterval) {
+            startAutoScroll('topRated');
+        }
     }, 100);
 }
 
@@ -3742,201 +3937,87 @@ function displaySearchSuggestions(filteredRecipes) {
     }
 }
 
-// ===== CAROUSEL NAVIGATION =====
-function initializeScrollNavigation() {
-    if (scrollPrevFeatured) scrollPrevFeatured.addEventListener('click', () => scrollRecipes('featured', 'prev'));
-    if (scrollNextFeatured) scrollNextFeatured.addEventListener('click', () => scrollRecipes('featured', 'next'));
-    if (scrollPrevTopRated) scrollPrevTopRated.addEventListener('click', () => scrollRecipes('topRated', 'prev'));
-    if (scrollNextTopRated) scrollNextTopRated.addEventListener('click', () => scrollRecipes('topRated', 'next'));
-    
-    [scrollPrevFeatured, scrollNextFeatured, scrollPrevTopRated, scrollNextTopRated].forEach(button => {
-        if (button) {
-            button.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-        }
-    });
-    
-    setTimeout(() => {
-        updateNavButtons('featured');
-        updateNavButtons('topRated');
-    }, 500);
-}
-
-function calculateCarouselMetrics(section) {
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (!wrapper || !wrapper.parentElement || wrapper.children.length === 0) return null;
-    
-    const container = wrapper.parentElement;
-    const card = wrapper.querySelector('.recipe-card');
-    if (!card) return null;
-    
-    // Get card width including margins
-    const cardRect = card.getBoundingClientRect();
-    const cardStyle = window.getComputedStyle(card);
-    const cardWidth = cardRect.width + 
-                     parseInt(cardStyle.marginLeft || 0) + 
-                     parseInt(cardStyle.marginRight || 0);
-    
-    // Get container width
-    const containerWidth = container.offsetWidth;
-    
-    // Calculate total width of all cards
-    let totalCardsWidth = 0;
-    Array.from(wrapper.children).forEach((child) => {
-        const childRect = child.getBoundingClientRect();
-        const childStyle = window.getComputedStyle(child);
-        totalCardsWidth += childRect.width + 
-                          parseInt(childStyle.marginLeft || 0) + 
-                          parseInt(childStyle.marginRight || 0);
-    });
-    
-    // Account for gaps between cards
-    const cardGap = 24;
-    totalCardsWidth += (wrapper.children.length - 1) * cardGap;
-    
-    // Calculate metrics
-    const visibleCards = Math.floor(containerWidth / cardWidth);
-    const maxPosition = Math.max(0, totalCardsWidth - containerWidth);
-    const scrollStep = visibleCards * cardWidth;
-    
-    return { 
-        cardWidth, 
-        cardGap, 
-        containerWidth, 
-        visibleCards, 
-        totalWidth: totalCardsWidth, 
-        maxPosition, 
-        scrollStep
-    };
-}
-
-function scrollRecipes(section, direction) {
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    const metrics = calculateCarouselMetrics(section);
-    if (!metrics || metrics.maxPosition <= 0) return;
-    
-    let currentPosition = carouselStates[section].currentPosition;
-    const scrollAmount = Math.min(metrics.scrollStep, metrics.maxPosition);
-    
-    if (direction === 'prev') {
-        currentPosition -= scrollAmount;
-        if (currentPosition < 0) currentPosition = 0;
-    } else {
-        currentPosition += scrollAmount;
-        if (currentPosition > metrics.maxPosition) currentPosition = metrics.maxPosition;
-    }
-    
-    carouselStates[section].currentPosition = currentPosition;
-    
-    // Use CSS transform for smooth scrolling
-    wrapper.style.transition = 'transform 0.5s ease';
-    wrapper.style.transform = `translateX(-${currentPosition}px)`;
-    
-    // Update navigation buttons
-    setTimeout(() => {
-        updateNavButtons(section);
-    }, 100);
-}
-
-function updateNavButtons(section) {
-    const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
-    const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
-    const metrics = calculateCarouselMetrics(section);
-    
-    if (!prevButton || !nextButton) return;
-    
-    if (!metrics) {
-        prevButton.classList.add('disabled');
-        nextButton.classList.add('disabled');
-        prevButton.setAttribute('aria-disabled', 'true');
-        nextButton.setAttribute('aria-disabled', 'true');
-        return;
-    }
-    
-    if (metrics.maxPosition <= 0) {
-        prevButton.classList.add('disabled');
-        nextButton.classList.add('disabled');
-        prevButton.setAttribute('aria-disabled', 'true');
-        nextButton.setAttribute('aria-disabled', 'true');
-        return;
-    }
-    
-    // Update previous button
-    if (carouselStates[section].currentPosition <= 0) {
-        prevButton.classList.add('disabled');
-        prevButton.setAttribute('aria-disabled', 'true');
-    } else {
-        prevButton.classList.remove('disabled');
-        prevButton.setAttribute('aria-disabled', 'false');
-    }
-    
-    // Update next button
-    const tolerance = 5;
-    if (carouselStates[section].currentPosition >= metrics.maxPosition - tolerance) {
-        nextButton.classList.add('disabled');
-        nextButton.setAttribute('aria-disabled', 'true');
-    } else {
-        nextButton.classList.remove('disabled');
-        nextButton.setAttribute('aria-disabled', 'false');
-    }
-}
-
 // ===== AUTO SCROLL =====
 function initializeAutoScroll() {
     setTimeout(() => {
         startAutoScroll('featured');
         startAutoScroll('topRated');
-    }, 2000);
+    }, 3000);
 }
 
 function startAutoScroll(section) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (carouselStates[section].autoScrollInterval) clearInterval(carouselStates[section].autoScrollInterval);
     
-    const metrics = calculateCarouselMetrics(section);
-    if (!metrics || metrics.maxPosition <= 0) return;
+    // Clear any existing interval
+    if (carouselStates[section].autoScrollInterval) {
+        clearInterval(carouselStates[section].autoScrollInterval);
+        carouselStates[section].autoScrollInterval = null;
+    }
+    
+    // Don't auto-scroll if user is interacting
+    if (carouselStates[section].isHovering || carouselStates[section].isScrolling) {
+        return;
+    }
+    
+    // Don't auto-scroll if there's nothing to scroll
+    if (!wrapper || wrapper.scrollWidth <= wrapper.clientWidth) {
+        return;
+    }
     
     carouselStates[section].autoScrollInterval = setInterval(() => {
-        if (carouselStates[section].isHovering) return;
-        const metrics = calculateCarouselMetrics(section);
-        if (!metrics || metrics.maxPosition <= 0) {
-            clearInterval(carouselStates[section].autoScrollInterval);
+        // Check again if user is interacting
+        if (carouselStates[section].isHovering || carouselStates[section].isScrolling) {
             return;
         }
         
-        let currentPosition = carouselStates[section].currentPosition;
-        currentPosition += metrics.scrollStep;
+        // Calculate next position
+        const card = wrapper.querySelector('.recipe-card');
+        if (!card) return;
         
-        if (currentPosition > metrics.maxPosition) {
-            currentPosition = 0;
-            wrapper.style.transition = 'none';
-            wrapper.style.transform = `translateX(-${currentPosition}px)`;
-            void wrapper.offsetWidth;
-            wrapper.style.transition = 'transform 0.5s ease';
+        const cardStyle = window.getComputedStyle(card);
+        const cardWidth = card.offsetWidth + 
+                         parseInt(cardStyle.marginLeft || 0) + 
+                         parseInt(cardStyle.marginRight || 0);
+        
+        const scrollAmount = cardWidth * 2;
+        let newPosition = wrapper.scrollLeft + scrollAmount;
+        
+        // Check if we've reached the end
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        if (newPosition > maxScroll) {
+            newPosition = 0;
         }
         
-        carouselStates[section].currentPosition = currentPosition;
-        wrapper.style.transform = `translateX(-${currentPosition}px)`;
-        updateNavButtons(section);
+        // Smooth scroll to new position
+        wrapper.scrollTo({
+            left: newPosition,
+            behavior: 'smooth'
+        });
+        
+        // Update navigation buttons after scroll
+        setTimeout(() => {
+            updateNavButtons(section);
+        }, 300);
+        
     }, 5000);
     
+    // Track hover state
     if (wrapper) {
-        wrapper.addEventListener('mouseenter', () => carouselStates[section].isHovering = true);
-        wrapper.addEventListener('mouseleave', () => carouselStates[section].isHovering = false);
+        wrapper.addEventListener('mouseenter', () => {
+            carouselStates[section].isHovering = true;
+            if (carouselStates[section].autoScrollInterval) {
+                clearInterval(carouselStates[section].autoScrollInterval);
+                carouselStates[section].autoScrollInterval = null;
+            }
+        });
+        
+        wrapper.addEventListener('mouseleave', () => {
+            carouselStates[section].isHovering = false;
+            if (!carouselStates[section].autoScrollInterval) {
+                startAutoScroll(section);
+            }
+        });
     }
-    
-    const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
-    const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
-    [prevButton, nextButton].forEach(button => {
-        if (button) {
-            button.addEventListener('mouseenter', () => carouselStates[section].isHovering = true);
-            button.addEventListener('mouseleave', () => carouselStates[section].isHovering = false);
-        }
-    });
 }
 
 // ===== UI INTERACTIONS =====
@@ -4059,7 +4140,6 @@ if (newsletterPopup) {
 }
 
 // ===== SHARED RECIPES DATA =====
-// This should be defined before any functions that use it
 const SHARED_RECIPES = [
   {
     "id": 1,
