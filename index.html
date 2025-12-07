@@ -2354,6 +2354,69 @@ input, textarea, select {
         -webkit-transform: translateZ(0);
     }
 }
+/* Add these styles to your existing CSS */
+
+/* Improve touch scrolling experience */
+.featured-wrapper {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory; /* Better snapping on mobile */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    display: flex;
+    padding: var(--space-md) 0;
+    gap: var(--space-lg);
+    touch-action: pan-x; /* Enable horizontal touch scrolling */
+}
+
+.featured-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Prevent text selection during dragging */
+.featured-wrapper {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Recipe card snapping */
+.recipe-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    will-change: transform; /* Performance optimization */
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+    .featured-wrapper {
+        gap: var(--space-md); /* Smaller gap on mobile */
+        scroll-padding: 0 15px; /* Padding for scroll snapping */
+        padding: var(--space-sm) 0;
+    }
+    
+    .recipe-card {
+        scroll-snap-align: center; /* Center cards on mobile */
+        margin-right: var(--space-md);
+    }
+    
+    .featured-container {
+        padding: 0 15px;
+        margin: 0 -15px;
+        width: calc(100% + 30px);
+    }
+}
+
+/* Disable auto-scroll on hover for mobile */
+@media (hover: none) and (pointer: coarse) {
+    .featured-wrapper:hover,
+    .featured-wrapper:active {
+        /* Override any hover styles that might interfere */
+    }
+}
 </style>
 </head>
 <body>
@@ -6234,6 +6297,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAdSystem();
     initializeScrollNavigation();
     
+    // Add touch scrolling initialization
+    initTouchScrolling();
+    initializeWheelScrolling();
+    
+    // Initialize card sizes
+    updateCardSizes();
+    
     setTimeout(() => floatingAd.classList.add('show'), 3000);
     setTimeout(() => {
         if (!localStorage.getItem('newsletterShown')) {
@@ -6249,8 +6319,17 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAutoScroll();
     
     console.log(`✅ Loaded ${recipes.length} recipes (${SHARED_RECIPES.length} shared)`);
+    
+    // Add resize listener
+    window.addEventListener('resize', () => {
+        clearTimeout(window.resizeTimer);
+        window.resizeTimer = setTimeout(() => {
+            updateCardSizes();
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
+        }, 250);
+    });
 });
-
 // ===== RECIPE MANAGEMENT =====
 function loadRecipes() {
     console.log('📦 Loading recipes...');
@@ -7032,42 +7111,72 @@ function initializeScrollNavigation() {
 
 function calculateCarouselMetrics(section) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (!wrapper || !wrapper.parentElement) return null;
+    if (!wrapper || !wrapper.parentElement || wrapper.children.length === 0) return null;
     
     const container = wrapper.parentElement;
-    if (!wrapper || wrapper.children.length === 0) return null;
     const card = wrapper.querySelector('.recipe-card');
     if (!card) return null;
     
+    // Get card width including margins
+    const cardRect = card.getBoundingClientRect();
     const cardStyle = window.getComputedStyle(card);
-    const cardWidth = card.offsetWidth + parseInt(cardStyle.marginLeft || 0) + parseInt(cardStyle.marginRight || 0);
-    const cardGap = 24;
+    const cardWidth = cardRect.width + 
+                     parseInt(cardStyle.marginLeft || 0) + 
+                     parseInt(cardStyle.marginRight || 0);
+    
+    // Get container width
     const containerWidth = container.offsetWidth;
     
+    // Calculate total width of all cards
     let totalCardsWidth = 0;
-    Array.from(wrapper.children).forEach(child => {
+    Array.from(wrapper.children).forEach((child, index) => {
+        const childRect = child.getBoundingClientRect();
         const childStyle = window.getComputedStyle(child);
-        totalCardsWidth += child.offsetWidth + 
+        totalCardsWidth += childRect.width + 
                           parseInt(childStyle.marginLeft || 0) + 
-                          parseInt(childStyle.marginRight || 0) + 
-                          cardGap;
+                          parseInt(childStyle.marginRight || 0);
     });
-    totalCardsWidth -= cardGap;
     
+    // Account for gaps between cards
+    const cardGap = 24; // Your CSS gap value
+    totalCardsWidth += (wrapper.children.length - 1) * cardGap;
+    
+    // Calculate metrics
     const visibleCards = Math.floor(containerWidth / cardWidth);
     const maxPosition = Math.max(0, totalCardsWidth - containerWidth);
     const scrollStep = visibleCards * cardWidth;
     
-    return { cardWidth, cardGap, containerWidth, visibleCards, totalWidth: totalCardsWidth, maxPosition, scrollStep };
+    return { 
+        cardWidth, 
+        cardGap, 
+        containerWidth, 
+        visibleCards, 
+        totalWidth: totalCardsWidth, 
+        maxPosition, 
+        scrollStep,
+        wrapperWidth: wrapper.offsetWidth
+    };
 }
-
+function initializeWheelScrolling() {
+    const carousels = document.querySelectorAll('.featured-wrapper');
+    
+    carousels.forEach(carousel => {
+        carousel.addEventListener('wheel', (e) => {
+            // Prevent vertical scrolling if there's horizontal scroll
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                carousel.scrollLeft += e.deltaX;
+                e.preventDefault();
+            }
+        }, { passive: false });
+    });
+}
 function scrollRecipes(section, direction) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
     const metrics = calculateCarouselMetrics(section);
     if (!metrics || metrics.maxPosition <= 0) return;
     
     let currentPosition = carouselStates[section].currentPosition;
-    const scrollAmount = metrics.scrollStep;
+    const scrollAmount = Math.min(metrics.scrollStep, metrics.maxPosition);
     
     if (direction === 'prev') {
         currentPosition -= scrollAmount;
@@ -7078,10 +7187,16 @@ function scrollRecipes(section, direction) {
     }
     
     carouselStates[section].currentPosition = currentPosition;
+    
+    // Use smooth scrolling
+    wrapper.style.transition = 'transform 0.5s ease';
     wrapper.style.transform = `translateX(-${currentPosition}px)`;
-    updateNavButtons(section);
+    
+    // Update navigation buttons after transition
+    setTimeout(() => {
+        updateNavButtons(section);
+    }, 500);
 }
-
 function updateNavButtons(section) {
     const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
     const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
@@ -7127,6 +7242,7 @@ function updateNavButtons(section) {
 // Add this to your existing JavaScript
 
 // Enable touch scrolling for carousels
+// ===== TOUCH SCROLLING FOR MOBILE =====
 function initTouchScrolling() {
     const carousels = document.querySelectorAll('.featured-wrapper');
     
@@ -7134,75 +7250,139 @@ function initTouchScrolling() {
         let isDown = false;
         let startX;
         let scrollLeft;
+        let velocity = 0;
+        let lastX;
+        let lastTime;
+        let momentumId;
+        
+        // Helper function to get the correct scroll element
+        function getScrollElement() {
+            return carousel;
+        }
+        
+        const scrollElement = getScrollElement();
         
         // Touch events
         carousel.addEventListener('touchstart', (e) => {
             isDown = true;
-            startX = e.touches[0].pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
-            carousel.style.scrollBehavior = 'auto'; // Disable smooth scroll during dragging
-        });
+            startX = e.touches[0].pageX - carousel.getBoundingClientRect().left;
+            scrollLeft = scrollElement.scrollLeft;
+            
+            // Clear any ongoing momentum
+            if (momentumId) {
+                cancelAnimationFrame(momentumId);
+                momentumId = null;
+            }
+            
+            // Reset velocity tracking
+            velocity = 0;
+            lastX = e.touches[0].pageX;
+            lastTime = Date.now();
+            
+            // Disable transition during manual scrolling
+            carousel.style.transition = 'none';
+            e.preventDefault();
+        }, { passive: false });
         
         carousel.addEventListener('touchmove', (e) => {
             if (!isDown) return;
-            e.preventDefault();
-            const x = e.touches[0].pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 1.5; // Scroll-fast factor
-            carousel.scrollLeft = scrollLeft - walk;
-        });
-        
-        carousel.addEventListener('touchend', () => {
-            isDown = false;
-            carousel.style.scrollBehavior = 'smooth'; // Re-enable smooth scroll
             
-            // Add momentum scrolling effect
-            const velocity = Math.abs(carousel.scrollLeft - scrollLeft);
-            if (velocity > 50) {
-                const direction = carousel.scrollLeft > scrollLeft ? 1 : -1;
-                const momentumScroll = direction * velocity * 0.5;
-                
-                requestAnimationFrame(() => {
-                    carousel.scrollBy({
-                        left: momentumScroll,
-                        behavior: 'smooth'
-                    });
-                });
+            const currentX = e.touches[0].pageX;
+            const currentTime = Date.now();
+            
+            // Calculate velocity
+            if (lastX !== undefined && lastTime !== undefined) {
+                const deltaX = currentX - lastX;
+                const deltaTime = currentTime - lastTime;
+                if (deltaTime > 0) {
+                    velocity = deltaX / deltaTime;
+                }
+            }
+            
+            lastX = currentX;
+            lastTime = currentTime;
+            
+            const x = currentX - carousel.getBoundingClientRect().left;
+            const walk = (x - startX) * 1.5;
+            scrollElement.scrollLeft = scrollLeft - walk;
+            
+            e.preventDefault();
+        }, { passive: false });
+        
+        carousel.addEventListener('touchend', (e) => {
+            isDown = false;
+            
+            // Re-enable transitions
+            carousel.style.transition = 'transform 0.5s ease';
+            
+            // Apply momentum scrolling if velocity is high enough
+            if (Math.abs(velocity) > 0.1) {
+                applyMomentum(scrollElement, velocity);
             }
         });
         
         // Mouse events for desktop
         carousel.addEventListener('mousedown', (e) => {
             isDown = true;
-            startX = e.pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
+            startX = e.pageX - carousel.getBoundingClientRect().left;
+            scrollLeft = scrollElement.scrollLeft;
             carousel.style.cursor = 'grabbing';
-            carousel.style.scrollBehavior = 'auto';
+            carousel.style.transition = 'none';
+            
+            // Clear momentum
+            if (momentumId) {
+                cancelAnimationFrame(momentumId);
+                momentumId = null;
+            }
         });
         
         carousel.addEventListener('mouseleave', () => {
             isDown = false;
             carousel.style.cursor = 'grab';
+            carousel.style.transition = 'transform 0.5s ease';
         });
         
         carousel.addEventListener('mouseup', () => {
             isDown = false;
             carousel.style.cursor = 'grab';
-            carousel.style.scrollBehavior = 'smooth';
+            carousel.style.transition = 'transform 0.5s ease';
         });
         
         carousel.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
-            const x = e.pageX - carousel.offsetLeft;
+            const x = e.pageX - carousel.getBoundingClientRect().left;
             const walk = (x - startX) * 1.5;
-            carousel.scrollLeft = scrollLeft - walk;
+            scrollElement.scrollLeft = scrollLeft - walk;
         });
         
         // Initialize cursor
         carousel.style.cursor = 'grab';
+        
+        // Momentum scrolling function
+        function applyMomentum(element, initialVelocity) {
+            const friction = 0.95;
+            let currentVelocity = initialVelocity;
+            
+            function animateMomentum() {
+                if (Math.abs(currentVelocity) < 0.1) {
+                    return; // Stop when velocity is too low
+                }
+                
+                // Apply velocity
+                element.scrollLeft -= currentVelocity * 16; // 16ms per frame
+                
+                // Apply friction
+                currentVelocity *= friction;
+                
+                // Continue animation
+                momentumId = requestAnimationFrame(animateMomentum);
+            }
+            
+            momentumId = requestAnimationFrame(animateMomentum);
+        }
     });
 }
-
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initTouchScrolling();
@@ -7216,27 +7396,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 250);
     });
     
-    function updateCardSizes() {
-        const cards = document.querySelectorAll('.recipe-card');
-        const screenWidth = window.innerWidth;
-        
-        cards.forEach(card => {
-            if (screenWidth <= 480) {
-                // Very small screens
-                card.style.minWidth = 'calc(100vw - 40px)';
-                card.style.flexBasis = 'calc(100vw - 40px)';
-            } else if (screenWidth <= 768) {
-                // Tablets and large phones
-                card.style.minWidth = 'calc(50vw - 60px)';
-                card.style.flexBasis = 'calc(50vw - 60px)';
-            } else {
-                // Desktop
-                card.style.minWidth = '320px';
-                card.style.flexBasis = '320px';
-            }
-        });
-    }
+function updateCardSizes() {
+    const cards = document.querySelectorAll('.recipe-card');
+    const screenWidth = window.innerWidth;
+    const containerWidth = document.querySelector('.container')?.offsetWidth || screenWidth;
     
+    cards.forEach(card => {
+        // Remove any inline styles first
+        card.style.minWidth = '';
+        card.style.flexBasis = '';
+        card.style.width = '';
+        card.style.marginRight = '';
+        
+        if (screenWidth <= 480) {
+            // Small phones - full width minus padding
+            const padding = 20; // 10px on each side
+            card.style.minWidth = `calc(100vw - ${padding * 2}px)`;
+            card.style.flexBasis = `calc(100vw - ${padding * 2}px)`;
+            card.style.marginRight = '16px';
+        } else if (screenWidth <= 768) {
+            // Tablets and large phones - half width
+            const padding = 30; // 15px on each side
+            card.style.minWidth = `calc(50vw - ${padding * 2}px)`;
+            card.style.flexBasis = `calc(50vw - ${padding * 2}px)`;
+            card.style.marginRight = '16px';
+        } else {
+            // Desktop - fixed width
+            card.style.minWidth = '320px';
+            card.style.flexBasis = '320px';
+            card.style.marginRight = '24px';
+        }
+    });
+    
+    // Update carousel positions after resize
+    setTimeout(() => {
+        updateNavButtons('featured');
+        updateNavButtons('topRated');
+    }, 100);
+}    
     // Initial call
     updateCardSizes();
 });
