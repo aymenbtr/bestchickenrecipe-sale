@@ -3099,19 +3099,20 @@ function displaySearchSuggestions(filteredRecipes) {
     }
 }
 
+// ===== IMPORT FUNCTIONALITY =====
 function importRecipesFromFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-    
     const reader = new FileReader();
     
     reader.onload = function(e) {
         try {
             const importedData = JSON.parse(e.target.result);
-            console.log('📦 Imported data structure:', importedData);
-            
             let importedRecipes = Array.isArray(importedData) ? importedData : [importedData];
-            console.log('📊 Number of recipes in file:', importedRecipes.length);
+            if (!importedRecipes.length) {
+                showNotification('No recipes found in the file.', 'error');
+                return;
+            }
             
             const validRecipes = [];
             importedRecipes.forEach((recipe, index) => {
@@ -3119,7 +3120,6 @@ function importRecipesFromFile(event) {
                     console.warn(`Recipe ${index + 1} skipped: Missing required fields`);
                     return;
                 }
-                
                 if (!recipe.id) recipe.id = Date.now() + index;
                 if (!recipe.badges || !Array.isArray(recipe.badges)) recipe.badges = ['traditional'];
                 if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
@@ -3127,9 +3127,7 @@ function importRecipesFromFile(event) {
                     if (!recipe.badges.includes('funny')) recipe.badges.push('funny');
                 }
                 if (recipe.saved === undefined) recipe.saved = false;
-                
                 validRecipes.push(recipe);
-                console.log(`✅ Added recipe: ${recipe.title}`);
             });
             
             if (validRecipes.length === 0) {
@@ -3137,38 +3135,25 @@ function importRecipesFromFile(event) {
                 return;
             }
             
-            // Merge with existing recipes
-            const existingRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
-            recipes = [...existingRecipes, ...validRecipes];
-            
+            recipes = [...recipes, ...validRecipes];
             localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-            console.log('💾 Saved to localStorage. Total recipes:', recipes.length);
-            
-            // Reload everything
             loadFeaturedRecipes();
             loadTopRatedRecipes();
             populateCategoriesMenu();
             
-            // Show success message
             const hasKrabbyPatty = validRecipes.some(recipe => 
                 recipe.title && recipe.title.toLowerCase().includes('krabby patty')
             );
+            if (hasKrabbyPatty) {
+                showNotification(`${validRecipes.length} recipes imported successfully! 🍔 SECRET FORMULA ADDED!`, 'success');
+            } else {
+                showNotification(`${validRecipes.length} recipes imported successfully!`, 'success');
+            }
             
-            let msg = `${validRecipes.length} recipes imported successfully!`;
-            if (hasKrabbyPatty) msg += ' 🍔 SECRET FORMULA ADDED!';
-            
-            showNotification(msg, 'success');
-            
-            setTimeout(() => {
-                showNotification(`Total recipes: ${recipes.length}`, 'info');
-            }, 1500);
-            
-            // Reset file input
             event.target.value = '';
-            
         } catch (error) {
             console.error('Import error:', error);
-            showNotification(`Error: ${error.message}`, 'error');
+            showNotification(`Error importing recipes: ${error.message}`, 'error');
         }
     };
     
@@ -3178,6 +3163,7 @@ function importRecipesFromFile(event) {
     
     reader.readAsText(file);
 }
+
 // ===== CAROUSEL NAVIGATION =====
 function initializeScrollNavigation() {
     scrollPrevFeatured.addEventListener('click', () => scrollRecipes('featured', 'prev'));
