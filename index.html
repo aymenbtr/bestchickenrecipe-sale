@@ -943,64 +943,54 @@
             padding: 0 1.5rem;
         }
 
-        .featured-wrapper, #topRatedRecipesWrapper {
-    display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    padding: 1rem 0.5rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    cursor: grab;
-    user-select: none;
-}
+        .featured-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding: 1rem 0.5rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x proximity;
+            scroll-padding: 0 1.5rem;
+        }
 
-.featured-wrapper::-webkit-scrollbar,
-#topRatedRecipesWrapper::-webkit-scrollbar {
-    display: none;
-}
+        .featured-wrapper::-webkit-scrollbar {
+            display: none;
+        }
 
-/* When dragging/grabbing */
-.featured-wrapper:active,
-#topRatedRecipesWrapper:active {
-    cursor: grabbing;
-}
-
-/* Recipe card - allow natural scrolling */
-.recipe-card {
-    flex: 0 0 auto;
-    width: 320px;
-    min-width: 320px;
-    background: var(--bg-white);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    scroll-snap-align: start;
-    position: relative;
-    border: 1px solid var(--border-color);
-    touch-action: pan-y;
-}
-
-/* Remove the blocking click events on the entire card */
-.recipe-card > *:not(.recipe-image) {
-    pointer-events: auto;
-}
-
-.recipe-image {
-    pointer-events: none;
-}
+        /* ===== RECIPE CARD - ADJUSTED SIZE ===== */
+        .recipe-card {
+            flex: 0 0 auto;
+            width: 320px;
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            scroll-snap-align: start;
+            will-change: transform;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
 
         .recipe-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-color);
         }
-         .recipe-image img {
+
+        .recipe-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .recipe-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -2275,45 +2265,6 @@
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        /* Add to your existing CSS */
-.featured-wrapper.active,
-#topRatedRecipesWrapper.active {
-    cursor: grabbing;
-}
-
-/* Improve touch scrolling on mobile */
-@media (max-width: 768px) {
-    .featured-wrapper,
-    #topRatedRecipesWrapper {
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scroll-padding: 0 1.5rem;
-    }
-    
-    .recipe-card {
-        scroll-snap-align: start;
-    }
-}
-
-/* Make arrows more visible on hover */
-.scroll-nav {
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.scroll-nav:hover {
-    opacity: 1;
-}
-
-/* Disable text selection during drag */
-.featured-wrapper,
-#topRatedRecipesWrapper,
-.recipe-card {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
     </style>
 </head>
 <body>
@@ -2684,27 +2635,26 @@
 
     // ===== INITIALIZATION =====
     document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Initializing website...');
-    
-    // Load data first
-    loadRecipes();
-    loadFeaturedRecipes();
-    loadTopRatedRecipes();
-    populateCategoriesMenu();
-    initializeSearch();
-    initializeThemeToggle();
-    initializeScrollEvents();
-    initializeAdSystem();
-    
-    // Initialize carousel functionality with delay
-    setTimeout(() => {
-        initCarouselScrolling('featured');
-        initCarouselScrolling('topRated');
-        initArrowNavigation();
-        enableDragScrolling(); // Add this line
-        updateNavButtons('featured');
-        updateNavButtons('topRated');
-    }, 100);
+        console.log('🚀 Initializing website...');
+        
+        // Load data first
+        loadRecipes();
+        loadFeaturedRecipes();
+        loadTopRatedRecipes();
+        populateCategoriesMenu();
+        initializeSearch();
+        initializeThemeToggle();
+        initializeScrollEvents();
+        initializeAdSystem();
+        
+        // Initialize carousel functionality with delay
+        setTimeout(() => {
+            initCarouselScrolling('featured');
+            initCarouselScrolling('topRated');
+            initArrowNavigation();
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
+        }, 100);
         
         // Auto-scroll after 3 seconds (desktop only)
         if (!isMobile()) {
@@ -3190,182 +3140,118 @@
         return card;
     }
 
-   // ===== ENABLE DRAG SCROLLING FOR CAROUSELS =====
-function enableDragScrolling() {
-    const carousels = [
-        { wrapper: featuredRecipesWrapper, id: 'featured' },
-        { wrapper: topRatedRecipesWrapper, id: 'topRated' }
-    ];
+    // ===== CARD EVENT HANDLING - FIXED VERSION =====
+    function setupCardEvents(card, recipeId) {
+        // Save button handler - FIXED
+        const saveBtn = card.querySelector('.save-recipe');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                toggleSaveRecipe(recipeId, e);
+            });
+        }
 
-    carousels.forEach(({ wrapper, id }) => {
-        if (!wrapper) return;
+        // View recipe button handler - only this should navigate
+        const viewBtn = card.querySelector('.view-recipe-btn');
+        if (viewBtn) {
+            viewBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handleRecipeClick(recipeId, e);
+            });
+        }
 
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+        // Rate button handler
+        const rateBtn = card.querySelector('.rate-btn');
+        if (rateBtn) {
+            rateBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                submitRating(recipeId);
+            });
+        }
 
-        // Mouse events for desktop
-        wrapper.addEventListener('mousedown', (e) => {
-            isDown = true;
-            wrapper.classList.add('active');
-            startX = e.pageX - wrapper.offsetLeft;
-            scrollLeft = wrapper.scrollLeft;
-            stopAutoScroll(id);
+        // Star rating handlers
+        const stars = card.querySelectorAll('.star-wrapper');
+        stars.forEach((wrapper, index) => {
+            wrapper.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                selectStar(recipeId, index + 1, e);
+            });
         });
 
-        wrapper.addEventListener('mouseleave', () => {
-            isDown = false;
-            wrapper.classList.remove('active');
-        });
-
-        wrapper.addEventListener('mouseup', () => {
-            isDown = false;
-            wrapper.classList.remove('active');
-            // Restart auto-scroll after delay
-            setTimeout(() => {
-                if (!carouselStates[id].isHovering) {
-                    startAutoScroll(id);
-                }
-            }, 3000);
-        });
-
-        wrapper.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - wrapper.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed multiplier
-            wrapper.scrollLeft = scrollLeft - walk;
-            updateNavButtons(id);
+        // Card click handler - FIXED: Highlight view button instead of navigating
+        card.addEventListener('click', function(e) {
+            // Don't trigger if clicking on interactive elements
+            if (e.target.closest('button') || 
+                e.target.closest('.star') || 
+                e.target.closest('.star-wrapper') ||
+                e.target.closest('.recipe-badges') ||
+                e.target.closest('.recipe-rating-section') ||
+                e.target.closest('.view-recipe-btn') ||
+                e.target.closest('.save-recipe') ||
+                e.target.closest('.rate-btn')) {
+                return;
+            }
+            
+            // Highlight the view recipe button
+            this.classList.add('card-clicked');
+            const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+            if (viewRecipeBtn) {
+                viewRecipeBtn.focus();
+                viewRecipeBtn.style.animation = 'none';
+                setTimeout(() => {
+                    viewRecipeBtn.style.animation = 'pulse 0.5s ease';
+                }, 10);
+                
+                // Remove highlight after animation
+                setTimeout(() => {
+                    this.classList.remove('card-clicked');
+                }, 500);
+            }
         });
 
         // Touch events for mobile
-        wrapper.addEventListener('touchstart', (e) => {
-            isDown = true;
-            startX = e.touches[0].pageX - wrapper.offsetLeft;
-            scrollLeft = wrapper.scrollLeft;
-            stopAutoScroll(id);
+        let touchStartTime = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        card.addEventListener('touchstart', function(e) {
+            // Don't handle if touch is on interactive elements
+            if (e.target.closest('button') || 
+                e.target.closest('.star') || 
+                e.target.closest('.recipe-badges') ||
+                e.target.closest('.recipe-rating-section')) {
+                return;
+            }
+            
+            touchStartTime = Date.now();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
         }, { passive: true });
 
-        wrapper.addEventListener('touchend', () => {
-            isDown = false;
-            // Restart auto-scroll after delay
-            setTimeout(() => {
-                if (!carouselStates[id].isHovering) {
-                    startAutoScroll(id);
-                }
-            }, 3000);
-        });
+        card.addEventListener('touchend', function(e) {
+            // Don't handle if touch is on interactive elements
+            if (e.target.closest('button') || 
+                e.target.closest('.star') || 
+                e.target.closest('.recipe-badges') ||
+                e.target.closest('.recipe-rating-section')) {
+                return;
+            }
 
-        wrapper.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            const x = e.touches[0].pageX - wrapper.offsetLeft;
-            const walk = (x - startX) * 2;
-            wrapper.scrollLeft = scrollLeft - walk;
-            updateNavButtons(id);
-        }, { passive: true });
+            const touchEndTime = Date.now();
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
 
-        // Wheel scrolling
-        wrapper.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            wrapper.scrollLeft += e.deltaY * 0.5;
-            updateNavButtons(id);
-            stopAutoScroll(id);
-            
-            // Restart auto-scroll after wheel interaction
-            setTimeout(() => {
-                if (!carouselStates[id].isHovering) {
-                    startAutoScroll(id);
-                }
-            }, 3000);
-        }, { passive: false });
-    });
-}
+            const timeDiff = touchEndTime - touchStartTime;
+            const xDiff = Math.abs(touchEndX - touchStartX);
+            const yDiff = Math.abs(touchEndY - touchStartY);
 
-// ===== UPDATE THE SETUP CARD EVENTS FUNCTION =====
-function setupCardEvents(card, recipeId) {
-    // Save button handler - FIXED
-    const saveBtn = card.querySelector('.save-recipe');
-    if (saveBtn) {
-        saveBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            toggleSaveRecipe(recipeId, e);
-        });
-    }
-
-    // View recipe button handler
-    const viewBtn = card.querySelector('.view-recipe-btn');
-    if (viewBtn) {
-        viewBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            handleRecipeClick(recipeId, e);
-        });
-    }
-
-    // Rate button handler
-    const rateBtn = card.querySelector('.rate-btn');
-    if (rateBtn) {
-        rateBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            submitRating(recipeId);
-        });
-    }
-
-    // Star rating handlers
-    const stars = card.querySelectorAll('.star-wrapper');
-    stars.forEach((wrapper, index) => {
-        wrapper.addEventListener('click', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            selectStar(recipeId, index + 1, e);
-        });
-    });
-
-    // Only add click event to the view recipe button, not the entire card
-    // This allows the card to be draggable for scrolling
-    
-    // Card click handler - only highlight on non-interactive areas
-    card.addEventListener('click', function(e) {
-        // Don't trigger if clicking on interactive elements
-        if (e.target.closest('button') || 
-            e.target.closest('.star') || 
-            e.target.closest('.star-wrapper') ||
-            e.target.closest('.recipe-badges') ||
-            e.target.closest('.recipe-rating-section') ||
-            e.target.closest('.view-recipe-btn') ||
-            e.target.closest('.save-recipe') ||
-            e.target.closest('.rate-btn')) {
-            return;
-        }
-        
-        // Highlight the view recipe button
-        this.classList.add('card-clicked');
-        const viewRecipeBtn = this.querySelector('.view-recipe-btn');
-        if (viewRecipeBtn) {
-            viewRecipeBtn.focus();
-            viewRecipeBtn.style.animation = 'none';
-            setTimeout(() => {
-                viewRecipeBtn.style.animation = 'pulse 0.5s ease';
-            }, 10);
-            
-            // Remove highlight after animation
-            setTimeout(() => {
-                this.classList.remove('card-clicked');
-            }, 500);
-        }
-    });
-
-    // Remove the touch event handlers that were blocking scrolling
-    // Only keep keyboard support
-    card.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (!e.target.closest('button') && 
-                !e.target.closest('.star') && 
-                !e.target.closest('.recipe-badges') &&
-                !e.target.closest('.recipe-rating-section')) {
+            // If it's a quick tap without much movement, highlight the view button
+            if (timeDiff < 200 && xDiff < 10 && yDiff < 10) {
+                e.preventDefault();
                 this.classList.add('card-clicked');
                 const viewRecipeBtn = this.querySelector('.view-recipe-btn');
                 if (viewRecipeBtn) {
@@ -3381,9 +3267,35 @@ function setupCardEvents(card, recipeId) {
                     }, 500);
                 }
             }
-        }
-    });
-}
+        }, { passive: false });
+        
+        // Keyboard support
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (!e.target.closest('button') && 
+                    !e.target.closest('.star') && 
+                    !e.target.closest('.recipe-badges') &&
+                    !e.target.closest('.recipe-rating-section')) {
+                    this.classList.add('card-clicked');
+                    const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+                    if (viewRecipeBtn) {
+                        viewRecipeBtn.focus();
+                        viewRecipeBtn.style.animation = 'none';
+                        setTimeout(() => {
+                            viewRecipeBtn.style.animation = 'pulse 0.5s ease';
+                        }, 10);
+                        
+                        // Remove highlight after animation
+                        setTimeout(() => {
+                            this.classList.remove('card-clicked');
+                        }, 500);
+                    }
+                }
+            }
+        });
+    }
+
     // ===== IMPORT FUNCTION =====
     function importRecipesFromFile(event) {
         const file = event.target.files[0];
@@ -4049,6 +3961,7 @@ function setupCardEvents(card, recipeId) {
             }
         }, 3000);
     }
+
 // ===== SHARED RECIPES DATA =====
 const SHARED_RECIPES = [
   {
