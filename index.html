@@ -2668,45 +2668,45 @@
     }
 
     // ===== INITIALIZATION =====
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 Initializing website...');
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Initializing website...');
+    
+    // Load data first
+    loadRecipes();
+    loadFeaturedRecipes();
+    loadTopRatedRecipes();
+    populateCategoriesMenu();
+    initializeSearch();
+    initializeThemeToggle();
+    initializeScrollEvents();
+    initializeAdSystem();
+    
+    // Initialize carousel functionality with delay
+    setTimeout(() => {
+        initCarouselScrolling('featured');
+        initCarouselScrolling('topRated');
+        initArrowNavigation();
+        updateNavButtons('featured');
+        updateNavButtons('topRated');
         
-        // Load data first
-        loadRecipes();
-        loadFeaturedRecipes();
-        loadTopRatedRecipes();
-        populateCategoriesMenu();
-        initializeSearch();
-        initializeThemeToggle();
-        initializeScrollEvents();
-        initializeAdSystem();
-        
-        // Initialize carousel functionality with delay
-        setTimeout(() => {
-            initCarouselScrolling('featured');
-            initCarouselScrolling('topRated');
-            initArrowNavigation();
-            updateNavButtons('featured');
-            updateNavButtons('topRated');
+        // Setup mobile-specific features
+        if (isMobile()) {
+            setupMobileCarousel('featured');
+            setupMobileCarousel('topRated');
             
-            // Setup mobile-specific features
-            if (isMobile()) {
-                setupMobileCarousel('featured');
-                setupMobileCarousel('topRated');
-                
-                // Start mobile auto-scroll
-                setTimeout(() => {
-                    startMobileAutoScroll('featured');
-                    startMobileAutoScroll('topRated');
-                }, 3000);
-            } else {
-                // Desktop auto-scroll
-                setTimeout(() => {
-                    startAutoScroll('featured');
-                    startAutoScroll('topRated');
-                }, 2000);
-            }
-        }, 500);
+            // Start mobile auto-scroll with shorter delay
+            setTimeout(() => {
+                startMobileAutoScroll('featured');
+                startMobileAutoScroll('topRated');
+            }, 1000); // Reduced from 3000 to 1000ms
+        } else {
+            // Desktop auto-scroll with shorter delay
+            setTimeout(() => {
+                startAutoScroll('featured');
+                startAutoScroll('topRated');
+            }, 1000); // Reduced from 2000 to 1000ms
+        }
+    }, 300); // Reduced from 500 to 300ms
         
         // Show floating ad after 3 seconds
         setTimeout(() => {
@@ -2892,44 +2892,43 @@
     }
 
     // ===== AUTO-SCROLL FOR MOBILE =====
-    function startMobileAutoScroll(section) {
-        if (!isMobile()) return;
+   function startMobileAutoScroll(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || wrapper.children.length < 2) return;
+    
+    // Clear existing interval
+    stopMobileAutoScroll(section);
+    
+    carouselStates[section].mobileInterval = setInterval(() => {
+        const currentScroll = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
         
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        if (!wrapper || wrapper.children.length < 2) return;
+        let targetScroll;
         
-        // Clear existing interval
-        stopMobileAutoScroll(section);
+        // If at or near the end, go back to start
+        if (currentScroll >= maxScroll - 50) {
+            targetScroll = 0;
+        } else {
+            targetScroll = currentScroll + scrollAmount;
+        }
         
-        carouselStates[section].mobileInterval = setInterval(() => {
-            const currentScroll = wrapper.scrollLeft;
-            const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-            
-            let targetScroll;
-            
-            // If at or near the end, go back to start
-            if (currentScroll >= maxScroll - 50) {
-                targetScroll = 0;
-            } else {
-                targetScroll = currentScroll + scrollAmount;
-            }
-            
-            wrapper.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            // Update indicator after scroll
-            setTimeout(() => {
-                updateScrollIndicator(section);
-            }, 300);
-            
-        }, 10000); // Every 10 seconds
-    }
-
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Update indicator after scroll
+        setTimeout(() => {
+            updateScrollIndicator(section);
+        }, 300);
+        
+    }, 2000); // Changed from 10000 to 2000 (2 seconds)
+}
     function stopMobileAutoScroll(section) {
         if (carouselStates[section].mobileInterval) {
             clearInterval(carouselStates[section].mobileInterval);
@@ -3063,72 +3062,71 @@
 
     // ===== AUTO SCROLL (DESKTOP) =====
     function startAutoScroll(section) {
-        if (isMobile()) return; // No auto-scroll on mobile
-        
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        
-        // Clear existing interval
-        stopAutoScroll(section);
-        
-        // Don't auto-scroll if user is interacting
+    if (isMobile()) return; // No auto-scroll on mobile
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    
+    // Clear existing interval
+    stopAutoScroll(section);
+    
+    // Don't auto-scroll if user is interacting
+    if (carouselStates[section].isHovering) {
+        return;
+    }
+    
+    // Don't auto-scroll if there's nothing to scroll
+    if (!wrapper || wrapper.scrollWidth <= wrapper.clientWidth) {
+        return;
+    }
+    
+    console.log(`Starting desktop auto-scroll for ${section} section`);
+    
+    carouselStates[section].autoScrollInterval = setInterval(() => {
+        // Check again if user is interacting
         if (carouselStates[section].isHovering) {
             return;
         }
         
-        // Don't auto-scroll if there's nothing to scroll
-        if (!wrapper || wrapper.scrollWidth <= wrapper.clientWidth) {
+        const card = wrapper.querySelector('.recipe-card');
+        if (!card) return;
+        
+        const cardWidth = card.offsetWidth;
+        const gap = 24;
+        const scrollAmount = cardWidth + gap;
+        
+        let targetScroll = wrapper.scrollLeft + scrollAmount;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        
+        // If we're at or near the end, loop back to start
+        if (targetScroll >= maxScroll - 50) {
+            targetScroll = 0;
+            
+            // Add a little pause before restarting from beginning
+            setTimeout(() => {
+                wrapper.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }, 500); // Reduced from 1000 to 500ms
+            
             return;
         }
         
-        console.log(`Starting desktop auto-scroll for ${section} section`);
+        // Smooth scroll to the next card
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
         
-        carouselStates[section].autoScrollInterval = setInterval(() => {
-            // Check again if user is interacting
-            if (carouselStates[section].isHovering) {
-                return;
-            }
-            
-            const card = wrapper.querySelector('.recipe-card');
-            if (!card) return;
-            
-            const cardWidth = card.offsetWidth;
-            const gap = 24;
-            const scrollAmount = cardWidth + gap;
-            
-            let targetScroll = wrapper.scrollLeft + scrollAmount;
-            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-            
-            // If we're at or near the end, loop back to start
-            if (targetScroll >= maxScroll - 50) {
-                targetScroll = 0;
-                
-                // Add a little pause before restarting from beginning
-                setTimeout(() => {
-                    wrapper.scrollTo({
-                        left: 0,
-                        behavior: 'smooth'
-                    });
-                }, 1000);
-                
-                return;
-            }
-            
-            // Smooth scroll to the next card
-            wrapper.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            console.log(`Auto-scrolling ${section} to ${targetScroll}`);
-            
-            // Update buttons
-            setTimeout(() => {
-                updateNavButtons(section);
-            }, 300);
-            
-        }, 10000); // Scroll every 10 seconds
-    }
-
+        console.log(`Auto-scrolling ${section} to ${targetScroll}`);
+        
+        // Update buttons
+        setTimeout(() => {
+            updateNavButtons(section);
+        }, 300);
+        
+    }, 2000); // Changed from 10000 to 2000 (2 seconds)
+}
     function stopAutoScroll(section) {
         if (carouselStates[section].autoScrollInterval) {
             clearInterval(carouselStates[section].autoScrollInterval);
