@@ -157,8 +157,8 @@
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json">
     
-    <style>
-        /* ===== CSS RESET & BASE STYLES ===== */
+  <style>
+    /* ===== CSS RESET & BASE STYLES ===== */
 * {
     margin: 0;
     padding: 0;
@@ -1165,8 +1165,12 @@ html {
     50% { transform: scale(1.2); }
 }
 
+/* ===== RECIPE CARD LAYOUT FIXES ===== */
 .recipe-content {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 220px);
 }
 
 .recipe-title {
@@ -1178,23 +1182,26 @@ html {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .recipe-description {
     color: var(--text-light);
     font-size: 0.875rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .recipe-rating-section {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .rating-label {
@@ -1286,6 +1293,29 @@ html {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+}
+
+/* For top rated section */
+.top-rated-section .recipe-content {
+    height: calc(100% - 220px);
+}
+
+.top-rated-section .recipe-description {
+    margin-bottom: 1.5rem;
+}
+
+.top-rated-section .recipe-rating-section {
+    margin-top: auto;
+    padding-top: 0;
+    border-top: none;
+}
+
+.top-rated-section .recipe-rating-section div[role="img"] {
+    font-size: 0.9rem;
+}
+
+.top-rated-section .recipe-rating-section div[role="img"] i {
+    font-size: 0.9rem;
 }
 
 /* ===== NAVIGATION ARROWS ===== */
@@ -1963,7 +1993,7 @@ html {
     margin-right: auto;
 }
 
-/* ===== MOBILE RESPONSIVE - IMPROVED FOR HORIZONTAL SCROLL ===== */
+/* ===== MOBILE RESPONSIVE - FIX RATING BUTTON ===== */
 @media (max-width: 1200px) {
     :root {
         --container-width: 1000px;
@@ -2113,31 +2143,81 @@ html {
     
     .recipe-card {
         flex: 0 0 auto;
-        width: 280px !important; /* Smaller cards */
+        width: 280px !important;
         min-width: 280px !important;
-        height: 400px !important; /* Fixed height */
+        height: 420px !important; /* Increased height to fit rating button */
         scroll-snap-align: start;
         margin-right: 0 !important;
         display: block !important;
     }
     
     .recipe-image {
-        height: 180px !important; /* Smaller image */
+        height: 180px !important;
     }
     
     .recipe-content {
-        padding: 1.25rem !important; /* Slightly less padding */
+        padding: 1.25rem !important;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 180px);
     }
     
     .recipe-title {
-        font-size: 1.15rem !important; /* Smaller title */
+        font-size: 1.15rem !important;
         margin-bottom: 0.5rem !important;
     }
     
     .recipe-description {
-        font-size: 0.85rem !important; /* Smaller description */
-        margin-bottom: 1.25rem !important;
-        -webkit-line-clamp: 2 !important; /* Show fewer lines */
+        font-size: 0.85rem !important;
+        margin-bottom: 0.75rem !important;
+        -webkit-line-clamp: 2 !important;
+        flex-grow: 1;
+    }
+    
+    .recipe-rating-section {
+        margin-top: 0.75rem !important;
+        padding-top: 0.75rem !important;
+        border-top: 1px solid var(--border-color);
+        flex-shrink: 0;
+    }
+    
+    .rating-label {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.375rem !important;
+    }
+    
+    .star-rating {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .star {
+        font-size: 1rem !important;
+    }
+    
+    .selected-rating {
+        font-size: 0.75rem !important;
+        margin-left: 0.25rem !important;
+    }
+    
+    .rate-btn {
+        padding: 0.625rem !important;
+        font-size: 0.875rem !important;
+        margin-top: 0.375rem !important;
+    }
+    
+    .user-has-rated {
+        font-size: 0.75rem !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    /* For top rated section */
+    .top-rated-section .recipe-card .recipe-rating-section {
+        padding: 0.5rem 0 0 !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    .top-rated-section .recipe-card .recipe-rating-section div[role="img"] {
+        font-size: 0.8rem !important;
     }
     
     /* Add some visual indicators that there's more to scroll */
@@ -2148,7 +2228,7 @@ html {
     }
     
     .scroll-nav {
-        display: none; /* Hide on mobile for better touch experience */
+        display: none;
     }
     
     /* Scroll indicator dots for mobile */
@@ -2224,46 +2304,51 @@ html {
     }
     
     .recipe-card {
-        width: 250px !important; /* Even smaller on phones */
+        width: 250px !important;
         min-width: 250px !important;
-        height: 380px !important; /* Slightly shorter */
+        height: 410px !important; /* Slightly shorter but still fits button */
     }
     
     .recipe-image {
-        height: 160px !important; /* Smaller image on phones */
+        height: 160px !important;
     }
     
     .recipe-content {
-        padding: 1rem !important; /* Less padding */
+        height: calc(100% - 160px);
+        padding: 1rem !important;
     }
     
     .recipe-title {
-        font-size: 1.1rem !important; /* Smaller title */
+        font-size: 1.1rem !important;
         margin-bottom: 0.5rem !important;
     }
     
     .recipe-description {
-        font-size: 0.8rem !important; /* Smaller description */
-        margin-bottom: 1rem !important;
+        font-size: 0.8rem !important;
+        margin-bottom: 0.5rem !important;
         -webkit-line-clamp: 2 !important;
     }
     
     .recipe-rating-section {
-        margin-top: 0.75rem !important;
-        padding-top: 0.75rem !important;
+        margin-top: 0.5rem !important;
+        padding-top: 0.5rem !important;
     }
     
-    .star-rating {
-        margin-bottom: 0.5rem !important;
+    .rating-label {
+        font-size: 0.75rem !important;
     }
     
     .star {
-        font-size: 1.1rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .star-wrapper {
+        padding: 0.125rem !important;
     }
     
     .rate-btn {
-        padding: 0.75rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
     }
     
     .featured-wrapper {
@@ -2353,7 +2438,7 @@ html {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
-    </style>
+  </style>
 </head>
 <body>
     <!-- Recipe Ad Overlay -->
