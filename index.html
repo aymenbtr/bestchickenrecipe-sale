@@ -963,20 +963,20 @@
 
     /* ===== RECIPE CARD - IMPROVED DESIGN ===== */
     .recipe-card {
-        flex: 0 0 auto;
-        width: 350px;
-        background: var(--bg-white);
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        box-shadow: var(--shadow-md);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        scroll-snap-align: start;
-        will-change: transform;
-        position: relative;
-        border: 1px solid var(--border-color);
-    }
+    flex: 0 0 auto;
+    width: clamp(300px, 30vw, 340px); /* Flexible sizing */
+    background: var(--bg-white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    scroll-snap-align: start;
+    will-change: transform;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
 
     .recipe-card:hover {
         transform: translateY(-8px) scale(1.02);
@@ -985,13 +985,13 @@
     }
 
     .recipe-image {
-        position: relative;
-        height: 250px;
-        overflow: hidden;
-    }
+    position: relative;
+    height: clamp(200px, 22vw, 240px); /* Flexible height */
+    overflow: hidden;
+}
 
     .recipe-image img {
-        width: 100%;
+        width: 00%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s ease;
@@ -1050,27 +1050,46 @@
     }
 
     .recipe-badges {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        z-index: 2;
-    }
+    position: absolute;
+    top: 0.75rem; /* Reduced from 1rem */
+    left: 0.75rem; /* Reduced from 1rem */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem; /* Reduced from 0.5rem */
+    z-index: 2;
+}
 
-    .badge {
-        padding: 0.375rem 0.75rem;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        background: rgba(255, 255, 255, 0.95);
-        color: var(--text-dark);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+.badge {
+    padding: 0.25rem 0.5rem; /* Reduced from 0.375rem 0.75rem */
+    border-radius: 50px;
+    font-size: 0.65rem; /* Reduced from 0.75rem */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px; /* Reduced from 0.5px */
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-dark);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    line-height: 1.2;
+}
+
+.rating-badge {
+    position: absolute;
+    top: 0.75rem; /* Reduced from 1rem */
+    right: 0.75rem; /* Reduced from 1rem */
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    color: white;
+    padding: 0.375rem 0.625rem; /* Reduced from 0.5rem 0.75rem */
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.75rem; /* Reduced from 0.875rem */
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.125rem; /* Reduced from 0.25rem */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
 
     .badge.traditional { 
         background: linear-gradient(135deg, #3498db, #2980b9);
@@ -1089,67 +1108,61 @@
         color: white; 
     }
     .badge.krabby-patty {
-        background: linear-gradient(135deg, var(--krabby-patty-gold), #FFA500);
-        color: #8B4513;
-        font-weight: 800;
-        animation: krabbyShine 1.5s infinite;
-        border: 2px solid #FFA500;
-    }
+    background: linear-gradient(135deg, var(--krabby-patty-gold), #FFA500);
+    color: #8B4513;
+    font-weight: 700; /* Reduced from 800 */
+    animation: krabbyShine 1.5s infinite;
+    border: 1px solid #FFA500; /* Reduced from 2px */
+}
 
-    @keyframes krabbyShine {
-        0%, 100% { 
-            transform: scale(1);
-            box-shadow: 0 0 10px var(--krabby-patty-gold);
-        }
-        50% { 
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--krabby-patty-gold);
-        }
+@keyframes krabbyShine {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 5px var(--krabby-patty-gold); /* Reduced glow */
     }
-
-    .rating-badge {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: linear-gradient(135deg, #f1c40f, #f39c12);
-        color: white;
-        padding: 0.5rem 0.75rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 0.875rem;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+    50% { 
+        transform: scale(1.03); /* Reduced from 1.05 */
+        box-shadow: 0 0 10px var(--krabby-patty-gold); /* Reduced glow */
     }
-
+}
     .rating-badge::before {
-        content: '⭐';
-    }
+    content: '⭐';
+    font-size: 0.75rem; /* Added to control star size */
+}
 
     .save-recipe {
-        position: absolute;
-        bottom: 1rem;
-        right: 1rem;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.95);
-        border: none;
-        color: var(--text-light);
-        font-size: 1.25rem;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 3;
-        pointer-events: auto;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.save-recipe.active {
+    background: var(--primary-color);
+}
+
+.save-recipe.active i {
+    color: white !important;
+}
+
+.save-recipe:not(.active):hover i {
+    color: var(--primary-color);
+}
 
     .save-recipe:hover,
     .save-recipe.active {
@@ -1157,11 +1170,6 @@
         color: white;
         transform: scale(1.1) rotate(15deg);
     }
-
-    .save-recipe.active {
-        animation: heartbeat 0.5s ease;
-    }
-
     @keyframes heartbeat {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.2); }
@@ -1964,7 +1972,16 @@
         margin-left: auto;
         margin-right: auto;
     }
-
+      /* Adjust for different screen sizes */
+@media (min-width: 1400px) {
+    .recipe-card {
+        width: 340px;
+    }
+    
+    .recipe-image {
+        height: 240px;
+    }
+}
     /* ===== MOBILE RESPONSIVE - IMPROVED ===== */
     @media (max-width: 1200px) {
         :root {
@@ -1975,6 +1992,13 @@
         .newsletter-content {
             gap: 2rem;
         }
+        .recipe-card {
+        width: 320px;
+    }
+    
+    .recipe-image {
+        height: 220px;
+    }
     }
 
     @media (max-width: 992px) {
@@ -2019,8 +2043,15 @@
         .footer-links li:hover {
             transform: none;
         }
+        .recipe-card {
+        width: 300px;
     }
-
+    
+    .recipe-image {
+        height: 200px;
+    }
+    }
+        
     @media (max-width: 768px) {
         :root {
             --section-spacing: 3rem;
@@ -2091,10 +2122,14 @@
             align-self: center;
         }
         
-        .recipe-card {
-            width: calc(100vw - 3rem);
-            min-width: calc(100vw - 3rem);
-        }
+       .recipe-card {
+        width: calc(100vw - 2.5rem);
+        min-width: calc(100vw - 2.5rem);
+    }
+    
+    .recipe-image {
+        height: 180px;
+    }
         
         .featured-wrapper {
             gap: 1rem;
@@ -2130,6 +2165,35 @@
             min-width: 90%;
             max-width: 90%;
         }
+         .recipe-badges {
+        top: 0.5rem;
+        left: 0.5rem;
+        gap: 0.25rem;
+    }
+    
+    .badge {
+        padding: 0.1875rem 0.375rem;
+        font-size: 0.6rem;
+    }
+    
+    .rating-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .rating-badge::before {
+        font-size: 0.7rem;
+    }
+    
+    .save-recipe {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+    }
     }
 
     @media (max-width: 480px) {
@@ -2156,9 +2220,13 @@
         }
         
         .recipe-card {
-            width: calc(100vw - 2rem);
-            min-width: calc(100vw - 2rem);
-        }
+        width: calc(100vw - 1.5rem);
+        min-width: calc(100vw - 1.5rem);
+    }
+    
+    .recipe-image {
+        height: 160px;
+    }
         
         .ad-placeholder {
             padding: 2rem 1rem;
@@ -2243,6 +2311,16 @@
         0% { transform: translateX(-100%); }
         100% { transform: translateX(100%); }
     }
+    /* Add this to highlight the view recipe button when card is clicked */
+.view-recipe-btn:focus {
+    animation: pulse 0.5s ease;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
 </style>
 </head>
 <body>
@@ -3062,8 +3140,8 @@ function createRecipeCard(recipe, section) {
                 </div>
             ` : ''}
             <button class="save-recipe ${recipe.saved ? 'active' : ''}" aria-label="${recipe.saved ? 'Remove from saved' : 'Save recipe'}">
-                <i class="fas fa-heart"></i>
-            </button>
+    <i class="${recipe.saved ? 'fas' : 'far'} fa-heart"></i>
+</button>
         </div>
         <div class="recipe-content">
             <h3 class="recipe-title">
@@ -3121,7 +3199,7 @@ function createRecipeCard(recipe, section) {
     return card;
 }
 
-// ===== CARD EVENT HANDLING - MOBILE OPTIMIZED =====
+// ===== CARD EVENT HANDLING - UPDATED =====
 function setupCardEvents(card, recipeId) {
     // Save button handler
     const saveBtn = card.querySelector('.save-recipe');
@@ -3133,7 +3211,7 @@ function setupCardEvents(card, recipeId) {
         });
     }
 
-    // View recipe button handler
+    // View recipe button handler - only this should navigate
     const viewBtn = card.querySelector('.view-recipe-btn');
     if (viewBtn) {
         viewBtn.addEventListener('click', (e) => {
@@ -3163,16 +3241,42 @@ function setupCardEvents(card, recipeId) {
         });
     });
 
-    // Card click handler for mobile - only trigger on card background, not buttons
+    // Card click handler - only trigger if clicking on non-interactive areas
+    card.addEventListener('click', function(e) {
+        // Don't trigger if clicking on interactive elements
+        if (e.target.closest('button') || 
+            e.target.closest('.star') || 
+            e.target.closest('.star-wrapper') ||
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section') ||
+            e.target.closest('.view-recipe-btn') ||
+            e.target.closest('.save-recipe') ||
+            e.target.closest('.rate-btn')) {
+            return;
+        }
+        
+        // Only show the view recipe button or handle card click
+        const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+        if (viewRecipeBtn) {
+            viewRecipeBtn.focus();
+            viewRecipeBtn.style.animation = 'none';
+            setTimeout(() => {
+                viewRecipeBtn.style.animation = 'fadeInUp 0.3s ease-out';
+            }, 10);
+        }
+    });
+
+    // Touch events for mobile
     let touchStartTime = 0;
     let touchStartX = 0;
     let touchStartY = 0;
 
     card.addEventListener('touchstart', function(e) {
-        // Don't handle if touch is on a button
+        // Don't handle if touch is on interactive elements
         if (e.target.closest('button') || 
             e.target.closest('.star') || 
-            e.target.closest('.recipe-badges')) {
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section')) {
             return;
         }
         
@@ -3182,10 +3286,11 @@ function setupCardEvents(card, recipeId) {
     }, { passive: true });
 
     card.addEventListener('touchend', function(e) {
-        // Don't handle if touch is on a button
+        // Don't handle if touch is on interactive elements
         if (e.target.closest('button') || 
             e.target.closest('.star') || 
-            e.target.closest('.recipe-badges')) {
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section')) {
             return;
         }
 
@@ -3197,10 +3302,17 @@ function setupCardEvents(card, recipeId) {
         const xDiff = Math.abs(touchEndX - touchStartX);
         const yDiff = Math.abs(touchEndY - touchStartY);
 
-        // If it's a quick tap without much movement, treat as click
+        // If it's a quick tap without much movement, highlight the view button
         if (timeDiff < 200 && xDiff < 10 && yDiff < 10) {
             e.preventDefault();
-            handleRecipeClick(recipeId, e);
+            const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+            if (viewRecipeBtn) {
+                viewRecipeBtn.focus();
+                viewRecipeBtn.style.animation = 'none';
+                setTimeout(() => {
+                    viewRecipeBtn.style.animation = 'fadeInUp 0.3s ease-out';
+                }, 10);
+            }
         }
     }, { passive: false });
     
@@ -3210,13 +3322,20 @@ function setupCardEvents(card, recipeId) {
             e.preventDefault();
             if (!e.target.closest('button') && 
                 !e.target.closest('.star') && 
-                !e.target.closest('.recipe-badges')) {
-                handleRecipeClick(recipeId, e);
+                !e.target.closest('.recipe-badges') &&
+                !e.target.closest('.recipe-rating-section')) {
+                const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+                if (viewRecipeBtn) {
+                    viewRecipeBtn.focus();
+                    viewRecipeBtn.style.animation = 'none';
+                    setTimeout(() => {
+                        viewRecipeBtn.style.animation = 'fadeInUp 0.3s ease-out';
+                    }, 10);
+                }
             }
         }
     });
 }
-
 // ===== IMPORT FUNCTION =====
 function importRecipesFromFile(event) {
     const file = event.target.files[0];
@@ -3371,19 +3490,36 @@ function toggleSaveRecipe(recipeId, event) {
         event.stopPropagation();
         event.preventDefault();
     }
+    
     const recipe = recipes.find(r => r.id === recipeId);
     if (recipe) {
         recipe.saved = !recipe.saved;
-        const saveButton = event.target.closest('.save-recipe');
-        if (saveButton) {
+        
+        // Update the save button in ALL card instances
+        document.querySelectorAll(`.recipe-card[data-recipe-id="${recipeId}"] .save-recipe`).forEach(saveButton => {
             saveButton.classList.toggle('active', recipe.saved);
             saveButton.setAttribute('aria-label', recipe.saved ? 'Remove from saved' : 'Save recipe');
-        }
+            
+            // Update heart icon based on saved state
+            const heartIcon = saveButton.querySelector('i');
+            if (heartIcon) {
+                if (recipe.saved) {
+                    heartIcon.className = 'fas fa-heart';
+                    heartIcon.style.color = 'white';
+                } else {
+                    heartIcon.className = 'far fa-heart';
+                    heartIcon.style.color = '';
+                }
+            }
+        });
+        
+        // Update localStorage
         localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-        showNotification(recipe.saved ? 'Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
+        
+        // Show notification
+        showNotification(recipe.saved ? '❤️ Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
     }
 }
-
 // ===== AD SYSTEM =====
 function initializeAdSystem() {
     recipeAdVideoElement = document.getElementById('recipeAdVideo');
