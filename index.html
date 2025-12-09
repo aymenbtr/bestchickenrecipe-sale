@@ -842,7 +842,7 @@ html {
 /* ===== FEATURED RECIPES SECTION ===== */
 .featured-section,
 .top-rated-section {
-    padding: 2rem 0;
+    padding: var(--section-spacing) 0;
     position: relative;
     width: 100%;
 }
@@ -970,12 +970,11 @@ html {
     overflow-y: hidden;
     scroll-behavior: smooth;
     padding: 1rem 0.5rem;
-     touch-action: pan-y pinch-zoom;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scroll-padding: 0 45px;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 1.5rem;
     will-change: scroll-position;
 }
 
@@ -993,15 +992,13 @@ html {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     scroll-snap-align: start;
-    transform: translateZ(0);
     will-change: transform;
-    -webkit-tap-highlight-color: transparent;
     position: relative;
     border: 1px solid var(--border-color);
 }
 
 .recipe-card:hover {
-     transform: translateY(-4px) scale(1.02);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--primary-color);
 }
 
@@ -1212,7 +1209,7 @@ html {
 
 /* ===== RECIPE CARD LAYOUT FIXES ===== */
 .recipe-content {
-     padding: 1rem !important;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     height: calc(100% - 220px);
@@ -2046,21 +2043,17 @@ html {
 /* ===== RESPONSIVE DESIGN - MOBILE ===== */
 @media (max-width: 768px) {
     /* MOBILE NAVIGATION ARROWS */
-   .mobile-nav-arrows {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+    .mobile-nav-arrows {
         display: flex;
-        width: 100%;
-        justify-content: space-between;
-        pointer-events: none;
-        z-index: 10;
-        padding: 0 10px;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
     
     .mobile-nav-arrow {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
         color: white;
@@ -2068,54 +2061,37 @@ html {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.875rem;
+        font-size: 1rem;
         cursor: pointer;
         transition: var(--transition);
         box-shadow: var(--shadow-md);
-        pointer-events: auto;
         position: relative;
-        z-index: 11;
-        opacity: 0.9;
+        z-index: 10;
     }
     
     .mobile-nav-arrow:hover {
-        opacity: 1;
         transform: scale(1.1);
         box-shadow: var(--shadow-lg);
-    }
-    
-    .mobile-nav-arrow.prev-mobile {
-        left: 0;
-    }
-    
-    .mobile-nav-arrow.next-mobile {
-        right: 0;
     }
     
     .mobile-nav-arrow.disabled {
         opacity: 0.3;
         cursor: not-allowed;
-        pointer-events: none;
         transform: none;
     }
     
-    .mobile-nav-arrow.disabled:hover {
-        transform: none;
-        box-shadow: var(--shadow-md);
-    }
-    
-    /* Mobile scroll indicator */
+    /* MOBILE SCROLL INDICATOR */
     .mobile-scroll-indicator {
         display: flex;
         justify-content: center;
         gap: 0.5rem;
-        margin-top: 0.75rem;
-        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
     }
     
     .mobile-scroll-dot {
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         background: var(--border-color);
         transition: var(--transition);
@@ -2123,10 +2099,10 @@ html {
     
     .mobile-scroll-dot.active {
         background: var(--primary-color);
-        transform: scale(1.3);
+        transform: scale(1.2);
     }
     
-    /* Hide desktop arrows on mobile */
+    /* HIDE DESKTOP ARROWS ON MOBILE */
     .scroll-nav {
         display: none !important;
     }
@@ -2136,14 +2112,14 @@ html {
         touch-action: pan-y pinch-zoom !important;
         -webkit-overflow-scrolling: touch !important;
         overscroll-behavior-x: contain;
-        padding: 1rem 0;
-        scroll-padding: 0 45px;
         scroll-snap-type: x mandatory;
     }
-      .featured-container {
-        position: relative;
-        padding: 0 45px; /* Increased padding for side arrows */
+    
+    .recipe-card {
+        -webkit-tap-highlight-color: transparent;
+        scroll-snap-align: start;
     }
+    
     /* PERFORMANCE OPTIMIZATIONS FOR MOBILE */
     .recipe-card:hover {
         transform: translateY(-4px) scale(1.01);
@@ -2317,11 +2293,11 @@ html {
     
     .recipe-card {
         flex: 0 0 auto;
-        width: calc(100vw - 110px) !important; /* Account for arrow spacing */
-        min-width: calc(100vw - 110px) !important;
+        width: 280px !important;
+        min-width: 280px !important;
         height: 420px !important;
-        scroll-snap-align: center;
-        margin: 0 8px;
+        scroll-snap-align: start;
+        margin-right: 0 !important;
         display: block !important;
     }
     
@@ -2408,7 +2384,6 @@ html {
     /* Add mobile navigation arrows styling */
     .featured-container {
         position: relative;
-         padding: 0 60px; /* Reset for desktop */
     }
     
     .mobile-nav-arrows {
@@ -2517,7 +2492,7 @@ html {
     }
     
     .featured-wrapper {
-        padding: 1rem 0;
+        gap: 0.75rem;
     }
     
     .ad-placeholder {
@@ -2637,7 +2612,7 @@ img {
     height: 100%;
     object-fit: cover;
 }
- </style>
+</style>
 </head>
 <body>
     <!-- Recipe Ad Overlay -->
@@ -8415,4 +8390,3 @@ const SHARED_RECIPES = [
 </script>
 </body>
 </html>
-
