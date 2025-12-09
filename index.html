@@ -159,7 +159,7 @@
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json">
     
-<style>
+ <style>
     /* ===== CSS RESET & BASE STYLES ===== */
 * {
     margin: 0;
@@ -2612,7 +2612,7 @@ img {
     height: 100%;
     object-fit: cover;
 }
-</style>
+ </style>
 </head>
 <body>
     <!-- Recipe Ad Overlay -->
@@ -2899,91 +2899,545 @@ img {
         </div>
     </div>
 
-   <script>
+    <script>
     // ===== CONFIGURATION =====
-let recipes = [];
-let recipeRatings = JSON.parse(localStorage.getItem('recipeRatings')) || {};
-let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+    let recipes = [];
+    let recipeRatings = JSON.parse(localStorage.getItem('recipeRatings')) || {};
+    let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
 
-let recipeSkipTimer;
-let recipeSkipCountdown = 8;
-let isRecipeAdShowing = false;
-let targetRecipeUrl = null;
-let recipeAdVideoElement = null;
+    let recipeSkipTimer;
+    let recipeSkipCountdown = 8;
+    let isRecipeAdShowing = false;
+    let targetRecipeUrl = null;
+    let recipeAdVideoElement = null;
 
-const allCategories = [
-    { id: 'fried', name: 'Fried', icon: 'fas fa-fire' },
-    { id: 'baked', name: 'Baked', icon: 'fas fa-oven' },
-    { id: 'grilled', name: 'Grilled', icon: 'fas fa-grill' },
-    { id: 'soup', name: 'Soup', icon: 'fas fa-bowl-food' },
-    { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart' },
-    { id: 'traditional', name: 'Traditional', icon: 'fas fa-landmark' },
-    { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot' },
-    { id: 'quick', name: 'Quick', icon: 'fas fa-bolt' },
-    { id: 'krabby-patty', name: 'Krabby Patty', icon: 'fas fa-hamburger' }
-];
+    const allCategories = [
+        { id: 'fried', name: 'Fried', icon: 'fas fa-fire' },
+        { id: 'baked', name: 'Baked', icon: 'fas fa-oven' },
+        { id: 'grilled', name: 'Grilled', icon: 'fas fa-grill' },
+        { id: 'soup', name: 'Soup', icon: 'fas fa-bowl-food' },
+        { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart' },
+        { id: 'traditional', name: 'Traditional', icon: 'fas fa-landmark' },
+        { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot' },
+        { id: 'quick', name: 'Quick', icon: 'fas fa-bolt' },
+        { id: 'krabby-patty', name: 'Krabby Patty', icon: 'fas fa-hamburger' }
+    ];
 
-let currentFilters = [];
-let currentSearchTerm = '';
+    let currentFilters = [];
+    let currentSearchTerm = '';
 
-const carouselStates = {
-    featured: { 
-        currentPosition: 0, 
-        autoScrollInterval: null,
-        mobileInterval: null,
-        isHovering: false,
-        isDragging: false
-    },
-    topRated: { 
-        currentPosition: 0, 
-        autoScrollInterval: null,
-        mobileInterval: null,
-        isHovering: false,
-        isDragging: false
-    }
-};
-
-// ===== DOM ELEMENTS =====
-const featuredRecipesWrapper = document.getElementById('featuredRecipesWrapper');
-const topRatedRecipesWrapper = document.getElementById('topRatedRecipesWrapper');
-const searchInput = document.getElementById('searchInput');
-const searchSuggestionsContainer = document.getElementById('searchSuggestions');
-const themeToggle = document.getElementById('themeToggle');
-const backToTop = document.getElementById('backToTop');
-const floatingAd = document.getElementById('floatingAd');
-const newsletterPopup = document.getElementById('newsletterPopup');
-const closePopup = document.getElementById('closePopup');
-const filterTagsContainer = document.getElementById('filterTags');
-const categoriesMenu = document.getElementById('categoriesMenu');
-const sectionTitle = document.getElementById('sectionTitle');
-const sectionSubtitle = document.getElementById('sectionSubtitle');
-const scrollPrevFeatured = document.getElementById('scrollPrevFeatured');
-const scrollNextFeatured = document.getElementById('scrollNextFeatured');
-const scrollPrevTopRated = document.getElementById('scrollPrevTopRated');
-const scrollNextTopRated = document.getElementById('scrollNextTopRated');
-
-// ===== UTILITY FUNCTIONS =====
-function isMobile() {
-    return window.innerWidth <= 768 || 
-           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-function isTouchDevice() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-}
-
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+    const carouselStates = {
+        featured: { 
+            currentPosition: 0, 
+            autoScrollInterval: null,
+            mobileInterval: null,
+            isHovering: false,
+            isDragging: false
+        },
+        topRated: { 
+            currentPosition: 0, 
+            autoScrollInterval: null,
+            mobileInterval: null,
+            isHovering: false,
+            isDragging: false
+        }
     };
-}
 
+    // ===== DOM ELEMENTS =====
+    const featuredRecipesWrapper = document.getElementById('featuredRecipesWrapper');
+    const topRatedRecipesWrapper = document.getElementById('topRatedRecipesWrapper');
+    const searchInput = document.getElementById('searchInput');
+    const searchSuggestionsContainer = document.getElementById('searchSuggestions');
+    const themeToggle = document.getElementById('themeToggle');
+    const backToTop = document.getElementById('backToTop');
+    const floatingAd = document.getElementById('floatingAd');
+    const newsletterPopup = document.getElementById('newsletterPopup');
+    const closePopup = document.getElementById('closePopup');
+    const filterTagsContainer = document.getElementById('filterTags');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const sectionSubtitle = document.getElementById('sectionSubtitle');
+    const scrollPrevFeatured = document.getElementById('scrollPrevFeatured');
+    const scrollNextFeatured = document.getElementById('scrollNextFeatured');
+    const scrollPrevTopRated = document.getElementById('scrollPrevTopRated');
+    const scrollNextTopRated = document.getElementById('scrollNextTopRated');
+
+    // ===== UTILITY FUNCTIONS =====
+    function isMobile() {
+        return window.innerWidth <= 768 || 
+               /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    function isTouchDevice() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // ===== INITIALIZATION =====
+ document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Initializing website with performance optimizations...');
+    
+    // Initialize performance optimizations
+    const { smoothScrollTo, batchDOMUpdates } = optimizePerformance();
+    
+    // Store for global use
+    window.smoothScrollTo = smoothScrollTo;
+    window.batchDOMUpdates = batchDOMUpdates;
+    
+    // Load data first
+    batchDOMUpdates(() => {
+        loadRecipes();
+        loadFeaturedRecipes();
+        loadTopRatedRecipes();
+        populateCategoriesMenu();
+        initializeSearch();
+        initializeThemeToggle();
+        initializeScrollEvents();
+        initializeAdSystem();
+    });
+    
+    // Initialize carousel functionality with delay
+    setTimeout(() => {
+        batchDOMUpdates(() => {
+            initCarouselScrolling('featured');
+            initCarouselScrolling('topRated');
+            initArrowNavigation();
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
+            
+            // Setup mobile-specific features
+            if (isMobile()) {
+                setupMobileCarousel('featured');
+                setupMobileCarousel('topRated');
+                setupMobileNavigationArrows('featured');
+                setupMobileNavigationArrows('topRated');
+                
+                // Start mobile auto-scroll
+                setTimeout(() => {
+                    startMobileAutoScroll('featured');
+                    startMobileAutoScroll('topRated');
+                }, 1500);
+            } else {
+                // Desktop auto-scroll
+                setTimeout(() => {
+                    startAutoScroll('featured');
+                    startAutoScroll('topRated');
+                }, 1500);
+            }
+        });
+    }, 300);
+        
+        // Show floating ad after 3 seconds
+        setTimeout(() => {
+            if (floatingAd) floatingAd.classList.add('show');
+        }, 3000);
+        
+        // Show newsletter popup after 15 seconds (only once)
+        setTimeout(() => {
+            if (!localStorage.getItem('newsletterShown')) {
+                if (newsletterPopup) newsletterPopup.classList.add('show');
+                localStorage.setItem('newsletterShown', 'true');
+            }
+        }, 15000);
+        
+        // Import recipes file input
+        const importFileInput = document.getElementById('importRecipesFile');
+        if (importFileInput) importFileInput.addEventListener('change', importRecipesFromFile);
+        
+        initializeKeyboardNavigation();
+        
+        console.log(`✅ Loaded ${recipes.length} recipes`);
+        
+        // Handle window resize with debounce
+        window.addEventListener('resize', debounce(function() {
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
+            
+            // Re-setup mobile features if needed
+            if (isMobile()) {
+                setupMobileCarousel('featured');
+                setupMobileCarousel('topRated');
+            }
+        }, 250));
+    });
+// ===== UPDATE CAROUSEL METRICS FUNCTION =====
+function updateCarouselMetrics() {
+    // Update metrics for all carousels
+    const sections = ['featured', 'topRated'];
+    sections.forEach(section => {
+        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+        if (!wrapper) return;
+        
+        batchDOMUpdates(() => {
+            updateNavButtons(section);
+            if (isMobile()) {
+                updateMobileScrollIndicator(section);
+                updateMobileArrowStates(section);
+            }
+        });
+    });
+}
+    // ===== CAROUSEL SCROLLING - OPTIMIZED FOR MOBILE =====
+function initCarouselScrolling(section) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper) return;
+
+    wrapper.style.scrollBehavior = 'smooth';
+    
+    let scrollTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateNavButtons(section);
+            
+            if (isMobile()) {
+                updateScrollIndicator(section);
+            }
+        }, 100);
+    }, { passive: true });
+
+    // FIXED: Touch events for CAROUSEL swiping (horizontal only)
+    if (isMobile()) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isHorizontalSwipe = false;
+        let scrollTimeout;
+        
+        wrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isHorizontalSwipe = false;
+            
+            stopMobileAutoScroll(section);
+        }, { passive: true });
+        
+        wrapper.addEventListener('touchmove', (e) => {
+            touchEndX = e.touches[0].clientX;
+            touchEndY = e.touches[0].clientY;
+            
+            const xDiff = Math.abs(touchEndX - touchStartX);
+            const yDiff = Math.abs(touchEndY - touchStartY);
+            
+            // FIXED: Only mark as horizontal swipe if movement is more horizontal than vertical
+            if (xDiff > yDiff && xDiff > 30) {
+                isHorizontalSwipe = true;
+            }
+        }, { passive: true });
+        
+        wrapper.addEventListener('touchend', () => {
+            // Only restart auto-scroll if it was a horizontal swipe
+            if (isHorizontalSwipe) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    startMobileAutoScroll(section);
+                }, 3000);
+            } else {
+                // For vertical scrolls or taps, restart sooner
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    startMobileAutoScroll(section);
+                }, 2000);
+            }
+        }, { passive: true });
+        
+        wrapper.addEventListener('touchcancel', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 3000);
+        }, { passive: true });
+    }
+
+    // Desktop hover handling
+    wrapper.addEventListener('mouseenter', () => {
+        if (!isMobile()) {
+            carouselStates[section].isHovering = true;
+            stopAutoScroll(section);
+        }
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+        if (!isMobile()) {
+            carouselStates[section].isHovering = false;
+            setTimeout(() => {
+                if (!carouselStates[section].isHovering) {
+                    startAutoScroll(section);
+                }
+            }, 2000);
+        }
+    });
+}
+    // ===== MOBILE SCROLL HANDLING =====
+  function setupMobileCarousel(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || !wrapper.children.length) return;
+    
+    // Create scroll indicator dots
+    const container = wrapper.closest('.featured-container');
+    if (!container) return;
+    
+    // Remove existing indicators if any
+    const existingIndicator = container.querySelector('.scroll-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    
+    // Create new indicators (max 5 dots)
+    const indicator = document.createElement('div');
+    indicator.className = 'scroll-indicator';
+    
+    const cardCount = wrapper.children.length;
+    const maxDots = Math.min(cardCount, 5);
+    
+    for (let i = 0; i < maxDots; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'scroll-dot';
+        dot.dataset.index = i;
+        indicator.appendChild(dot);
+    }
+    
+    // Only add indicator if there are multiple cards
+    if (cardCount > 1) {
+        container.appendChild(indicator);
+    }
+    
+    // Update dots on scroll
+    let scrollUpdateTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollUpdateTimeout);
+        scrollUpdateTimeout = setTimeout(() => {
+            updateScrollIndicator(section);
+        }, 100);
+    }, { passive: true });
+    
+    // Click on dots to scroll
+    indicator.addEventListener('click', (e) => {
+        const dot = e.target.closest('.scroll-dot');
+        if (!dot) return;
+        
+        const index = parseInt(dot.dataset.index);
+        scrollToCard(section, index);
+    });
+    
+    // Initialize
+    updateScrollIndicator(section);
+}
+function setupMobileNavigationArrows(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    const container = wrapper ? wrapper.closest('.featured-container') : null;
+    if (!wrapper || !container) return;
+    
+    // Remove existing mobile navigation if any
+    const existingNav = container.querySelector('.mobile-nav-arrows');
+    if (existingNav) existingNav.remove();
+    const existingIndicator = container.querySelector('.mobile-scroll-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    
+    // Create mobile navigation arrows
+    const mobileNav = document.createElement('div');
+    mobileNav.className = 'mobile-nav-arrows';
+    mobileNav.innerHTML = `
+        <button class="mobile-nav-arrow prev-mobile" aria-label="Previous recipes">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="mobile-nav-arrow next-mobile" aria-label="Next recipes">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+    
+    // Create scroll indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'mobile-scroll-indicator';
+    
+    const cardCount = Math.min(wrapper.children.length, 8);
+    for (let i = 0; i < cardCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'mobile-scroll-dot';
+        dot.dataset.index = i;
+        indicator.appendChild(dot);
+    }
+    
+    // Add to container
+    container.appendChild(mobileNav);
+    container.appendChild(indicator);
+    
+    // Setup event listeners for mobile arrows
+    const prevMobile = mobileNav.querySelector('.prev-mobile');
+    const nextMobile = mobileNav.querySelector('.next-mobile');
+    
+    // Mobile navigation function
+    function scrollToCardMobile(index) {
+        const card = wrapper.children[index];
+        if (!card) return;
+        
+        const containerRect = container.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        
+        const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
+        
+        // Smooth scroll with hardware acceleration
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+        
+        // Update indicator
+        updateMobileScrollIndicator(section);
+        
+        // Update arrow states
+        updateMobileArrowStates(section);
+    }
+    
+    // Update mobile indicator
+    function updateMobileScrollIndicator(section) {
+        const indicator = container.querySelector('.mobile-scroll-indicator');
+        if (!indicator) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const currentIndex = Math.round(scrollLeft / scrollAmount);
+        
+        const dots = indicator.querySelectorAll('.mobile-scroll-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    // Update mobile arrow states
+    function updateMobileArrowStates(section) {
+        const scrollLeft = wrapper.scrollLeft;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const tolerance = 5;
+        
+        if (prevMobile) {
+            if (scrollLeft <= tolerance) {
+                prevMobile.classList.add('disabled');
+                prevMobile.disabled = true;
+            } else {
+                prevMobile.classList.remove('disabled');
+                prevMobile.disabled = false;
+            }
+        }
+        
+        if (nextMobile) {
+            if (scrollLeft >= maxScroll - tolerance) {
+                nextMobile.classList.add('disabled');
+                nextMobile.disabled = true;
+            } else {
+                nextMobile.classList.remove('disabled');
+                nextMobile.disabled = false;
+            }
+        }
+    }
+    
+    // Click handlers for mobile arrows
+    prevMobile.addEventListener('click', () => {
+        if (prevMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const targetScroll = Math.max(0, scrollLeft - scrollAmount);
+        
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 3000);
+        }, 300);
+    });
+    
+    nextMobile.addEventListener('click', () => {
+        if (nextMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        let targetScroll = scrollLeft + scrollAmount;
+        
+        // If at end, loop to start
+        if (targetScroll >= maxScroll - 50) {
+            targetScroll = 0;
+        }
+        
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 3000);
+        }, 300);
+    });
+    
+    // Initialize states
+    updateMobileScrollIndicator(section);
+    updateMobileArrowStates(section);
+    
+    // Update on scroll
+    let scrollUpdateTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollUpdateTimeout);
+        scrollUpdateTimeout = setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+        }, 50); // Faster update for mobile
+    }, { passive: true });
+    
+    // Click on indicator dots
+    indicator.addEventListener('click', (e) => {
+        const dot = e.target.closest('.mobile-scroll-dot');
+        if (!dot) return;
+        
+        const index = parseInt(dot.dataset.index);
+        scrollToCardMobile(index);
+    });
+}
 // ===== PERFORMANCE OPTIMIZATION FUNCTIONS =====
 function optimizePerformance() {
     // Request Animation Frame for smooth animations
@@ -3060,6 +3514,7 @@ function optimizePerformance() {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
+            // Update carousel metrics after resize
             updateCarouselMetrics();
         }, 150);
     });
@@ -3094,496 +3549,51 @@ function optimizePerformance() {
         batchDOMUpdates
     };
 }
-
-// ===== INITIALIZATION =====
-let performanceTools;
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Initializing website with performance optimizations...');
-    
-    // Initialize performance optimizations
-    performanceTools = optimizePerformance();
-    
-    // Load data first
-    performanceTools.batchDOMUpdates(() => {
-        loadRecipes();
-        loadFeaturedRecipes();
-        loadTopRatedRecipes();
-        populateCategoriesMenu();
-        initializeSearch();
-        initializeThemeToggle();
-        initializeScrollEvents();
-        initializeAdSystem();
-    });
-    
-    // Initialize carousel functionality with delay
-    setTimeout(() => {
-        performanceTools.batchDOMUpdates(() => {
-            initCarouselScrolling('featured');
-            initCarouselScrolling('topRated');
-            initArrowNavigation();
-            updateNavButtons('featured');
-            updateNavButtons('topRated');
-            
-            // Setup mobile-specific features
-            if (isMobile()) {
-                setupMobileCarousel('featured');
-                setupMobileCarousel('topRated');
-                setupMobileNavigationArrows('featured');
-                setupMobileNavigationArrows('topRated');
-                
-                // Start mobile auto-scroll
-                setTimeout(() => {
-                    startMobileAutoScroll('featured');
-                    startMobileAutoScroll('topRated');
-                }, 1500);
-            } else {
-                // Desktop auto-scroll
-                setTimeout(() => {
-                    startAutoScroll('featured');
-                    startAutoScroll('topRated');
-                }, 1500);
-            }
-        });
-    }, 300);
+    function updateScrollIndicator(section) {
+        if (!isMobile()) return;
         
-    // Show floating ad after 3 seconds
-    setTimeout(() => {
-        if (floatingAd) floatingAd.classList.add('show');
-    }, 3000);
-    
-    // Show newsletter popup after 15 seconds (only once)
-    setTimeout(() => {
-        if (!localStorage.getItem('newsletterShown')) {
-            if (newsletterPopup) newsletterPopup.classList.add('show');
-            localStorage.setItem('newsletterShown', 'true');
-        }
-    }, 15000);
-    
-    // Import recipes file input
-    const importFileInput = document.getElementById('importRecipesFile');
-    if (importFileInput) importFileInput.addEventListener('change', importRecipesFromFile);
-    
-    initializeKeyboardNavigation();
-    
-    console.log(`✅ Loaded ${recipes.length} recipes`);
-});
-
-// ===== UPDATE CAROUSEL METRICS FUNCTION =====
-function updateCarouselMetrics() {
-    // Update metrics for all carousels
-    const sections = ['featured', 'topRated'];
-    sections.forEach(section => {
         const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        if (!wrapper) return;
+        const container = wrapper ? wrapper.closest('.featured-container') : null;
+        if (!wrapper || !container) return;
         
-        performanceTools.batchDOMUpdates(() => {
-            updateNavButtons(section);
-            if (isMobile()) {
-                updateMobileScrollIndicator(section);
-                updateMobileArrowStates(section);
-            }
-        });
-    });
-}
-
-// ===== CAROUSEL SCROLLING - OPTIMIZED FOR MOBILE =====
-function initCarouselScrolling(section) {
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (!wrapper) return;
-
-    wrapper.style.scrollBehavior = 'smooth';
-    
-    let scrollTimeout;
-    wrapper.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            updateNavButtons(section);
-            
-            if (isMobile()) {
-                updateMobileScrollIndicator(section);
-                updateMobileArrowStates(section);
-            }
-        }, 100);
-    }, { passive: true });
-
-    // FIXED: Touch events for CAROUSEL swiping (horizontal only)
-    if (isMobile()) {
-        wrapper.style.touchAction = 'pan-y pinch-zoom';
-        wrapper.style.webkitOverflowScrolling = 'touch';
-        
-        // Simple touch handling - let browser handle scrolling
-        wrapper.addEventListener('touchstart', () => {
-            stopMobileAutoScroll(section);
-        }, { passive: true });
-        
-        wrapper.addEventListener('touchend', () => {
-            setTimeout(() => {
-                startMobileAutoScroll(section);
-            }, 3000);
-        }, { passive: true });
-    }
-
-    // Desktop hover handling
-    wrapper.addEventListener('mouseenter', () => {
-        if (!isMobile()) {
-            carouselStates[section].isHovering = true;
-            stopAutoScroll(section);
-        }
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-        if (!isMobile()) {
-            carouselStates[section].isHovering = false;
-            setTimeout(() => {
-                if (!carouselStates[section].isHovering) {
-                    startAutoScroll(section);
-                }
-            }, 2000);
-        }
-    });
-}
-
-// ===== MOBILE NAVIGATION ARROWS =====
-function setupMobileNavigationArrows(section) {
-    if (!isMobile()) return;
-    
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    const container = wrapper ? wrapper.closest('.featured-container') : null;
-    if (!wrapper || !container) return;
-    
-    // Remove existing mobile navigation if any
-    const existingNav = container.querySelector('.mobile-nav-arrows');
-    if (existingNav) existingNav.remove();
-    const existingIndicator = container.querySelector('.mobile-scroll-indicator');
-    if (existingIndicator) existingIndicator.remove();
-    
-    // Create mobile navigation arrows container
-    const mobileNav = document.createElement('div');
-    mobileNav.className = 'mobile-nav-arrows';
-    mobileNav.innerHTML = `
-        <button class="mobile-nav-arrow prev-mobile" aria-label="Previous recipes">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="mobile-nav-arrow next-mobile" aria-label="Next recipes">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-    `;
-    
-    // Create scroll indicator (centered below the carousel)
-    const indicator = document.createElement('div');
-    indicator.className = 'mobile-scroll-indicator';
-    
-    // Create dots (max 5 for mobile)
-    const cardCount = Math.min(wrapper.children.length, 5);
-    for (let i = 0; i < cardCount; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'mobile-scroll-dot';
-        dot.dataset.index = i;
-        indicator.appendChild(dot);
-    }
-    
-    // Add to container
-    container.appendChild(mobileNav);
-    container.appendChild(indicator);
-    
-    // Setup event listeners
-    const prevMobile = mobileNav.querySelector('.prev-mobile');
-    const nextMobile = mobileNav.querySelector('.next-mobile');
-    
-    // Mobile navigation function
-    function scrollToCardMobile(index) {
-        const card = wrapper.children[index];
-        if (!card) return;
-        
-        const containerRect = container.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-        
-        // Calculate scroll position to center the card
-        const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
-        
-        // Smooth scroll
-        wrapper.style.scrollBehavior = 'smooth';
-        wrapper.scrollTo({
-            left: scrollPosition,
-            behavior: 'smooth'
-        });
-        
-        // Update indicator after scroll
-        setTimeout(() => {
-            updateMobileScrollIndicator(section);
-            updateMobileArrowStates(section);
-        }, 300);
-    }
-    
-    // Update mobile indicator
-    function updateMobileScrollIndicator(section) {
-        const indicator = container.querySelector('.mobile-scroll-indicator');
+        const indicator = container.querySelector('.scroll-indicator');
         if (!indicator) return;
         
         const scrollLeft = wrapper.scrollLeft;
         const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-        const gap = 16;
+        const gap = 16; // Approximate gap in pixels
         const scrollAmount = cardWidth + gap;
         
         // Calculate which card is most visible
-        let currentIndex = Math.round(scrollLeft / scrollAmount);
-        
-        // Clamp the index to valid range
-        currentIndex = Math.max(0, Math.min(currentIndex, wrapper.children.length - 1));
+        const currentIndex = Math.round(scrollLeft / scrollAmount);
         
         // Update dots
-        const dots = indicator.querySelectorAll('.mobile-scroll-dot');
+        const dots = indicator.querySelectorAll('.scroll-dot');
         dots.forEach((dot, index) => {
-            // For mobile, show dot as active if it's within range
-            const isActive = Math.abs(index - currentIndex) < 0.5;
-            dot.classList.toggle('active', isActive);
+            dot.classList.toggle('active', index === currentIndex);
         });
     }
-    
-    // Update mobile arrow states
-    function updateMobileArrowStates(section) {
-        const scrollLeft = wrapper.scrollLeft;
-        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-        const tolerance = 5;
+
+    function scrollToCard(section, index) {
+        if (!isMobile()) return;
         
-        // Update previous button
-        if (scrollLeft <= tolerance) {
-            prevMobile.classList.add('disabled');
-            prevMobile.disabled = true;
-            prevMobile.setAttribute('aria-disabled', 'true');
-        } else {
-            prevMobile.classList.remove('disabled');
-            prevMobile.disabled = false;
-            prevMobile.setAttribute('aria-disabled', 'false');
-        }
+        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+        if (!wrapper || !wrapper.children[index]) return;
         
-        // Update next button
-        if (scrollLeft >= maxScroll - tolerance) {
-            nextMobile.classList.add('disabled');
-            nextMobile.disabled = true;
-            nextMobile.setAttribute('aria-disabled', 'true');
-        } else {
-            nextMobile.classList.remove('disabled');
-            nextMobile.disabled = false;
-            nextMobile.setAttribute('aria-disabled', 'false');
-        }
-    }
-    
-    // Previous button click handler
-    prevMobile.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (prevMobile.disabled) return;
+        const card = wrapper.children[index];
+        const containerRect = wrapper.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
         
-        const scrollLeft = wrapper.scrollLeft;
-        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-        const gap = 16;
-        const scrollAmount = cardWidth + gap;
+        const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
         
-        // Calculate target scroll position
-        let targetScroll = Math.max(0, scrollLeft - scrollAmount);
-        
-        // Smooth scroll
-        wrapper.style.scrollBehavior = 'smooth';
         wrapper.scrollTo({
-            left: targetScroll,
+            left: scrollPosition,
             behavior: 'smooth'
         });
-        
-        // Stop auto-scroll when user interacts
-        stopMobileAutoScroll(section);
-        
-        // Update UI after scroll
-        setTimeout(() => {
-            updateMobileScrollIndicator(section);
-            updateMobileArrowStates(section);
-            
-            // Restart auto-scroll after delay
-            setTimeout(() => {
-                startMobileAutoScroll(section);
-            }, 3000);
-        }, 300);
-    });
-    
-    // Next button click handler
-    nextMobile.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (nextMobile.disabled) return;
-        
-        const scrollLeft = wrapper.scrollLeft;
-        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-        const gap = 16;
-        const scrollAmount = cardWidth + gap;
-        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-        
-        let targetScroll = scrollLeft + scrollAmount;
-        
-        // If at or near the end, smoothly scroll back to start
-        if (targetScroll >= maxScroll - 50) {
-            targetScroll = 0;
-        }
-        
-        // Smooth scroll
-        wrapper.style.scrollBehavior = 'smooth';
-        wrapper.scrollTo({
-            left: targetScroll,
-            behavior: 'smooth'
-        });
-        
-        // Stop auto-scroll when user interacts
-        stopMobileAutoScroll(section);
-        
-        // Update UI after scroll
-        setTimeout(() => {
-            updateMobileScrollIndicator(section);
-            updateMobileArrowStates(section);
-            
-            // Restart auto-scroll after delay
-            setTimeout(() => {
-                startMobileAutoScroll(section);
-            }, 3000);
-        }, 300);
-    });
-    
-    // Click on indicator dots
-    indicator.addEventListener('click', (e) => {
-        const dot = e.target.closest('.mobile-scroll-dot');
-        if (!dot) return;
-        
-        const index = parseInt(dot.dataset.index);
-        scrollToCardMobile(index);
-    });
-    
-    // Initialize states
-    updateMobileScrollIndicator(section);
-    updateMobileArrowStates(section);
-    
-    // Update on scroll (with debouncing for performance)
-    let scrollUpdateTimeout;
-    wrapper.addEventListener('scroll', () => {
-        clearTimeout(scrollUpdateTimeout);
-        scrollUpdateTimeout = setTimeout(() => {
-            updateMobileScrollIndicator(section);
-            updateMobileArrowStates(section);
-        }, 50);
-    }, { passive: true });
-    
-    // Add keyboard navigation for mobile arrows
-    prevMobile.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            prevMobile.click();
-        }
-    });
-    
-    nextMobile.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            nextMobile.click();
-        }
-    });
-}
-
-// ===== MOBILE SCROLL HANDLING =====
-function setupMobileCarousel(section) {
-    if (!isMobile()) return;
-    
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (!wrapper || !wrapper.children.length) return;
-    
-    // Create scroll indicator dots
-    const container = wrapper.closest('.featured-container');
-    if (!container) return;
-    
-    // Remove existing indicators if any
-    const existingIndicator = container.querySelector('.scroll-indicator');
-    if (existingIndicator) existingIndicator.remove();
-    
-    // Create new indicators (max 5 dots)
-    const indicator = document.createElement('div');
-    indicator.className = 'scroll-indicator';
-    
-    const cardCount = wrapper.children.length;
-    const maxDots = Math.min(cardCount, 5);
-    
-    for (let i = 0; i < maxDots; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'scroll-dot';
-        dot.dataset.index = i;
-        indicator.appendChild(dot);
     }
-    
-    // Only add indicator if there are multiple cards
-    if (cardCount > 1) {
-        container.appendChild(indicator);
-    }
-    
-    // Update dots on scroll
-    let scrollUpdateTimeout;
-    wrapper.addEventListener('scroll', () => {
-        clearTimeout(scrollUpdateTimeout);
-        scrollUpdateTimeout = setTimeout(() => {
-            updateScrollIndicator(section);
-        }, 100);
-    }, { passive: true });
-    
-    // Click on dots to scroll
-    indicator.addEventListener('click', (e) => {
-        const dot = e.target.closest('.scroll-dot');
-        if (!dot) return;
-        
-        const index = parseInt(dot.dataset.index);
-        scrollToCard(section, index);
-    });
-    
-    // Initialize
-    updateScrollIndicator(section);
-}
 
-function updateScrollIndicator(section) {
-    if (!isMobile()) return;
-    
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    const container = wrapper ? wrapper.closest('.featured-container') : null;
-    if (!wrapper || !container) return;
-    
-    const indicator = container.querySelector('.scroll-indicator');
-    if (!indicator) return;
-    
-    const scrollLeft = wrapper.scrollLeft;
-    const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-    const gap = 16; // Approximate gap in pixels
-    const scrollAmount = cardWidth + gap;
-    
-    // Calculate which card is most visible
-    const currentIndex = Math.round(scrollLeft / scrollAmount);
-    
-    // Update dots
-    const dots = indicator.querySelectorAll('.scroll-dot');
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentIndex);
-    });
-}
-
-function scrollToCard(section, index) {
-    if (!isMobile()) return;
-    
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    if (!wrapper || !wrapper.children[index]) return;
-    
-    const card = wrapper.children[index];
-    const containerRect = wrapper.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-    
-    const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
-    
-    wrapper.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth'
-    });
-}
-
-// ===== AUTO-SCROLL FOR MOBILE =====
-function startMobileAutoScroll(section) {
+    // ===== AUTO-SCROLL FOR MOBILE =====
+   function startMobileAutoScroll(section) {
     if (!isMobile()) return;
     
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
@@ -3593,7 +3603,7 @@ function startMobileAutoScroll(section) {
     stopMobileAutoScroll(section);
     
     carouselStates[section].mobileInterval = setInterval(() => {
-        performanceTools.batchDOMUpdates(() => {
+        batchDOMUpdates(() => {
             const currentScroll = wrapper.scrollLeft;
             const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
             const gap = 16;
@@ -3602,10 +3612,9 @@ function startMobileAutoScroll(section) {
             
             let targetScroll;
             
-            // If at or near the end, smoothly scroll back to start
             if (currentScroll >= maxScroll - 50) {
                 targetScroll = 0;
-                performanceTools.smoothScrollTo(wrapper, targetScroll, 800);
+                smoothScrollTo(wrapper, targetScroll, 800);
                 
                 setTimeout(() => {
                     updateMobileScrollIndicator(section);
@@ -3614,10 +3623,9 @@ function startMobileAutoScroll(section) {
                 
                 // Continue after reset
                 setTimeout(() => {
-                    // Check if interval is still running
                     if (carouselStates[section].mobileInterval) {
                         const nextScroll = scrollAmount;
-                        performanceTools.smoothScrollTo(wrapper, nextScroll, 800);
+                        smoothScrollTo(wrapper, nextScroll, 800);
                         
                         setTimeout(() => {
                             updateMobileScrollIndicator(section);
@@ -3628,7 +3636,7 @@ function startMobileAutoScroll(section) {
                 
             } else {
                 targetScroll = currentScroll + scrollAmount;
-                performanceTools.smoothScrollTo(wrapper, targetScroll, 800);
+                smoothScrollTo(wrapper, targetScroll, 800);
                 
                 setTimeout(() => {
                     updateMobileScrollIndicator(section);
@@ -3636,46 +3644,45 @@ function startMobileAutoScroll(section) {
                 }, 300);
             }
         });
-    }, 2000); // Every 2 seconds
-}
+    }, 2000);
+} 
+   function stopMobileAutoScroll(section) {
+        if (carouselStates[section].mobileInterval) {
+            clearInterval(carouselStates[section].mobileInterval);
+            carouselStates[section].mobileInterval = null;
+        }
+    }
 
-function stopMobileAutoScroll(section) {
-    if (carouselStates[section].mobileInterval) {
-        clearInterval(carouselStates[section].mobileInterval);
-        carouselStates[section].mobileInterval = null;
+    // ===== ARROW NAVIGATION =====
+    function initArrowNavigation() {
+        // Featured recipes
+        if (scrollPrevFeatured) {
+            scrollPrevFeatured.addEventListener('click', (e) => {
+                e.stopPropagation();
+                scrollCarousel('featured', 'prev');
+            });
+        }
+        if (scrollNextFeatured) {
+            scrollNextFeatured.addEventListener('click', (e) => {
+                e.stopPropagation();
+                scrollCarousel('featured', 'next');
+            });
+        }
+        
+        // Top rated recipes
+        if (scrollPrevTopRated) {
+            scrollPrevTopRated.addEventListener('click', (e) => {
+                e.stopPropagation();
+                scrollCarousel('topRated', 'prev');
+            });
+        }
+        if (scrollNextTopRated) {
+            scrollNextTopRated.addEventListener('click', (e) => {
+                e.stopPropagation();
+                scrollCarousel('topRated', 'next');
+            });
+        }
     }
-}
-
-// ===== ARROW NAVIGATION =====
-function initArrowNavigation() {
-    // Featured recipes
-    if (scrollPrevFeatured) {
-        scrollPrevFeatured.addEventListener('click', (e) => {
-            e.stopPropagation();
-            scrollCarousel('featured', 'prev');
-        });
-    }
-    if (scrollNextFeatured) {
-        scrollNextFeatured.addEventListener('click', (e) => {
-            e.stopPropagation();
-            scrollCarousel('featured', 'next');
-        });
-    }
-    
-    // Top rated recipes
-    if (scrollPrevTopRated) {
-        scrollPrevTopRated.addEventListener('click', (e) => {
-            e.stopPropagation();
-            scrollCarousel('topRated', 'prev');
-        });
-    }
-    if (scrollNextTopRated) {
-        scrollNextTopRated.addEventListener('click', (e) => {
-            e.stopPropagation();
-            scrollCarousel('topRated', 'next');
-        });
-    }
-}
 
 function scrollCarousel(section, direction) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
@@ -3718,8 +3725,7 @@ function scrollCarousel(section, direction) {
         
         // Update mobile indicator
         if (isMobile()) {
-            updateMobileScrollIndicator(section);
-            updateMobileArrowStates(section);
+            updateScrollIndicator(section);
         }
         
         // Restart auto-scroll after delay
@@ -3737,43 +3743,42 @@ function scrollCarousel(section, direction) {
         }
     }, 300);
 }
-
-function updateNavButtons(section) {
-    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-    const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
-    const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
-    
-    if (!wrapper || !prevButton || !nextButton) return;
-    
-    const scrollLeft = wrapper.scrollLeft;
-    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-    const tolerance = 5;
-    
-    // Update previous button
-    if (scrollLeft <= tolerance) {
-        prevButton.classList.add('disabled');
-        prevButton.setAttribute('aria-disabled', 'true');
-        prevButton.disabled = true;
-    } else {
-        prevButton.classList.remove('disabled');
-        prevButton.setAttribute('aria-disabled', 'false');
-        prevButton.disabled = false;
+    function updateNavButtons(section) {
+        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+        const prevButton = section === 'featured' ? scrollPrevFeatured : scrollPrevTopRated;
+        const nextButton = section === 'featured' ? scrollNextFeatured : scrollNextTopRated;
+        
+        if (!wrapper || !prevButton || !nextButton) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const tolerance = 5;
+        
+        // Update previous button
+        if (scrollLeft <= tolerance) {
+            prevButton.classList.add('disabled');
+            prevButton.setAttribute('aria-disabled', 'true');
+            prevButton.disabled = true;
+        } else {
+            prevButton.classList.remove('disabled');
+            prevButton.setAttribute('aria-disabled', 'false');
+            prevButton.disabled = false;
+        }
+        
+        // Update next button
+        if (scrollLeft >= maxScroll - tolerance) {
+            nextButton.classList.add('disabled');
+            nextButton.setAttribute('aria-disabled', 'true');
+            nextButton.disabled = true;
+        } else {
+            nextButton.classList.remove('disabled');
+            nextButton.setAttribute('aria-disabled', 'false');
+            nextButton.disabled = false;
+        }
     }
-    
-    // Update next button
-    if (scrollLeft >= maxScroll - tolerance) {
-        nextButton.classList.add('disabled');
-        nextButton.setAttribute('aria-disabled', 'true');
-        nextButton.disabled = true;
-    } else {
-        nextButton.classList.remove('disabled');
-        nextButton.setAttribute('aria-disabled', 'false');
-        nextButton.disabled = false;
-    }
-}
 
-// ===== AUTO SCROLL (DESKTOP) =====
-function startAutoScroll(section) {
+    // ===== AUTO SCROLL (DESKTOP) =====
+    function startAutoScroll(section) {
     if (isMobile()) return; // No auto-scroll on mobile
     
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
@@ -3839,265 +3844,264 @@ function startAutoScroll(section) {
         
     }, 2000); // Changed from 10000 to 2000 (2 seconds)
 }
-
-function stopAutoScroll(section) {
-    if (carouselStates[section].autoScrollInterval) {
-        clearInterval(carouselStates[section].autoScrollInterval);
-        carouselStates[section].autoScrollInterval = null;
-    }
-}
-
-// ===== RECIPE MANAGEMENT =====
-function loadRecipes() {
-    console.log('📦 Loading recipes...');
-    
-    // 1. Get user's imported recipes from localStorage
-    const userRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
-    
-    // 2. Combine with shared recipes
-    const allRecipesCombined = [...SHARED_RECIPES, ...userRecipes];
-    
-    // 3. Remove duplicates
-    const uniqueRecipes = [];
-    const seenIds = new Set();
-    
-    allRecipesCombined.forEach(recipe => {
-        if (!seenIds.has(recipe.id)) {
-            seenIds.add(recipe.id);
-            uniqueRecipes.push(recipe);
+    function stopAutoScroll(section) {
+        if (carouselStates[section].autoScrollInterval) {
+            clearInterval(carouselStates[section].autoScrollInterval);
+            carouselStates[section].autoScrollInterval = null;
         }
-    });
-    
-    recipes = uniqueRecipes;
-    
-    console.log(`🍗 Total recipes: ${recipes.length} (${SHARED_RECIPES.length} shared + ${userRecipes.length} user)`);
-    
-    // Save combined recipes
-    localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-}
+    }
 
-function loadFeaturedRecipes() {
-    console.log('🎯 Loading featured recipes...');
-    if (!featuredRecipesWrapper) return;
-    
-    featuredRecipesWrapper.innerHTML = '';
-    
-    if (recipes.length === 0) {
-        featuredRecipesWrapper.innerHTML = `
-            <div class="no-recipes-state">
-                <i class="fas fa-utensils"></i>
-                <h3>No Recipes Yet</h3>
-                <p>Import your chicken recipes to get started.</p>
-                <button class="btn btn-primary" onclick="document.getElementById('importRecipesFile').click()">
-                    <i class="fas fa-file-import"></i>
-                    Import Your First Recipe
-                </button>
-            </div>
-        `;
-        return;
+    // ===== RECIPE MANAGEMENT =====
+    function loadRecipes() {
+        console.log('📦 Loading recipes...');
+        
+        // 1. Get user's imported recipes from localStorage
+        const userRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+        
+        // 2. Combine with shared recipes
+        const allRecipesCombined = [...SHARED_RECIPES, ...userRecipes];
+        
+        // 3. Remove duplicates
+        const uniqueRecipes = [];
+        const seenIds = new Set();
+        
+        allRecipesCombined.forEach(recipe => {
+            if (!seenIds.has(recipe.id)) {
+                seenIds.add(recipe.id);
+                uniqueRecipes.push(recipe);
+            }
+        });
+        
+        recipes = uniqueRecipes;
+        
+        console.log(`🍗 Total recipes: ${recipes.length} (${SHARED_RECIPES.length} shared + ${userRecipes.length} user)`);
+        
+        // Save combined recipes
+        localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
     }
-    
-    let filteredRecipes = [...recipes];
-    
-    if (currentFilters.length > 0) {
-        filteredRecipes = filteredRecipes.filter(recipe => 
-            recipe.badges && recipe.badges.some(badge => currentFilters.includes(badge))
-        );
-    }
-    
-    if (currentSearchTerm) {
-        const searchLower = currentSearchTerm.toLowerCase();
-        filteredRecipes = filteredRecipes.filter(recipe => 
-            recipe.title.toLowerCase().includes(searchLower) ||
-            recipe.description.toLowerCase().includes(searchLower)
-        );
-    }
-    
-    if (filteredRecipes.length === 0) {
-        featuredRecipesWrapper.innerHTML = `
-            <div class="no-recipes-state">
-                <i class="fas fa-search"></i>
-                <h3>No Recipes Found</h3>
-                <p>Try different filters or search terms</p>
-                <button class="btn btn-primary" onclick="clearFilters()">
-                    <i class="fas fa-times"></i>
-                    Clear Filters
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
-    filteredRecipes.forEach((recipe) => {
-        const recipeCard = createRecipeCard(recipe, 'featured');
-        featuredRecipesWrapper.appendChild(recipeCard);
-    });
-    
-    // Setup mobile features after loading
-    if (isMobile()) {
-        setTimeout(() => {
-            setupMobileCarousel('featured');
-            updateScrollIndicator('featured');
-        }, 100);
-    }
-    
-    updateFilterTags();
-    updateSectionTitle();
-    
-    // Update nav buttons after render
-    setTimeout(() => {
-        updateNavButtons('featured');
-    }, 100);
-}
 
-function loadTopRatedRecipes() {
-    console.log('⭐ Loading top rated recipes...');
-    if (!topRatedRecipesWrapper) return;
-    
-    topRatedRecipesWrapper.innerHTML = '';
-    const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
-    
-    if (ratedRecipes.length === 0) {
-        topRatedRecipesWrapper.innerHTML = `
-            <div class="no-recipes-state">
-                <i class="fas fa-star"></i>
-                <h3>No Ratings Yet</h3>
-                <p>Rate recipes to see them here!</p>
-            </div>
-        `;
-        return;
-    }
-    
-    const sortedRecipes = ratedRecipes.sort((a, b) => {
-        const ratingA = recipeRatings[a.id]?.average || 0;
-        const ratingB = recipeRatings[b.id]?.average || 0;
-        return ratingB - ratingA;
-    });
-    
-    const topRecipes = sortedRecipes.slice(0, 10);
-    
-    topRecipes.forEach((recipe) => {
-        const recipeCard = createRecipeCard(recipe, 'topRated');
-        topRatedRecipesWrapper.appendChild(recipeCard);
-    });
-    
-    // Setup mobile features after loading
-    if (isMobile()) {
-        setTimeout(() => {
-            setupMobileCarousel('topRated');
-            updateScrollIndicator('topRated');
-        }, 100);
-    }
-    
-    // Update nav buttons after render
-    setTimeout(() => {
-        updateNavButtons('topRated');
-    }, 100);
-}
-
-// ===== CREATE RECIPE CARD - FIXED VERSION =====
-function createRecipeCard(recipe, section) {
-    const isKrabbyPatty = recipe.badges && recipe.badges.includes('krabby-patty');
-    const card = document.createElement('div');
-    card.className = `recipe-card ${isKrabbyPatty ? 'krabby-patty-card' : ''}`;
-    card.setAttribute('role', 'article');
-    card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('data-recipe-id', recipe.id);
-    
-    const ratingData = recipeRatings[recipe.id];
-    const averageRating = ratingData?.average || 0;
-    const ratingCount = ratingData?.count || 0;
-    const userRating = userRatings[recipe.id] || 0;
-    const hasUserRated = userRating > 0;
-    
-    const badges = recipe.badges ? recipe.badges.map(badge => {
-        let badgeClass = badge;
-        if (badge === 'krabby-patty') badgeClass = 'krabby-patty';
-        return `<span class="badge ${badgeClass}">${badge === 'krabby-patty' ? '⭐ Krabby Patty ⭐' : badge.charAt(0).toUpperCase() + badge.slice(1)}</span>`;
-    }).join('') : '';
-    
-    // FIXED: Use proper heart icons based on saved state
-    const heartIconClass = recipe.saved ? 'fas fa-heart' : 'far fa-heart';
-    const heartAriaLabel = recipe.saved ? 'Remove from favorites' : 'Add to favorites';
-    
-    card.innerHTML = `
-        <div class="recipe-image">
-            <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-            <div class="recipe-overlay">
-                <button class="view-recipe-btn" aria-label="View ${recipe.title} recipe">
+    function loadFeaturedRecipes() {
+        console.log('🎯 Loading featured recipes...');
+        if (!featuredRecipesWrapper) return;
+        
+        featuredRecipesWrapper.innerHTML = '';
+        
+        if (recipes.length === 0) {
+            featuredRecipesWrapper.innerHTML = `
+                <div class="no-recipes-state">
                     <i class="fas fa-utensils"></i>
-                    View Recipe
-                </button>
-            </div>
-            ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
-            ${section === 'topRated' && ratingCount > 0 ? `
-                <div class="rating-badge">
-                    ${averageRating.toFixed(1)}
-                </div>
-            ` : ''}
-            <button class="save-recipe ${recipe.saved ? 'active' : ''}" aria-label="${heartAriaLabel}">
-                <i class="${heartIconClass}"></i>
-            </button>
-        </div>
-        <div class="recipe-content">
-            <h3 class="recipe-title">
-                ${isKrabbyPatty ? '🍔 ' : ''}${recipe.title}${isKrabbyPatty ? ' 🍔' : ''}
-            </h3>
-            <p class="recipe-description">${recipe.description}</p>
-            
-            ${section === 'featured' ? `
-                <div class="recipe-rating-section">
-                    <span class="rating-label">Rate this recipe:</span>
-                    <div class="star-rating" data-recipe-id="${recipe.id}" role="radiogroup" aria-label="Rating stars">
-                        ${Array(5).fill().map((_, i) => `
-                            <span class="star-wrapper">
-                                <i class="fas fa-star star ${i < userRating ? 'selected' : ''}" 
-                                   data-value="${i + 1}"
-                                   role="radio"
-                                   aria-checked="${i < userRating ? 'true' : 'false'}"
-                                   tabindex="0"
-                                   aria-label="${i + 1} star${i !== 0 ? 's' : ''}"></i>
-                            </span>
-                        `).join('')}
-                        <span class="selected-rating">${userRating > 0 ? `You rated: ${userRating}/5` : ''}</span>
-                    </div>
-                    <button class="rate-btn" 
-                            data-recipe-id="${recipe.id}"
-                            ${hasUserRated ? 'disabled' : ''}
-                            aria-label="${hasUserRated ? 'Already rated' : 'Rate this recipe'}">
-                        ${hasUserRated ? '<i class="fas fa-check"></i> Already Rated' : '<i class="fas fa-star"></i> Rate Recipe'}
+                    <h3>No Recipes Yet</h3>
+                    <p>Import your chicken recipes to get started.</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('importRecipesFile').click()">
+                        <i class="fas fa-file-import"></i>
+                        Import Your First Recipe
                     </button>
-                    ${hasUserRated ? '<div class="user-has-rated">Thank you for your rating!</div>' : ''}
                 </div>
-            ` : `
-                ${ratingCount > 0 ? `
-                    <div class="recipe-rating-section">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div role="img" aria-label="${averageRating.toFixed(1)} out of 5 stars">
-                                ${Array(5).fill().map((_, i) => {
-                                    if (i < Math.floor(averageRating)) return '<i class="fas fa-star" style="color: #f1c40f;"></i>';
-                                    else if (i === Math.floor(averageRating) && averageRating % 1 >= 0.5) return '<i class="fas fa-star-half-alt" style="color: #f1c40f;"></i>';
-                                    else return '<i class="far fa-star" style="color: #ddd;"></i>';
-                                }).join('')}
-                            </div>
-                            <span style="font-weight: 600; color: var(--text-dark);">${averageRating.toFixed(1)}</span>
-                            <span style="font-size: 0.875rem; color: var(--text-light);">(${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'})</span>
-                        </div>
+            `;
+            return;
+        }
+        
+        let filteredRecipes = [...recipes];
+        
+        if (currentFilters.length > 0) {
+            filteredRecipes = filteredRecipes.filter(recipe => 
+                recipe.badges && recipe.badges.some(badge => currentFilters.includes(badge))
+            );
+        }
+        
+        if (currentSearchTerm) {
+            const searchLower = currentSearchTerm.toLowerCase();
+            filteredRecipes = filteredRecipes.filter(recipe => 
+                recipe.title.toLowerCase().includes(searchLower) ||
+                recipe.description.toLowerCase().includes(searchLower)
+            );
+        }
+        
+        if (filteredRecipes.length === 0) {
+            featuredRecipesWrapper.innerHTML = `
+                <div class="no-recipes-state">
+                    <i class="fas fa-search"></i>
+                    <h3>No Recipes Found</h3>
+                    <p>Try different filters or search terms</p>
+                    <button class="btn btn-primary" onclick="clearFilters()">
+                        <i class="fas fa-times"></i>
+                        Clear Filters
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        
+        filteredRecipes.forEach((recipe) => {
+            const recipeCard = createRecipeCard(recipe, 'featured');
+            featuredRecipesWrapper.appendChild(recipeCard);
+        });
+        
+        // Setup mobile features after loading
+        if (isMobile()) {
+            setTimeout(() => {
+                setupMobileCarousel('featured');
+                updateScrollIndicator('featured');
+            }, 100);
+        }
+        
+        updateFilterTags();
+        updateSectionTitle();
+        
+        // Update nav buttons after render
+        setTimeout(() => {
+            updateNavButtons('featured');
+        }, 100);
+    }
+
+    function loadTopRatedRecipes() {
+        console.log('⭐ Loading top rated recipes...');
+        if (!topRatedRecipesWrapper) return;
+        
+        topRatedRecipesWrapper.innerHTML = '';
+        const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
+        
+        if (ratedRecipes.length === 0) {
+            topRatedRecipesWrapper.innerHTML = `
+                <div class="no-recipes-state">
+                    <i class="fas fa-star"></i>
+                    <h3>No Ratings Yet</h3>
+                    <p>Rate recipes to see them here!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        const sortedRecipes = ratedRecipes.sort((a, b) => {
+            const ratingA = recipeRatings[a.id]?.average || 0;
+            const ratingB = recipeRatings[b.id]?.average || 0;
+            return ratingB - ratingA;
+        });
+        
+        const topRecipes = sortedRecipes.slice(0, 10);
+        
+        topRecipes.forEach((recipe) => {
+            const recipeCard = createRecipeCard(recipe, 'topRated');
+            topRatedRecipesWrapper.appendChild(recipeCard);
+        });
+        
+        // Setup mobile features after loading
+        if (isMobile()) {
+            setTimeout(() => {
+                setupMobileCarousel('topRated');
+                updateScrollIndicator('topRated');
+            }, 100);
+        }
+        
+        // Update nav buttons after render
+        setTimeout(() => {
+            updateNavButtons('topRated');
+        }, 100);
+    }
+
+    // ===== CREATE RECIPE CARD - FIXED VERSION =====
+    function createRecipeCard(recipe, section) {
+        const isKrabbyPatty = recipe.badges && recipe.badges.includes('krabby-patty');
+        const card = document.createElement('div');
+        card.className = `recipe-card ${isKrabbyPatty ? 'krabby-patty-card' : ''}`;
+        card.setAttribute('role', 'article');
+        card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('data-recipe-id', recipe.id);
+        
+        const ratingData = recipeRatings[recipe.id];
+        const averageRating = ratingData?.average || 0;
+        const ratingCount = ratingData?.count || 0;
+        const userRating = userRatings[recipe.id] || 0;
+        const hasUserRated = userRating > 0;
+        
+        const badges = recipe.badges ? recipe.badges.map(badge => {
+            let badgeClass = badge;
+            if (badge === 'krabby-patty') badgeClass = 'krabby-patty';
+            return `<span class="badge ${badgeClass}">${badge === 'krabby-patty' ? '⭐ Krabby Patty ⭐' : badge.charAt(0).toUpperCase() + badge.slice(1)}</span>`;
+        }).join('') : '';
+        
+        // FIXED: Use proper heart icons based on saved state
+        const heartIconClass = recipe.saved ? 'fas fa-heart' : 'far fa-heart';
+        const heartAriaLabel = recipe.saved ? 'Remove from favorites' : 'Add to favorites';
+        
+        card.innerHTML = `
+            <div class="recipe-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-overlay">
+                    <button class="view-recipe-btn" aria-label="View ${recipe.title} recipe">
+                        <i class="fas fa-utensils"></i>
+                        View Recipe
+                    </button>
+                </div>
+                ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
+                ${section === 'topRated' && ratingCount > 0 ? `
+                    <div class="rating-badge">
+                        ${averageRating.toFixed(1)}
                     </div>
                 ` : ''}
-            `}
-        </div>
-    `;
-    
-    // Setup event handlers with FIXED functionality
-    setupCardEvents(card, recipe.id);
-    
-    return card;
-}
+                <button class="save-recipe ${recipe.saved ? 'active' : ''}" aria-label="${heartAriaLabel}">
+                    <i class="${heartIconClass}"></i>
+                </button>
+            </div>
+            <div class="recipe-content">
+                <h3 class="recipe-title">
+                    ${isKrabbyPatty ? '🍔 ' : ''}${recipe.title}${isKrabbyPatty ? ' 🍔' : ''}
+                </h3>
+                <p class="recipe-description">${recipe.description}</p>
+                
+                ${section === 'featured' ? `
+                    <div class="recipe-rating-section">
+                        <span class="rating-label">Rate this recipe:</span>
+                        <div class="star-rating" data-recipe-id="${recipe.id}" role="radiogroup" aria-label="Rating stars">
+                            ${Array(5).fill().map((_, i) => `
+                                <span class="star-wrapper">
+                                    <i class="fas fa-star star ${i < userRating ? 'selected' : ''}" 
+                                       data-value="${i + 1}"
+                                       role="radio"
+                                       aria-checked="${i < userRating ? 'true' : 'false'}"
+                                       tabindex="0"
+                                       aria-label="${i + 1} star${i !== 0 ? 's' : ''}"></i>
+                                </span>
+                            `).join('')}
+                            <span class="selected-rating">${userRating > 0 ? `You rated: ${userRating}/5` : ''}</span>
+                        </div>
+                        <button class="rate-btn" 
+                                data-recipe-id="${recipe.id}"
+                                ${hasUserRated ? 'disabled' : ''}
+                                aria-label="${hasUserRated ? 'Already rated' : 'Rate this recipe'}">
+                            ${hasUserRated ? '<i class="fas fa-check"></i> Already Rated' : '<i class="fas fa-star"></i> Rate Recipe'}
+                        </button>
+                        ${hasUserRated ? '<div class="user-has-rated">Thank you for your rating!</div>' : ''}
+                    </div>
+                ` : `
+                    ${ratingCount > 0 ? `
+                        <div class="recipe-rating-section">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <div role="img" aria-label="${averageRating.toFixed(1)} out of 5 stars">
+                                    ${Array(5).fill().map((_, i) => {
+                                        if (i < Math.floor(averageRating)) return '<i class="fas fa-star" style="color: #f1c40f;"></i>';
+                                        else if (i === Math.floor(averageRating) && averageRating % 1 >= 0.5) return '<i class="fas fa-star-half-alt" style="color: #f1c40f;"></i>';
+                                        else return '<i class="far fa-star" style="color: #ddd;"></i>';
+                                    }).join('')}
+                                </div>
+                                <span style="font-weight: 600; color: var(--text-dark);">${averageRating.toFixed(1)}</span>
+                                <span style="font-size: 0.875rem; color: var(--text-light);">(${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'})</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                `}
+            </div>
+        `;
+        
+        // Setup event handlers with FIXED functionality
+        setupCardEvents(card, recipe.id);
+        
+        return card;
+    }
 
-// ===== CARD EVENT HANDLING - SIMPLIFIED VERSION =====
-function setupCardEvents(card, recipeId) {
+    // ===== CARD EVENT HANDLING - FIXED VERSION =====
+  function setupCardEvents(card, recipeId) {
     // Save button handler
     const saveBtn = card.querySelector('.save-recipe');
     if (saveBtn) {
@@ -4138,20 +4142,74 @@ function setupCardEvents(card, recipeId) {
         });
     });
 
-    // Card click handler for desktop ONLY
-    if (!isMobile()) {
-        card.addEventListener('click', function(e) {
-            if (e.target.closest('button') || 
-                e.target.closest('.star') || 
-                e.target.closest('.star-wrapper') ||
-                e.target.closest('.recipe-badges') ||
-                e.target.closest('.recipe-rating-section') ||
-                e.target.closest('.view-recipe-btn') ||
-                e.target.closest('.save-recipe') ||
-                e.target.closest('.rate-btn')) {
-                return;
-            }
+    // Card click handler
+    card.addEventListener('click', function(e) {
+        if (e.target.closest('button') || 
+            e.target.closest('.star') || 
+            e.target.closest('.star-wrapper') ||
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section') ||
+            e.target.closest('.view-recipe-btn') ||
+            e.target.closest('.save-recipe') ||
+            e.target.closest('.rate-btn')) {
+            return;
+        }
+        
+        this.classList.add('card-clicked');
+        const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+        if (viewRecipeBtn) {
+            viewRecipeBtn.focus();
+            viewRecipeBtn.style.animation = 'none';
+            setTimeout(() => {
+                viewRecipeBtn.style.animation = 'pulse 0.5s ease';
+            }, 10);
             
+            setTimeout(() => {
+                this.classList.remove('card-clicked');
+            }, 500);
+        }
+    });
+
+    // FIXED: Touch events - ONLY for card highlighting, NOT for carousel swiping
+    let touchStartTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    card.addEventListener('touchstart', function(e) {
+        // Don't handle if touch is on interactive elements
+        if (e.target.closest('button') || 
+            e.target.closest('.star') || 
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section')) {
+            return;
+        }
+        
+        touchStartTime = Date.now();
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true }); // Keep passive: true to allow scrolling
+
+    card.addEventListener('touchend', function(e) {
+        // Don't handle if touch is on interactive elements
+        if (e.target.closest('button') || 
+            e.target.closest('.star') || 
+            e.target.closest('.recipe-badges') ||
+            e.target.closest('.recipe-rating-section')) {
+            return;
+        }
+
+        const touchEndTime = Date.now();
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+
+        const timeDiff = touchEndTime - touchStartTime;
+        const xDiff = Math.abs(touchEndX - touchStartX);
+        const yDiff = Math.abs(touchEndY - touchStartY);
+
+        // FIXED: Only trigger if it's a TAP (minimal movement), not a scroll gesture
+        // If there's significant vertical movement, it's probably a scroll attempt
+        if (timeDiff < 200 && xDiff < 10 && yDiff < 10) {
+            // This is a tap, highlight the view button
             this.classList.add('card-clicked');
             const viewRecipeBtn = this.querySelector('.view-recipe-btn');
             if (viewRecipeBtn) {
@@ -4165,709 +4223,703 @@ function setupCardEvents(card, recipeId) {
                     this.classList.remove('card-clicked');
                 }, 500);
             }
-        });
-    }
-
-    // For mobile: Only click on view button, not whole card
-    if (isMobile()) {
-        card.addEventListener('click', function(e) {
-            // Only handle clicks on interactive elements
-            if (e.target.closest('.view-recipe-btn') ||
-                e.target.closest('.save-recipe') ||
-                e.target.closest('.rate-btn') ||
-                e.target.closest('.star-wrapper')) {
-                // These are handled by their specific listeners
-                return;
-            }
-            
-            // For card body click on mobile, do nothing to allow scrolling
-            // Or you can make it open the view button
-            const viewBtn = this.querySelector('.view-recipe-btn');
-            if (viewBtn) {
-                viewBtn.focus();
-                viewBtn.style.animation = 'pulse 0.5s ease';
-            }
-        });
-    }
+        }
+        // If yDiff > 10, user is scrolling - do nothing and let it scroll naturally
+    }, { passive: true }); // Keep passive: true to allow scrolling
     
     // Keyboard support
     card.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            handleRecipeClick(recipeId, e);
+            if (!e.target.closest('button') && 
+                !e.target.closest('.star') && 
+                !e.target.closest('.recipe-badges') &&
+                !e.target.closest('.recipe-rating-section')) {
+                this.classList.add('card-clicked');
+                const viewRecipeBtn = this.querySelector('.view-recipe-btn');
+                if (viewRecipeBtn) {
+                    viewRecipeBtn.focus();
+                    viewRecipeBtn.style.animation = 'none';
+                    setTimeout(() => {
+                        viewRecipeBtn.style.animation = 'pulse 0.5s ease';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        this.classList.remove('card-clicked');
+                    }, 500);
+                }
+            }
         }
     });
 }
-
-// ===== IMPORT FUNCTION =====
-function importRecipesFromFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            let importedRecipes = Array.isArray(importedData) ? importedData : [importedData];
-            if (!importedRecipes.length) {
-                showNotification('No recipes found in the file.', 'error');
-                return;
-            }
-            
-            const validRecipes = [];
-            importedRecipes.forEach((recipe, index) => {
-                if (!recipe.title || !recipe.description || !recipe.image) {
-                    console.warn(`Recipe ${index + 1} skipped: Missing required fields`);
+    // ===== IMPORT FUNCTION =====
+    function importRecipesFromFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                let importedRecipes = Array.isArray(importedData) ? importedData : [importedData];
+                if (!importedRecipes.length) {
+                    showNotification('No recipes found in the file.', 'error');
                     return;
                 }
-                if (!recipe.id) recipe.id = Date.now() + index;
-                if (!recipe.badges || !Array.isArray(recipe.badges)) recipe.badges = ['traditional'];
-                if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
-                    if (!recipe.badges.includes('krabby-patty')) recipe.badges.push('krabby-patty');
+                
+                const validRecipes = [];
+                importedRecipes.forEach((recipe, index) => {
+                    if (!recipe.title || !recipe.description || !recipe.image) {
+                        console.warn(`Recipe ${index + 1} skipped: Missing required fields`);
+                        return;
+                    }
+                    if (!recipe.id) recipe.id = Date.now() + index;
+                    if (!recipe.badges || !Array.isArray(recipe.badges)) recipe.badges = ['traditional'];
+                    if (recipe.title && recipe.title.toLowerCase().includes('krabby patty')) {
+                        if (!recipe.badges.includes('krabby-patty')) recipe.badges.push('krabby-patty');
+                    }
+                    if (recipe.saved === undefined) recipe.saved = false;
+                    if (recipe.rating === undefined) recipe.rating = 4.5;
+                    validRecipes.push(recipe);
+                });
+                
+                if (validRecipes.length === 0) {
+                    showNotification('No valid recipes found in the file.', 'error');
+                    return;
                 }
-                if (recipe.saved === undefined) recipe.saved = false;
-                if (recipe.rating === undefined) recipe.rating = 4.5;
-                validRecipes.push(recipe);
-            });
-            
-            if (validRecipes.length === 0) {
-                showNotification('No valid recipes found in the file.', 'error');
-                return;
+                
+                // Get existing user recipes
+                const existingUserRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+                
+                // Filter out shared recipes
+                const newUserRecipes = validRecipes.filter(newRecipe => 
+                    !SHARED_RECIPES.some(sharedRecipe => sharedRecipe.id === newRecipe.id)
+                );
+                
+                // Combine with existing
+                const updatedUserRecipes = [...existingUserRecipes, ...newUserRecipes];
+                localStorage.setItem('chickenRecipes', JSON.stringify(updatedUserRecipes));
+                
+                // Reload everything
+                loadRecipes();
+                loadFeaturedRecipes();
+                loadTopRatedRecipes();
+                populateCategoriesMenu();
+                
+                const hasKrabbyPatty = validRecipes.some(recipe => 
+                    recipe.title && recipe.title.toLowerCase().includes('krabby patty')
+                );
+                if (hasKrabbyPatty) {
+                    showNotification(`${validRecipes.length} recipes imported successfully! 🍔 SECRET FORMULA ADDED!`, 'success');
+                } else {
+                    showNotification(`${validRecipes.length} recipes imported successfully!`, 'success');
+                }
+                
+                event.target.value = '';
+            } catch (error) {
+                console.error('Import error:', error);
+                showNotification(`Error importing recipes: ${error.message}`, 'error');
             }
-            
-            // Get existing user recipes
-            const existingUserRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
-            
-            // Filter out shared recipes
-            const newUserRecipes = validRecipes.filter(newRecipe => 
-                !SHARED_RECIPES.some(sharedRecipe => sharedRecipe.id === newRecipe.id)
-            );
-            
-            // Combine with existing
-            const updatedUserRecipes = [...existingUserRecipes, ...newUserRecipes];
-            localStorage.setItem('chickenRecipes', JSON.stringify(updatedUserRecipes));
-            
-            // Reload everything
-            loadRecipes();
+        };
+        
+        reader.onerror = function() {
+            showNotification('Error reading the file.', 'error');
+        };
+        
+        reader.readAsText(file);
+    }
+
+    // ===== RATING SYSTEM =====
+    function selectStar(recipeId, rating, event) {
+        if (event) event.stopPropagation();
+        if (userRatings[recipeId]) {
+            showNotification('You have already rated this recipe!', 'info');
+            return;
+        }
+        
+        const starContainer = event.target.closest('.star-rating');
+        if (!starContainer) return;
+        
+        const stars = starContainer.querySelectorAll('.star');
+        const ratingText = starContainer.querySelector('.selected-rating');
+        
+        stars.forEach((star, index) => {
+            const isSelected = index < rating;
+            star.classList.toggle('selected', isSelected);
+            star.setAttribute('aria-checked', isSelected.toString());
+        });
+        
+        if (ratingText) {
+            ratingText.textContent = `Selected: ${rating}/5`;
+        }
+        
+        const rateBtn = starContainer.nextElementSibling;
+        if (rateBtn) {
+            rateBtn.disabled = false;
+            rateBtn.dataset.currentRating = rating;
+        }
+    }
+
+    function submitRating(recipeId) {
+        const rateBtn = document.querySelector(`.rate-btn[data-recipe-id="${recipeId}"]`);
+        if (!rateBtn) return;
+        
+        const currentRating = parseInt(rateBtn.dataset.currentRating);
+        
+        if (!currentRating || currentRating < 1 || currentRating > 5) {
+            showNotification('Please select a rating first!', 'error');
+            return;
+        }
+        
+        if (userRatings[recipeId]) {
+            showNotification('You have already rated this recipe!', 'info');
+            return;
+        }
+        
+        userRatings[recipeId] = currentRating;
+        localStorage.setItem('userRatings', JSON.stringify(userRatings));
+        
+        if (!recipeRatings[recipeId]) {
+            recipeRatings[recipeId] = { total: 0, count: 0, average: 0 };
+        }
+        
+        recipeRatings[recipeId].total += currentRating;
+        recipeRatings[recipeId].count += 1;
+        recipeRatings[recipeId].average = recipeRatings[recipeId].total / recipeRatings[recipeId].count;
+        localStorage.setItem('recipeRatings', JSON.stringify(recipeRatings));
+        
+        rateBtn.disabled = true;
+        rateBtn.innerHTML = '<i class="fas fa-check"></i> Already Rated';
+        rateBtn.setAttribute('aria-label', 'Already rated');
+        
+        showNotification(`Thank you for your ${currentRating}-star rating!`, 'success');
+        
+        setTimeout(() => {
             loadFeaturedRecipes();
             loadTopRatedRecipes();
-            populateCategoriesMenu();
-            
-            const hasKrabbyPatty = validRecipes.some(recipe => 
-                recipe.title && recipe.title.toLowerCase().includes('krabby patty')
-            );
-            if (hasKrabbyPatty) {
-                showNotification(`${validRecipes.length} recipes imported successfully! 🍔 SECRET FORMULA ADDED!`, 'success');
-            } else {
-                showNotification(`${validRecipes.length} recipes imported successfully!`, 'success');
-            }
-            
-            event.target.value = '';
-        } catch (error) {
-            console.error('Import error:', error);
-            showNotification(`Error importing recipes: ${error.message}`, 'error');
+        }, 500);
+    }
+
+    // ===== RECIPE INTERACTIONS - FIXED VERSION =====
+    function toggleSaveRecipe(recipeId, event) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
         }
-    };
-    
-    reader.onerror = function() {
-        showNotification('Error reading the file.', 'error');
-    };
-    
-    reader.readAsText(file);
-}
-
-// ===== RATING SYSTEM =====
-function selectStar(recipeId, rating, event) {
-    if (event) event.stopPropagation();
-    if (userRatings[recipeId]) {
-        showNotification('You have already rated this recipe!', 'info');
-        return;
-    }
-    
-    const starContainer = event.target.closest('.star-rating');
-    if (!starContainer) return;
-    
-    const stars = starContainer.querySelectorAll('.star');
-    const ratingText = starContainer.querySelector('.selected-rating');
-    
-    stars.forEach((star, index) => {
-        const isSelected = index < rating;
-        star.classList.toggle('selected', isSelected);
-        star.setAttribute('aria-checked', isSelected.toString());
-    });
-    
-    if (ratingText) {
-        ratingText.textContent = `Selected: ${rating}/5`;
-    }
-    
-    const rateBtn = starContainer.nextElementSibling;
-    if (rateBtn) {
-        rateBtn.disabled = false;
-        rateBtn.dataset.currentRating = rating;
-    }
-}
-
-function submitRating(recipeId) {
-    const rateBtn = document.querySelector(`.rate-btn[data-recipe-id="${recipeId}"]`);
-    if (!rateBtn) return;
-    
-    const currentRating = parseInt(rateBtn.dataset.currentRating);
-    
-    if (!currentRating || currentRating < 1 || currentRating > 5) {
-        showNotification('Please select a rating first!', 'error');
-        return;
-    }
-    
-    if (userRatings[recipeId]) {
-        showNotification('You have already rated this recipe!', 'info');
-        return;
-    }
-    
-    userRatings[recipeId] = currentRating;
-    localStorage.setItem('userRatings', JSON.stringify(userRatings));
-    
-    if (!recipeRatings[recipeId]) {
-        recipeRatings[recipeId] = { total: 0, count: 0, average: 0 };
-    }
-    
-    recipeRatings[recipeId].total += currentRating;
-    recipeRatings[recipeId].count += 1;
-    recipeRatings[recipeId].average = recipeRatings[recipeId].total / recipeRatings[recipeId].count;
-    localStorage.setItem('recipeRatings', JSON.stringify(recipeRatings));
-    
-    rateBtn.disabled = true;
-    rateBtn.innerHTML = '<i class="fas fa-check"></i> Already Rated';
-    rateBtn.setAttribute('aria-label', 'Already rated');
-    
-    showNotification(`Thank you for your ${currentRating}-star rating!`, 'success');
-    
-    setTimeout(() => {
-        loadFeaturedRecipes();
-        loadTopRatedRecipes();
-    }, 500);
-}
-
-// ===== RECIPE INTERACTIONS - FIXED VERSION =====
-function toggleSaveRecipe(recipeId, event) {
-    if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-    
-    const recipe = recipes.find(r => r.id === recipeId);
-    if (recipe) {
-        recipe.saved = !recipe.saved;
         
-        // Update ALL instances of this recipe's save button
-        document.querySelectorAll(`.recipe-card[data-recipe-id="${recipeId}"] .save-recipe`).forEach(saveButton => {
-            const isSaved = recipe.saved;
+        const recipe = recipes.find(r => r.id === recipeId);
+        if (recipe) {
+            recipe.saved = !recipe.saved;
             
-            // Update button class
-            saveButton.classList.toggle('active', isSaved);
-            
-            // Update aria-label
-            saveButton.setAttribute('aria-label', isSaved ? 'Remove from favorites' : 'Add to favorites');
-            
-            // Update heart icon - FIXED: Use proper icon classes
-            const heartIcon = saveButton.querySelector('i');
-            if (heartIcon) {
-                if (isSaved) {
-                    heartIcon.className = 'fas fa-heart';
-                } else {
-                    heartIcon.className = 'far fa-heart';
+            // Update ALL instances of this recipe's save button
+            document.querySelectorAll(`.recipe-card[data-recipe-id="${recipeId}"] .save-recipe`).forEach(saveButton => {
+                const isSaved = recipe.saved;
+                
+                // Update button class
+                saveButton.classList.toggle('active', isSaved);
+                
+                // Update aria-label
+                saveButton.setAttribute('aria-label', isSaved ? 'Remove from favorites' : 'Add to favorites');
+                
+                // Update heart icon - FIXED: Use proper icon classes
+                const heartIcon = saveButton.querySelector('i');
+                if (heartIcon) {
+                    if (isSaved) {
+                        heartIcon.className = 'fas fa-heart';
+                    } else {
+                        heartIcon.className = 'far fa-heart';
+                    }
                 }
-            }
-        });
-        
-        // Update localStorage
-        localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-        
-        // Show notification
-        showNotification(recipe.saved ? '❤️ Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
+            });
+            
+            // Update localStorage
+            localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
+            
+            // Show notification
+            showNotification(recipe.saved ? '❤️ Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
+        }
     }
-}
 
-function handleRecipeClick(recipeId, event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    
-    const recipe = recipes.find(r => r.id === recipeId);
-    if (recipe && recipe.badges && recipe.badges.includes('krabby-patty')) {
-        showNotification('🍔 SECRET FORMULA ACTIVATED! 🍔 Preparing Krabby Patty...', 'info');
-        const button = event ? (event.target.closest('.view-recipe-btn') || event.target) : null;
-        if (button && button.classList.contains('view-recipe-btn')) {
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Secret Formula...';
-            button.disabled = true;
+    function handleRecipeClick(recipeId, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        
+        const recipe = recipes.find(r => r.id === recipeId);
+        if (recipe && recipe.badges && recipe.badges.includes('krabby-patty')) {
+            showNotification('🍔 SECRET FORMULA ACTIVATED! 🍔 Preparing Krabby Patty...', 'info');
+            const button = event ? (event.target.closest('.view-recipe-btn') || event.target) : null;
+            if (button && button.classList.contains('view-recipe-btn')) {
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Secret Formula...';
+                button.disabled = true;
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-utensils"></i> Secret Formula Ready!';
+                    button.disabled = false;
+                }, 1000);
+            }
             setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-utensils"></i> Secret Formula Ready!';
-                button.disabled = false;
-            }, 1000);
+                targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
+                showRecipeAd();
+            }, 1500);
+            return;
         }
-        setTimeout(() => {
-            targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-            showRecipeAd();
-        }, 1500);
-        return;
-    }
-    
-    targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-    showRecipeAd();
-}
-
-// ===== AD SYSTEM =====
-function initializeAdSystem() {
-    recipeAdVideoElement = document.getElementById('recipeAdVideo');
-    const recipeSkipButton = document.getElementById('recipeSkipButton');
-    
-    if (recipeAdVideoElement) {
-        recipeAdVideoElement.addEventListener('loadeddata', function() {
-            const loadingElement = document.getElementById('recipeAdLoading');
-            if (loadingElement) loadingElement.style.display = 'none';
-        });
         
-        recipeAdVideoElement.addEventListener('error', function() {
-            skipRecipeAd();
-        });
+        targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
+        showRecipeAd();
+    }
+
+    // ===== AD SYSTEM =====
+    function initializeAdSystem() {
+        recipeAdVideoElement = document.getElementById('recipeAdVideo');
+        const recipeSkipButton = document.getElementById('recipeSkipButton');
         
-        recipeAdVideoElement.addEventListener('ended', function() {
-            hideRecipeAd();
-        });
-    }
-    
-    if (recipeSkipButton) {
-        recipeSkipButton.addEventListener('click', skipRecipeAd);
-    }
-}
-
-function showRecipeAd() {
-    if (isRecipeAdShowing) return;
-    isRecipeAdShowing = true;
-    const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-    const recipeSkipButton = document.getElementById('recipeSkipButton');
-    const recipeSkipTimerElement = document.getElementById('recipeSkipTimer');
-    
-    if (!recipeAdOverlay) return;
-    
-    recipeAdOverlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    
-    recipeSkipCountdown = 8;
-    if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
-    if (recipeSkipButton) {
-        recipeSkipButton.disabled = true;
-        recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
-    }
-    
-    const adLoading = document.getElementById('recipeAdLoading');
-    if (adLoading) adLoading.style.display = 'flex';
-    
-    recipeSkipTimer = setInterval(() => {
-        recipeSkipCountdown--;
-        if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
-        if (recipeSkipButton) recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
-        if (recipeSkipCountdown <= 0) {
-            clearInterval(recipeSkipTimer);
-            if (recipeSkipButton) {
-                recipeSkipButton.disabled = false;
-                if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = 'Skip';
-                recipeSkipButton.setAttribute('aria-label', 'Skip ad now');
-            }
-        }
-    }, 1000);
-}
-
-function skipRecipeAd() {
-    if (isRecipeAdShowing && recipeSkipCountdown <= 0) {
-        if (recipeAdVideoElement && !recipeAdVideoElement.paused) recipeAdVideoElement.pause();
-        hideRecipeAd();
-    }
-}
-
-function hideRecipeAd() {
-    isRecipeAdShowing = false;
-    const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-    clearInterval(recipeSkipTimer);
-    if (recipeAdVideoElement) {
-        recipeAdVideoElement.pause();
-        recipeAdVideoElement.currentTime = 0;
-    }
-    if (recipeAdOverlay) recipeAdOverlay.classList.remove('show');
-    document.body.style.overflow = '';
-    if (targetRecipeUrl) window.location.href = targetRecipeUrl;
-}
-
-// ===== FILTERS & SEARCH =====
-function populateCategoriesMenu() {
-    if (!categoriesMenu) return;
-    categoriesMenu.innerHTML = '';
-    const counts = {};
-    allCategories.forEach(cat => counts[cat.id] = 0);
-    
-    recipes.forEach(recipe => {
-        if (recipe.badges) {
-            recipe.badges.forEach(badge => {
-                if (counts.hasOwnProperty(badge)) counts[badge]++;
+        if (recipeAdVideoElement) {
+            recipeAdVideoElement.addEventListener('loadeddata', function() {
+                const loadingElement = document.getElementById('recipeAdLoading');
+                if (loadingElement) loadingElement.style.display = 'none';
+            });
+            
+            recipeAdVideoElement.addEventListener('error', function() {
+                skipRecipeAd();
+            });
+            
+            recipeAdVideoElement.addEventListener('ended', function() {
+                hideRecipeAd();
             });
         }
-    });
-    
-    allCategories.forEach(cat => {
-        const isKrabbyPatty = cat.id === 'krabby-patty';
-        const menuItem = document.createElement('div');
-        menuItem.className = `category-menu-item ${isKrabbyPatty ? 'krabby-patty-item' : ''}`;
-        menuItem.setAttribute('role', 'button');
-        menuItem.setAttribute('tabindex', '0');
-        menuItem.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <i class="${cat.icon}"></i>
-                <span>${cat.name}</span>
-            </div>
-                <span class="category-count ${isKrabbyPatty ? 'krabby-patty-count' : ''}">${counts[cat.id]}</span>
-        `;
-        menuItem.addEventListener('click', () => toggleCategoryFilter(cat.id));
-        menuItem.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleCategoryFilter(cat.id);
+        
+        if (recipeSkipButton) {
+            recipeSkipButton.addEventListener('click', skipRecipeAd);
+        }
+    }
+
+    function showRecipeAd() {
+        if (isRecipeAdShowing) return;
+        isRecipeAdShowing = true;
+        const recipeAdOverlay = document.getElementById('recipeAdOverlay');
+        const recipeSkipButton = document.getElementById('recipeSkipButton');
+        const recipeSkipTimerElement = document.getElementById('recipeSkipTimer');
+        
+        if (!recipeAdOverlay) return;
+        
+        recipeAdOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        
+        recipeSkipCountdown = 8;
+        if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
+        if (recipeSkipButton) {
+            recipeSkipButton.disabled = true;
+            recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
+        }
+        
+        const adLoading = document.getElementById('recipeAdLoading');
+        if (adLoading) adLoading.style.display = 'flex';
+        
+        recipeSkipTimer = setInterval(() => {
+            recipeSkipCountdown--;
+            if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = recipeSkipCountdown;
+            if (recipeSkipButton) recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
+            if (recipeSkipCountdown <= 0) {
+                clearInterval(recipeSkipTimer);
+                if (recipeSkipButton) {
+                    recipeSkipButton.disabled = false;
+                    if (recipeSkipTimerElement) recipeSkipTimerElement.textContent = 'Skip';
+                    recipeSkipButton.setAttribute('aria-label', 'Skip ad now');
+                }
+            }
+        }, 1000);
+    }
+
+    function skipRecipeAd() {
+        if (isRecipeAdShowing && recipeSkipCountdown <= 0) {
+            if (recipeAdVideoElement && !recipeAdVideoElement.paused) recipeAdVideoElement.pause();
+            hideRecipeAd();
+        }
+    }
+
+    function hideRecipeAd() {
+        isRecipeAdShowing = false;
+        const recipeAdOverlay = document.getElementById('recipeAdOverlay');
+        clearInterval(recipeSkipTimer);
+        if (recipeAdVideoElement) {
+            recipeAdVideoElement.pause();
+            recipeAdVideoElement.currentTime = 0;
+        }
+        if (recipeAdOverlay) recipeAdOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+        if (targetRecipeUrl) window.location.href = targetRecipeUrl;
+    }
+
+    // ===== FILTERS & SEARCH =====
+    function populateCategoriesMenu() {
+        if (!categoriesMenu) return;
+        categoriesMenu.innerHTML = '';
+        const counts = {};
+        allCategories.forEach(cat => counts[cat.id] = 0);
+        
+        recipes.forEach(recipe => {
+            if (recipe.badges) {
+                recipe.badges.forEach(badge => {
+                    if (counts.hasOwnProperty(badge)) counts[badge]++;
+                });
             }
         });
-        categoriesMenu.appendChild(menuItem);
-    });
-}
+        
+        allCategories.forEach(cat => {
+            const isKrabbyPatty = cat.id === 'krabby-patty';
+            const menuItem = document.createElement('div');
+            menuItem.className = `category-menu-item ${isKrabbyPatty ? 'krabby-patty-item' : ''}`;
+            menuItem.setAttribute('role', 'button');
+            menuItem.setAttribute('tabindex', '0');
+            menuItem.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="${cat.icon}"></i>
+                    <span>${cat.name}</span>
+                </div>
+                <span class="category-count ${isKrabbyPatty ? 'krabby-patty-count' : ''}">${counts[cat.id]}</span>
+            `;
+            menuItem.addEventListener('click', () => toggleCategoryFilter(cat.id));
+            menuItem.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleCategoryFilter(cat.id);
+                }
+            });
+            categoriesMenu.appendChild(menuItem);
+        });
+    }
 
-function toggleCategoryFilter(categoryId) {
-    const index = currentFilters.indexOf(categoryId);
-    if (index === -1) currentFilters.push(categoryId);
-    else currentFilters.splice(index, 1);
-    updateFilterTags();
-    loadFeaturedRecipes();
-}
+    function toggleCategoryFilter(categoryId) {
+        const index = currentFilters.indexOf(categoryId);
+        if (index === -1) currentFilters.push(categoryId);
+        else currentFilters.splice(index, 1);
+        updateFilterTags();
+        loadFeaturedRecipes();
+    }
 
-function updateFilterTags() {
-    if (!filterTagsContainer) return;
-    filterTagsContainer.innerHTML = '';
-    if (currentFilters.length === 0 && !currentSearchTerm) return;
-    
-    currentFilters.forEach(categoryId => {
-        const category = allCategories.find(cat => cat.id === categoryId);
-        if (category) {
-            const isKrabbyPatty = categoryId === 'krabby-patty';
+    function updateFilterTags() {
+        if (!filterTagsContainer) return;
+        filterTagsContainer.innerHTML = '';
+        if (currentFilters.length === 0 && !currentSearchTerm) return;
+        
+        currentFilters.forEach(categoryId => {
+            const category = allCategories.find(cat => cat.id === categoryId);
+            if (category) {
+                const isKrabbyPatty = categoryId === 'krabby-patty';
+                const tag = document.createElement('div');
+                tag.className = `filter-tag active ${isKrabbyPatty ? 'krabby-patty-tag' : ''}`;
+                tag.setAttribute('role', 'button');
+                tag.setAttribute('tabindex', '0');
+                tag.innerHTML = `
+                    ${category.name}
+                    <i class="fas fa-times" style="margin-left: 0.5rem; font-size: 0.75rem;"></i>
+                `;
+                tag.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleCategoryFilter(categoryId);
+                });
+                tag.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCategoryFilter(categoryId);
+                    }
+                });
+                filterTagsContainer.appendChild(tag);
+            }
+        });
+        
+        if (currentSearchTerm) {
             const tag = document.createElement('div');
-            tag.className = `filter-tag active ${isKrabbyPatty ? 'krabby-patty-tag' : ''}`;
+            tag.className = 'filter-tag active';
             tag.setAttribute('role', 'button');
             tag.setAttribute('tabindex', '0');
             tag.innerHTML = `
-                ${category.name}
+                Search: "${currentSearchTerm}"
                 <i class="fas fa-times" style="margin-left: 0.5rem; font-size: 0.75rem;"></i>
             `;
             tag.addEventListener('click', (e) => {
                 e.stopPropagation();
-                toggleCategoryFilter(categoryId);
+                clearSearch();
             });
             tag.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggleCategoryFilter(categoryId);
+                    clearSearch();
                 }
             });
             filterTagsContainer.appendChild(tag);
         }
-    });
-    
-    if (currentSearchTerm) {
-        const tag = document.createElement('div');
-        tag.className = 'filter-tag active';
-        tag.setAttribute('role', 'button');
-        tag.setAttribute('tabindex', '0');
-        tag.innerHTML = `
-            Search: "${currentSearchTerm}"
-            <i class="fas fa-times" style="margin-left: 0.5rem; font-size: 0.75rem;"></i>
-        `;
-        tag.addEventListener('click', (e) => {
-            e.stopPropagation();
-            clearSearch();
-        });
-        tag.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                clearSearch();
+    }
+
+    function clearFilters() {
+        currentFilters = [];
+        currentSearchTerm = '';
+        if (searchInput) searchInput.value = '';
+        if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
+        updateFilterTags();
+        loadFeaturedRecipes();
+    }
+
+    function clearSearch() {
+        currentSearchTerm = '';
+        if (searchInput) searchInput.value = '';
+        if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
+        updateFilterTags();
+        loadFeaturedRecipes();
+    }
+
+    function updateSectionTitle() {
+        if (!sectionTitle || !sectionSubtitle) return;
+        
+        if (currentFilters.length === 0 && !currentSearchTerm) {
+            sectionTitle.textContent = recipes.length > 0 ? 'Featured Recipes' : 'No Recipes Yet';
+            sectionSubtitle.textContent = recipes.length > 0 ? 'Handpicked by our culinary experts' : 'Import your first recipe to get started';
+        } else if (currentSearchTerm) {
+            sectionTitle.textContent = `Search Results for "${currentSearchTerm}"`;
+            sectionSubtitle.textContent = 'Recipes matching your search';
+        } else if (currentFilters.length === 1) {
+            const category = allCategories.find(cat => cat.id === currentFilters[0]);
+            if (category.id === 'krabby-patty') {
+                sectionTitle.textContent = '⭐ Krabby Patty Special ⭐';
+                sectionSubtitle.textContent = 'Secret formula from the Krusty Krab!';
+            } else {
+                sectionTitle.textContent = `${category.name} Recipes`;
+                sectionSubtitle.textContent = `All ${category.name.toLowerCase()} chicken recipes`;
             }
-        });
-        filterTagsContainer.appendChild(tag);
-    }
-}
-
-function clearFilters() {
-    currentFilters = [];
-    currentSearchTerm = '';
-    if (searchInput) searchInput.value = '';
-    if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
-    updateFilterTags();
-    loadFeaturedRecipes();
-}
-
-function clearSearch() {
-    currentSearchTerm = '';
-    if (searchInput) searchInput.value = '';
-    if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
-    updateFilterTags();
-    loadFeaturedRecipes();
-}
-
-function updateSectionTitle() {
-    if (!sectionTitle || !sectionSubtitle) return;
-    
-    if (currentFilters.length === 0 && !currentSearchTerm) {
-        sectionTitle.textContent = recipes.length > 0 ? 'Featured Recipes' : 'No Recipes Yet';
-        sectionSubtitle.textContent = recipes.length > 0 ? 'Handpicked by our culinary experts' : 'Import your first recipe to get started';
-    } else if (currentSearchTerm) {
-        sectionTitle.textContent = `Search Results for "${currentSearchTerm}"`;
-        sectionSubtitle.textContent = 'Recipes matching your search';
-    } else if (currentFilters.length === 1) {
-        const category = allCategories.find(cat => cat.id === currentFilters[0]);
-        if (category.id === 'krabby-patty') {
-            sectionTitle.textContent = '⭐ Krabby Patty Special ⭐';
-            sectionSubtitle.textContent = 'Secret formula from the Krusty Krab!';
         } else {
-            sectionTitle.textContent = `${category.name} Recipes`;
-            sectionSubtitle.textContent = `All ${category.name.toLowerCase()} chicken recipes`;
+            sectionTitle.textContent = 'Filtered Recipes';
+            sectionSubtitle.textContent = `Recipes matching ${currentFilters.length} categories`;
         }
-    } else {
-        sectionTitle.textContent = 'Filtered Recipes';
-        sectionSubtitle.textContent = `Recipes matching ${currentFilters.length} categories`;
     }
-}
 
-function initializeSearch() {
-    if (!searchInput) return;
-    
-    searchInput.addEventListener('input', function() {
-        currentSearchTerm = this.value.trim();
-        if (currentSearchTerm.length > 0) {
-            const searchLower = currentSearchTerm.toLowerCase();
-            const filteredRecipes = recipes.filter(recipe => 
-                recipe.title.toLowerCase().includes(searchLower) ||
-                recipe.description.toLowerCase().includes(searchLower)
-            );
-            displaySearchSuggestions(filteredRecipes.slice(0, 20));
-        } else {
-            if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
-            currentSearchTerm = '';
-            updateFilterTags();
-            loadFeaturedRecipes();
-        }
-    });
-    
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (currentSearchTerm) {
-                updateFilterTags();
-                loadFeaturedRecipes();
+    function initializeSearch() {
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', function() {
+            currentSearchTerm = this.value.trim();
+            if (currentSearchTerm.length > 0) {
+                const searchLower = currentSearchTerm.toLowerCase();
+                const filteredRecipes = recipes.filter(recipe => 
+                    recipe.title.toLowerCase().includes(searchLower) ||
+                    recipe.description.toLowerCase().includes(searchLower)
+                );
+                displaySearchSuggestions(filteredRecipes.slice(0, 20));
+            } else {
                 if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
-            }
-        }
-    });
-    
-    document.addEventListener('click', function(e) {
-        if (searchInput && searchSuggestionsContainer && 
-            !searchInput.contains(e.target) && !searchSuggestionsContainer.contains(e.target)) {
-            searchSuggestionsContainer.classList.remove('active');
-        }
-    });
-    
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            if (searchInput) searchInput.focus();
-        }
-    });
-}
-
-function displaySearchSuggestions(filteredRecipes) {
-    if (!searchSuggestionsContainer) return;
-    searchSuggestionsContainer.innerHTML = '';
-    
-    if (filteredRecipes.length > 0) {
-        filteredRecipes.forEach(recipe => {
-            const item = document.createElement('div');
-            item.className = 'search-suggestion-item';
-            item.setAttribute('role', 'button');
-            item.setAttribute('tabindex', '0');
-            const firstBadge = recipe.badges && recipe.badges[0];
-            const category = allCategories.find(cat => cat.id === firstBadge);
-            item.innerHTML = `
-                <div class="search-suggestion-image">
-                    <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-                </div>
-                <div class="search-suggestion-content">
-                    <div class="search-suggestion-title">${recipe.title}</div>
-                    ${category ? `<div class="suggestion-category">${category.name}</div>` : ''}
-                </div>
-            `;
-            item.addEventListener('click', function() {
-                if (searchInput) searchInput.value = recipe.title;
-                currentSearchTerm = recipe.title;
+                currentSearchTerm = '';
                 updateFilterTags();
                 loadFeaturedRecipes();
+            }
+        });
+        
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentSearchTerm) {
+                    updateFilterTags();
+                    loadFeaturedRecipes();
+                    if (searchSuggestionsContainer) searchSuggestionsContainer.classList.remove('active');
+                }
+            }
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (searchInput && searchSuggestionsContainer && 
+                !searchInput.contains(e.target) && !searchSuggestionsContainer.contains(e.target)) {
                 searchSuggestionsContainer.classList.remove('active');
-            });
-            item.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                if (searchInput) searchInput.focus();
+            }
+        });
+    }
+
+    function displaySearchSuggestions(filteredRecipes) {
+        if (!searchSuggestionsContainer) return;
+        searchSuggestionsContainer.innerHTML = '';
+        
+        if (filteredRecipes.length > 0) {
+            filteredRecipes.forEach(recipe => {
+                const item = document.createElement('div');
+                item.className = 'search-suggestion-item';
+                item.setAttribute('role', 'button');
+                item.setAttribute('tabindex', '0');
+                const firstBadge = recipe.badges && recipe.badges[0];
+                const category = allCategories.find(cat => cat.id === firstBadge);
+                item.innerHTML = `
+                    <div class="search-suggestion-image">
+                        <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                    </div>
+                    <div class="search-suggestion-content">
+                        <div class="search-suggestion-title">${recipe.title}</div>
+                        ${category ? `<div class="suggestion-category">${category.name}</div>` : ''}
+                    </div>
+                `;
+                item.addEventListener('click', function() {
                     if (searchInput) searchInput.value = recipe.title;
                     currentSearchTerm = recipe.title;
                     updateFilterTags();
                     loadFeaturedRecipes();
                     searchSuggestionsContainer.classList.remove('active');
-                }
+                });
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (searchInput) searchInput.value = recipe.title;
+                        currentSearchTerm = recipe.title;
+                        updateFilterTags();
+                        loadFeaturedRecipes();
+                        searchSuggestionsContainer.classList.remove('active');
+                    }
+                });
+                searchSuggestionsContainer.appendChild(item);
             });
-            searchSuggestionsContainer.appendChild(item);
-        });
-        searchSuggestionsContainer.classList.add('active');
-    } else {
-        const item = document.createElement('div');
-        item.className = 'search-suggestion-item';
-        item.style.justifyContent = 'center';
-        item.innerHTML = `
-            <i class="fas fa-search"></i>
-            <div style="color: var(--text-light);">
-                No recipes found for "${currentSearchTerm}"
-            </div>
-        `;
-        searchSuggestionsContainer.appendChild(item);
-        searchSuggestionsContainer.classList.add('active');
-    }
-}
-
-// ===== UI INTERACTIONS =====
-function initializeThemeToggle() {
-    if (!themeToggle) return;
-    
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
-    
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-        showNotification(`Switched to ${newTheme} theme`, 'info');
-    });
-    
-    themeToggle.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-}
-
-function updateThemeIcon(theme) {
-    if (!themeToggle) return;
-    const icon = themeToggle.querySelector('i');
-    if (theme === 'light') {
-        icon.className = 'fas fa-moon';
-        themeToggle.setAttribute('aria-label', 'Switch to dark theme');
-    } else {
-        icon.className = 'fas fa-sun';
-        themeToggle.setAttribute('aria-label', 'Switch to light theme');
-    }
-}
-
-function initializeScrollEvents() {
-    window.addEventListener('scroll', function() {
-        if (!backToTop) return;
-        if (window.pageYOffset > 100) {
-            backToTop.classList.add('show');
+            searchSuggestionsContainer.classList.add('active');
         } else {
-            backToTop.classList.remove('show');
+            const item = document.createElement('div');
+            item.className = 'search-suggestion-item';
+            item.style.justifyContent = 'center';
+            item.innerHTML = `
+                <i class="fas fa-search"></i>
+                <div style="color: var(--text-light);">
+                    No recipes found for "${currentSearchTerm}"
+                </div>
+            `;
+            searchSuggestionsContainer.appendChild(item);
+            searchSuggestionsContainer.classList.add('active');
         }
-    });
+    }
 
-    if (backToTop) {
-        backToTop.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+    // ===== UI INTERACTIONS =====
+    function initializeThemeToggle() {
+        if (!themeToggle) return;
+        
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            showNotification(`Switched to ${newTheme} theme`, 'info');
+        });
+        
+        themeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
         });
     }
-}
 
-function initializeKeyboardNavigation() {
-    document.addEventListener('keydown', function(e) {
-        // Escape key closes modals and popups
-        if (e.key === 'Escape') {
-            const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-            if (recipeAdOverlay && recipeAdOverlay.classList.contains('show')) {
-                skipRecipeAd();
-            }
-            
-            if (newsletterPopup && newsletterPopup.classList.contains('show')) {
-                newsletterPopup.classList.remove('show');
-            }
-            
-            if (floatingAd && floatingAd.classList.contains('show')) {
-                closeFloatingAd();
-            }
-            
-            if (searchSuggestionsContainer && searchSuggestionsContainer.classList.contains('active')) {
-                searchSuggestionsContainer.classList.remove('active');
-            }
+    function updateThemeIcon(theme) {
+        if (!themeToggle) return;
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.className = 'fas fa-moon';
+            themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+        } else {
+            icon.className = 'fas fa-sun';
+            themeToggle.setAttribute('aria-label', 'Switch to light theme');
         }
-    });
-}
+    }
 
-// ===== UI FUNCTIONS =====
-function closeFloatingAd() {
-    if (floatingAd) floatingAd.classList.remove('show');
-}
+    function initializeScrollEvents() {
+        window.addEventListener('scroll', function() {
+            if (!backToTop) return;
+            if (window.pageYOffset > 100) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
 
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `import-notification import-notification-${type}`;
-    notification.setAttribute('role', 'alert');
-    notification.setAttribute('aria-live', 'polite');
-    
-    let icon = 'info-circle';
-    if (type === 'success') icon = 'check-circle';
-    if (type === 'error') icon = 'exclamation-circle';
-    
-    notification.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-${icon}"></i>
-            <span>${message}</span>
-        </div>
-        <button onclick="this.parentElement.remove()" 
-                aria-label="Close notification"
-                style="background: none; border: none; color: inherit; cursor: pointer; padding: 0.25rem;">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateX(-50%) translateY(100px)';
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
+        if (backToTop) {
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    }
+
+    function initializeKeyboardNavigation() {
+        document.addEventListener('keydown', function(e) {
+            // Escape key closes modals and popups
+            if (e.key === 'Escape') {
+                const recipeAdOverlay = document.getElementById('recipeAdOverlay');
+                if (recipeAdOverlay && recipeAdOverlay.classList.contains('show')) {
+                    skipRecipeAd();
                 }
-            }, 300);
-        }
-    }, 3000);
-}
+                
+                if (newsletterPopup && newsletterPopup.classList.contains('show')) {
+                    newsletterPopup.classList.remove('show');
+                }
+                
+                if (floatingAd && floatingAd.classList.contains('show')) {
+                    closeFloatingAd();
+                }
+                
+                if (searchSuggestionsContainer && searchSuggestionsContainer.classList.contains('active')) {
+                    searchSuggestionsContainer.classList.remove('active');
+                }
+            }
+        });
+    }
 
-// ===== SHARED RECIPES DATA =====
-// Add this at the end of your JavaScript file
-const SHARED_RECIPES = [
+    // ===== UI FUNCTIONS =====
+    function closeFloatingAd() {
+        if (floatingAd) floatingAd.classList.remove('show');
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `import-notification import-notification-${type}`;
+        notification.setAttribute('role', 'alert');
+        notification.setAttribute('aria-live', 'polite');
+        
+        let icon = 'info-circle';
+        if (type === 'success') icon = 'check-circle';
+        if (type === 'error') icon = 'exclamation-circle';
+        
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fas fa-${icon}"></i>
+                <span>${message}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" 
+                    aria-label="Close notification"
+                    style="background: none; border: none; color: inherit; cursor: pointer; padding: 0.25rem;">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(-50%) translateY(100px)';
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, 3000);
+    }
+
+    // ===== SHARED RECIPES DATA =====
+ const SHARED_RECIPES = [
   {
     "id": 1,
     "title": "Creamy Cajun Chicken Pasta",
