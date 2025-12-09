@@ -209,7 +209,8 @@ body {
     display: flex;
     flex-direction: column;
     text-rendering: optimizeLegibility;
-    overscroll-behavior: contain;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -247,6 +248,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Smooth scrolling */
 html {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2108,17 +2111,26 @@ html {
     }
     
     /* IMPROVED TOUCH SCROLLING */
-    .featured-wrapper {
-        touch-action: pan-y pinch-zoom !important;
+     .featured-wrapper {
         -webkit-overflow-scrolling: touch !important;
-        overscroll-behavior-x: contain;
-        scroll-snap-type: x mandatory;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
         scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        scroll-snap-stop: always;
+        touch-action: pan-x pan-y;
+        overscroll-behavior-x: contain;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .featured-wrapper::-webkit-scrollbar {
+        display: none;
     }
     
     .recipe-card {
-        -webkit-tap-highlight-color: transparent;
         scroll-snap-align: start;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
     }
     
     /* PERFORMANCE OPTIMIZATIONS FOR MOBILE */
@@ -2646,6 +2658,7 @@ img {
     
     .recipe-card:active {
         transform: scale(0.98);
+        transition: transform 0.1s ease;
     }
 }
  </style>
@@ -3022,418 +3035,313 @@ img {
 
     // ===== MOBILE SCROLLING FUNCTIONS =====
     function setupMobileCarousel(section) {
-        if (!isMobile()) return;
-        
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        if (!wrapper || !wrapper.children.length) return;
-        
-        // Enable smooth scrolling
-        wrapper.style.scrollBehavior = 'smooth';
-        wrapper.style.webkitOverflowScrolling = 'touch';
-        
-        // Touch event handling for smooth scrolling
-        let isDragging = false;
-        let startX = 0;
-        let scrollLeft = 0;
-        let velocity = 0;
-        let animationFrameId = null;
-        let lastTime = 0;
-        
-        wrapper.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            carouselStates[section].isDragging = true;
-            startX = e.touches[0].pageX - wrapper.offsetLeft;
-            scrollLeft = wrapper.scrollLeft;
-            velocity = 0;
-            lastTime = Date.now();
-            
-            // Stop auto-scroll during user interaction
-            stopMobileAutoScroll(section);
-            
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-        }, { passive: true });
-        
-        wrapper.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            
-            const x = e.touches[0].pageX - wrapper.offsetLeft;
-            const walk = (x - startX) * 1.5; // Multiply for better sensitivity
-            const newScrollLeft = scrollLeft - walk;
-            
-            // Calculate velocity for momentum scrolling
-            const currentTime = Date.now();
-            const timeDiff = currentTime - lastTime;
-            if (timeDiff > 0) {
-                velocity = (wrapper.scrollLeft - newScrollLeft) / timeDiff;
-                lastTime = currentTime;
-            }
-            
-            wrapper.scrollLeft = newScrollLeft;
-        }, { passive: true });
-        
-        wrapper.addEventListener('touchend', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            carouselStates[section].isDragging = false;
-            
-            // Apply momentum scrolling
-            if (Math.abs(velocity) > 0.1) {
-                const momentum = velocity * 200; // Adjust multiplier for momentum strength
-                const start = wrapper.scrollLeft;
-                const target = start - momentum;
-                
-                const animateMomentum = (timestamp) => {
-                    if (!animationFrameId) return;
-                    
-                    const progress = Math.min(1, (timestamp - startTime) / 500);
-                    const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                    wrapper.scrollLeft = start + (target - start) * easeOutCubic;
-                    
-                    if (progress < 1) {
-                        animationFrameId = requestAnimationFrame(animateMomentum);
-                    } else {
-                        // Snap to nearest card after momentum
-                        setTimeout(() => snapToNearestCard(section), 50);
-                    }
-                };
-                
-                const startTime = performance.now();
-                animationFrameId = requestAnimationFrame(animateMomentum);
-            } else {
-                // Snap to nearest card
-                setTimeout(() => snapToNearestCard(section), 100);
-            }
-            
-            // Restart auto-scroll after delay
-            setTimeout(() => startMobileAutoScroll(section), 2000);
-        }, { passive: true });
-        
-        // Snap to nearest card function
-        function snapToNearestCard() {
-            const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 300;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const currentScroll = wrapper.scrollLeft;
-            const cardIndex = Math.round(currentScroll / scrollAmount);
-            const targetScroll = cardIndex * scrollAmount;
-            
-            wrapper.style.scrollBehavior = 'smooth';
-            wrapper.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            // Update indicators
-            setTimeout(() => {
-                updateScrollIndicator(section);
-                if (section === 'featured') {
-                    updateMobileScrollIndicator('featured');
-                    updateMobileArrowStates('featured');
-                } else {
-                    updateMobileScrollIndicator('topRated');
-                    updateMobileArrowStates('topRated');
-                }
-            }, 300);
-        }
-        
-        // Update on scroll
-        let scrollUpdateTimeout;
-        wrapper.addEventListener('scroll', () => {
-            clearTimeout(scrollUpdateTimeout);
-            scrollUpdateTimeout = setTimeout(() => {
-                updateScrollIndicator(section);
-            }, 100);
-        }, { passive: true });
-        
-        // Initialize
-        updateScrollIndicator(section);
-    }
-
-    function setupMobileNavigationArrows(section) {
-        if (!isMobile()) return;
-        
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        const container = wrapper ? wrapper.closest('.featured-container') : null;
-        if (!wrapper || !container) return;
-        
-        // Remove existing mobile navigation if any
-        const existingNav = container.querySelector('.mobile-nav-arrows');
-        if (existingNav) existingNav.remove();
-        const existingIndicator = container.querySelector('.mobile-scroll-indicator');
-        if (existingIndicator) existingIndicator.remove();
-        
-        // Create mobile navigation arrows
-        const mobileNav = document.createElement('div');
-        mobileNav.className = 'mobile-nav-arrows';
-        mobileNav.innerHTML = `
-            <button class="mobile-nav-arrow prev-mobile" aria-label="Previous recipes">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="mobile-nav-arrow next-mobile" aria-label="Next recipes">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        `;
-        
-        // Create scroll indicator
-        const indicator = document.createElement('div');
-        indicator.className = 'mobile-scroll-indicator';
-        
-        const cardCount = Math.min(wrapper.children.length, 8);
-        for (let i = 0; i < cardCount; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'mobile-scroll-dot';
-            dot.dataset.index = i;
-            indicator.appendChild(dot);
-        }
-        
-        // Add to container
-        container.appendChild(mobileNav);
-        container.appendChild(indicator);
-        
-        // Setup event listeners for mobile arrows
-        const prevMobile = mobileNav.querySelector('.prev-mobile');
-        const nextMobile = mobileNav.querySelector('.next-mobile');
-        
-        // Mobile navigation function
-        function scrollToCardMobile(index) {
-            const card = wrapper.children[index];
-            if (!card) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const cardRect = card.getBoundingClientRect();
-            
-            const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
-            
-            // Smooth scroll with hardware acceleration
-            wrapper.style.scrollBehavior = 'smooth';
-            wrapper.scrollTo({
-                left: scrollPosition,
-                behavior: 'smooth'
-            });
-            
-            // Stop auto-scroll when user interacts
-            stopMobileAutoScroll(section);
-            
-            // Update indicator
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || !wrapper.children.length) return;
+    
+    // Let the browser handle scrolling natively
+    wrapper.style.scrollBehavior = 'smooth';
+    wrapper.style.webkitOverflowScrolling = 'touch';
+    wrapper.style.overflowX = 'auto';
+    wrapper.style.overflowY = 'hidden';
+    wrapper.style.scrollSnapType = 'x mandatory';
+    wrapper.style.scrollSnapStop = 'always';
+    
+    // Add snap points to each card
+    const cards = wrapper.querySelectorAll('.recipe-card');
+    cards.forEach(card => {
+        card.style.scrollSnapAlign = 'start';
+    });
+    
+    // Track scrolling for indicator updates
+    let scrollTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
             updateMobileScrollIndicator(section);
-            
-            // Update arrow states
             updateMobileArrowStates(section);
-        }
+        }, 100);
+    }, { passive: true });
+    
+    // Setup simple touch events that don't interfere with native scrolling
+    let touchStartX = 0;
+    let isScrolling = false;
+    
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isScrolling = false;
         
-        // Update mobile indicator
-        function updateMobileScrollIndicator(section) {
-            const indicator = container.querySelector('.mobile-scroll-indicator');
-            if (!indicator) return;
-            
-            const scrollLeft = wrapper.scrollLeft;
-            const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const currentIndex = Math.round(scrollLeft / scrollAmount);
-            
-            const dots = indicator.querySelectorAll('.mobile-scroll-dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-        }
+        // Stop auto-scroll during user interaction
+        stopMobileAutoScroll(section);
+    }, { passive: true });
+    
+    wrapper.addEventListener('touchmove', (e) => {
+        const touchX = e.touches[0].clientX;
+        const diff = Math.abs(touchX - touchStartX);
         
-        // Update mobile arrow states
-        function updateMobileArrowStates(section) {
-            const scrollLeft = wrapper.scrollLeft;
-            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-            const tolerance = 5;
-            
-            if (prevMobile) {
-                if (scrollLeft <= tolerance) {
-                    prevMobile.classList.add('disabled');
-                    prevMobile.disabled = true;
-                } else {
-                    prevMobile.classList.remove('disabled');
-                    prevMobile.disabled = false;
-                }
-            }
-            
-            if (nextMobile) {
-                if (scrollLeft >= maxScroll - tolerance) {
-                    nextMobile.classList.add('disabled');
-                    nextMobile.disabled = true;
-                } else {
-                    nextMobile.classList.remove('disabled');
-                    nextMobile.disabled = false;
-                }
-            }
+        // If user moves finger horizontally more than 10px, they're scrolling
+        if (diff > 10) {
+            isScrolling = true;
         }
-        
-        // Click handlers for mobile arrows
-        prevMobile.addEventListener('click', () => {
-            if (prevMobile.disabled) return;
-            
-            const scrollLeft = wrapper.scrollLeft;
-            const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const targetScroll = Math.max(0, scrollLeft - scrollAmount);
-            
-            wrapper.style.scrollBehavior = 'smooth';
-            wrapper.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            // Stop auto-scroll when user interacts
-            stopMobileAutoScroll(section);
-            
-            // Update UI after scroll
+    }, { passive: true });
+    
+    wrapper.addEventListener('touchend', () => {
+        if (isScrolling) {
+            // User was scrolling, restart auto-scroll after delay
             setTimeout(() => {
-                updateMobileScrollIndicator(section);
-                updateMobileArrowStates(section);
-                
-                // Restart auto-scroll after delay
-                setTimeout(() => {
-                    startMobileAutoScroll(section);
-                }, 2000);
-            }, 300);
+                startMobileAutoScroll(section);
+            }, 2000);
+        }
+    }, { passive: true });
+}
+
+function setupMobileNavigationArrows(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    const container = wrapper ? wrapper.closest('.featured-container') : null;
+    if (!wrapper || !container) return;
+    
+    // Remove existing mobile navigation if any
+    const existingNav = container.querySelector('.mobile-nav-arrows');
+    if (existingNav) existingNav.remove();
+    const existingIndicator = container.querySelector('.mobile-scroll-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    
+    // Create mobile navigation arrows
+    const mobileNav = document.createElement('div');
+    mobileNav.className = 'mobile-nav-arrows';
+    mobileNav.innerHTML = `
+        <button class="mobile-nav-arrow prev-mobile" aria-label="Previous recipes">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="mobile-nav-arrow next-mobile" aria-label="Next recipes">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+    
+    // Create scroll indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'mobile-scroll-indicator';
+    
+    const cardCount = Math.min(wrapper.children.length, 8);
+    for (let i = 0; i < cardCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'mobile-scroll-dot';
+        dot.dataset.index = i;
+        indicator.appendChild(dot);
+    }
+    
+    // Add to container
+    container.appendChild(mobileNav);
+    container.appendChild(indicator);
+    
+    // Setup event listeners for mobile arrows
+    const prevMobile = mobileNav.querySelector('.prev-mobile');
+    const nextMobile = mobileNav.querySelector('.next-mobile');
+    
+    // Function to scroll to a specific card
+    function scrollToCardMobile(index) {
+        if (!wrapper.children[index]) return;
+        
+        const card = wrapper.children[index];
+        const cardWidth = card.offsetWidth;
+        const gap = 16;
+        const scrollPosition = (cardWidth + gap) * index;
+        
+        wrapper.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
         });
         
-        nextMobile.addEventListener('click', () => {
-            if (nextMobile.disabled) return;
-            
-            const scrollLeft = wrapper.scrollLeft;
-            const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-            let targetScroll = scrollLeft + scrollAmount;
-            
-            // If at end, loop to start
-            if (targetScroll >= maxScroll - 50) {
-                targetScroll = 0;
-            }
-            
-            wrapper.style.scrollBehavior = 'smooth';
-            wrapper.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            // Stop auto-scroll when user interacts
-            stopMobileAutoScroll(section);
-            
-            // Update UI after scroll
-            setTimeout(() => {
-                updateMobileScrollIndicator(section);
-                updateMobileArrowStates(section);
-                
-                // Restart auto-scroll after delay
-                setTimeout(() => {
-                    startMobileAutoScroll(section);
-                }, 2000);
-            }, 300);
-        });
-        
-        // Initialize states
+        // Update indicator
         updateMobileScrollIndicator(section);
         updateMobileArrowStates(section);
+    }
+    
+    // Update mobile indicator
+    function updateMobileScrollIndicator(section) {
+        const indicator = container.querySelector('.mobile-scroll-indicator');
+        if (!indicator) return;
         
-        // Update on scroll
-        let scrollUpdateTimeout;
-        wrapper.addEventListener('scroll', () => {
-            clearTimeout(scrollUpdateTimeout);
-            scrollUpdateTimeout = setTimeout(() => {
-                updateMobileScrollIndicator(section);
-                updateMobileArrowStates(section);
-            }, 50); // Faster update for mobile
-        }, { passive: true });
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const currentIndex = Math.round(scrollLeft / scrollAmount);
         
-        // Click on indicator dots
-        indicator.addEventListener('click', (e) => {
-            const dot = e.target.closest('.mobile-scroll-dot');
-            if (!dot) return;
-            
-            const index = parseInt(dot.dataset.index);
-            scrollToCardMobile(index);
+        const dots = indicator.querySelectorAll('.mobile-scroll-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
         });
     }
-
-    function startMobileAutoScroll(section) {
-        if (!isMobile()) return;
+    
+    // Update mobile arrow states
+    function updateMobileArrowStates(section) {
+        const scrollLeft = wrapper.scrollLeft;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const tolerance = 5;
         
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        if (!wrapper || wrapper.children.length < 2) return;
-        
-        // Clear existing interval
-        stopMobileAutoScroll(section);
-        
-        console.log(`Starting mobile auto-scroll for ${section} section (every 2 seconds)`);
-        
-        carouselStates[section].mobileInterval = setInterval(() => {
-            // Don't auto-scroll if user is interacting
-            if (carouselStates[section].isDragging) {
-                return;
-            }
-            
-            const card = wrapper.querySelector('.recipe-card');
-            if (!card) return;
-            
-            const cardWidth = card.offsetWidth;
-            const gap = 16;
-            const scrollAmount = cardWidth + gap;
-            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-            const currentScroll = wrapper.scrollLeft;
-            
-            let targetScroll;
-            
-            // If we're at or near the end, loop back to start
-            if (currentScroll >= maxScroll - 100) {
-                targetScroll = 0;
+        if (prevMobile) {
+            if (scrollLeft <= tolerance) {
+                prevMobile.classList.add('disabled');
+                prevMobile.disabled = true;
             } else {
-                targetScroll = currentScroll + scrollAmount;
+                prevMobile.classList.remove('disabled');
+                prevMobile.disabled = false;
             }
-            
-            // Smooth scroll with easing
-            const startTime = performance.now();
-            const startScroll = wrapper.scrollLeft;
-            const distance = targetScroll - startScroll;
-            
-            const animateScroll = (currentTime) => {
-                const elapsed = currentTime - startTime;
-                const duration = 500; // 0.5 seconds for smooth scroll
-                
-                if (elapsed < duration) {
-                    // Easing function for smooth animation
-                    const easeOutCubic = 1 - Math.pow(1 - Math.min(elapsed / duration, 1), 3);
-                    wrapper.scrollLeft = startScroll + (distance * easeOutCubic);
-                    requestAnimationFrame(animateScroll);
-                } else {
-                    wrapper.scrollLeft = targetScroll;
-                    
-                    // Update indicators
-                    updateScrollIndicator(section);
-                    if (section === 'featured') {
-                        updateMobileScrollIndicator('featured');
-                        updateMobileArrowStates('featured');
-                    } else {
-                        updateMobileScrollIndicator('topRated');
-                        updateMobileArrowStates('topRated');
-                    }
-                }
-            };
-            
-            requestAnimationFrame(animateScroll);
-            
-        }, 2000); // Scroll every 2 seconds
-    }
-
-    function stopMobileAutoScroll(section) {
-        if (carouselStates[section].mobileInterval) {
-            clearInterval(carouselStates[section].mobileInterval);
-            carouselStates[section].mobileInterval = null;
+        }
+        
+        if (nextMobile) {
+            if (scrollLeft >= maxScroll - tolerance) {
+                nextMobile.classList.add('disabled');
+                nextMobile.disabled = true;
+            } else {
+                nextMobile.classList.remove('disabled');
+                nextMobile.disabled = false;
+            }
         }
     }
+    
+    // Click handlers for mobile arrows
+    prevMobile.addEventListener('click', () => {
+        if (prevMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const targetScroll = Math.max(0, scrollLeft - scrollAmount);
+        
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 2000);
+        }, 300);
+    });
+    
+    nextMobile.addEventListener('click', () => {
+        if (nextMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        let targetScroll = scrollLeft + scrollAmount;
+        
+        // If at end, loop to start
+        if (targetScroll >= maxScroll - 50) {
+            targetScroll = 0;
+        }
+        
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 2000);
+        }, 300);
+    });
+    
+    // Initialize states
+    updateMobileScrollIndicator(section);
+    updateMobileArrowStates(section);
+    
+    // Click on indicator dots
+    indicator.addEventListener('click', (e) => {
+        const dot = e.target.closest('.mobile-scroll-dot');
+        if (!dot) return;
+        
+        const index = parseInt(dot.dataset.index);
+        scrollToCardMobile(index);
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Restart auto-scroll after delay
+        setTimeout(() => {
+            startMobileAutoScroll(section);
+        }, 2000);
+    });
+}
+
+function startMobileAutoScroll(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper || wrapper.children.length < 2) return;
+    
+    // Clear existing interval
+    stopMobileAutoScroll(section);
+    
+    console.log(`Starting mobile auto-scroll for ${section} section (every 2 seconds)`);
+    
+    carouselStates[section].mobileInterval = setInterval(() => {
+        const card = wrapper.querySelector('.recipe-card');
+        if (!card) return;
+        
+        const cardWidth = card.offsetWidth;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const currentScroll = wrapper.scrollLeft;
+        
+        let targetScroll;
+        
+        // If we're at or near the end, loop back to start
+        if (currentScroll >= maxScroll - 100) {
+            targetScroll = 0;
+        } else {
+            targetScroll = currentScroll + scrollAmount;
+        }
+        
+        // Use native smooth scroll
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Update indicators after scroll completes
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+        }, 300);
+        
+    }, 2000); // Scroll every 2 seconds
+}
+
+function stopMobileAutoScroll(section) {
+    if (carouselStates[section].mobileInterval) {
+        clearInterval(carouselStates[section].mobileInterval);
+        carouselStates[section].mobileInterval = null;
+    }
+}
 
     function updateScrollIndicator(section) {
         if (!isMobile()) return;
@@ -3462,131 +3370,102 @@ img {
 
     // ===== INITIALIZATION =====
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 Initializing website with mobile optimizations...');
+    console.log('🚀 Initializing website with mobile optimizations...');
+    
+    // Load data first
+    loadRecipes();
+    loadFeaturedRecipes();
+    loadTopRatedRecipes();
+    populateCategoriesMenu();
+    initializeSearch();
+    initializeThemeToggle();
+    initializeScrollEvents();
+    initializeAdSystem();
+    
+    // Initialize carousel functionality with delay
+    setTimeout(() => {
+        initCarouselScrolling('featured');
+        initCarouselScrolling('topRated');
+        initArrowNavigation();
+        updateNavButtons('featured');
+        updateNavButtons('topRated');
         
-        // Initialize performance optimizations
-        const { smoothScrollTo, batchDOMUpdates } = optimizePerformance();
+        // Setup mobile-specific features
+        if (isMobile()) {
+            // Mobile auto-scroll every 2 seconds
+            setTimeout(() => {
+                startMobileAutoScroll('featured');
+                startMobileAutoScroll('topRated');
+            }, 1000);
+        } else {
+            // Desktop auto-scroll
+            setTimeout(() => {
+                startAutoScroll('featured');
+                startAutoScroll('topRated');
+            }, 1500);
+        }
+    }, 300);
         
-        // Store for global use
-        window.smoothScrollTo = smoothScrollTo;
-        window.batchDOMUpdates = batchDOMUpdates;
-        
-        // Load data first
-        batchDOMUpdates(() => {
-            loadRecipes();
-            loadFeaturedRecipes();
-            loadTopRatedRecipes();
-            populateCategoriesMenu();
-            initializeSearch();
-            initializeThemeToggle();
-            initializeScrollEvents();
-            initializeAdSystem();
-        });
-        
-        // Initialize carousel functionality with delay
-        setTimeout(() => {
-            batchDOMUpdates(() => {
-                initCarouselScrolling('featured');
-                initCarouselScrolling('topRated');
-                initArrowNavigation();
-                updateNavButtons('featured');
-                updateNavButtons('topRated');
-                
-                // Setup mobile-specific features
-                if (isMobile()) {
-                    setupMobileCarousel('featured');
-                    setupMobileCarousel('topRated');
-                    setupMobileNavigationArrows('featured');
-                    setupMobileNavigationArrows('topRated');
-                    
-                    // Start mobile auto-scroll every 2 seconds
-                    setTimeout(() => {
-                        startMobileAutoScroll('featured');
-                        startMobileAutoScroll('topRated');
-                    }, 1000);
-                } else {
-                    // Desktop auto-scroll
-                    setTimeout(() => {
-                        startAutoScroll('featured');
-                        startAutoScroll('topRated');
-                    }, 1500);
-                }
-            });
-        }, 300);
-            
-        // Show floating ad after 3 seconds
-        setTimeout(() => {
-            if (floatingAd) floatingAd.classList.add('show');
-        }, 3000);
-        
-        // Show newsletter popup after 15 seconds (only once)
-        setTimeout(() => {
-            if (!localStorage.getItem('newsletterShown')) {
-                if (newsletterPopup) newsletterPopup.classList.add('show');
-                localStorage.setItem('newsletterShown', 'true');
-            }
-        }, 15000);
-        
-        // Import recipes file input
-        const importFileInput = document.getElementById('importRecipesFile');
-        if (importFileInput) importFileInput.addEventListener('change', importRecipesFromFile);
-        
-        initializeKeyboardNavigation();
-        
-        console.log(`✅ Loaded ${recipes.length} recipes`);
-        
-        // Handle window resize with debounce
-        window.addEventListener('resize', debounce(function() {
-            updateNavButtons('featured');
-            updateNavButtons('topRated');
-            
-            // Re-setup mobile features if needed
-            if (isMobile()) {
-                setupMobileCarousel('featured');
-                setupMobileCarousel('topRated');
-            }
-        }, 250));
-    });
+    // Show floating ad after 3 seconds
+    setTimeout(() => {
+        if (floatingAd) floatingAd.classList.add('show');
+    }, 3000);
+    
+    // Show newsletter popup after 15 seconds (only once)
+    setTimeout(() => {
+        if (!localStorage.getItem('newsletterShown')) {
+            if (newsletterPopup) newsletterPopup.classList.add('show');
+            localStorage.setItem('newsletterShown', 'true');
+        }
+    }, 15000);
+    
+    // Import recipes file input
+    const importFileInput = document.getElementById('importRecipesFile');
+    if (importFileInput) importFileInput.addEventListener('change', importRecipesFromFile);
+    
+    initializeKeyboardNavigation();
+    
+    console.log(`✅ Loaded ${recipes.length} recipes`);
+    
+    // Handle window resize with debounce
+    window.addEventListener('resize', debounce(function() {
+        updateNavButtons('featured');
+        updateNavButtons('topRated');
+    }, 250));
+});
 
     // ===== CAROUSEL SCROLLING =====
-    function initCarouselScrolling(section) {
-        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
-        if (!wrapper) return;
+function initCarouselScrolling(section) {
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    if (!wrapper) return;
 
-        wrapper.style.scrollBehavior = 'smooth';
-        
-        let scrollTimeout;
-        wrapper.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                updateNavButtons(section);
-                
-                if (isMobile()) {
-                    updateScrollIndicator(section);
+    let scrollTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateNavButtons(section);
+        }, 100);
+    }, { passive: true });
+
+    // Desktop hover handling
+    wrapper.addEventListener('mouseenter', () => {
+        if (!isMobile()) {
+            carouselStates[section].isHovering = true;
+            stopAutoScroll(section);
+        }
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+        if (!isMobile()) {
+            carouselStates[section].isHovering = false;
+            setTimeout(() => {
+                if (!carouselStates[section].isHovering) {
+                    startAutoScroll(section);
                 }
-            }, 100);
-        }, { passive: true });
-
-        // Desktop hover handling
-        wrapper.addEventListener('mouseenter', () => {
-            if (!isMobile()) {
-                carouselStates[section].isHovering = true;
-                stopAutoScroll(section);
-            }
-        });
-
-        wrapper.addEventListener('mouseleave', () => {
-            if (!isMobile()) {
-                carouselStates[section].isHovering = false;
-                setTimeout(() => {
-                    if (!carouselStates[section].isHovering) {
-                        startAutoScroll(section);
-                    }
-                }, 2000);
-            }
-        });
-    }
-
+            }, 2000);
+        }
+    });
+}
     // ===== ARROW NAVIGATION =====
     function initArrowNavigation() {
         // Featured recipes
@@ -3816,125 +3695,143 @@ img {
         localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
     }
 
-    function loadFeaturedRecipes() {
-        console.log('🎯 Loading featured recipes...');
-        if (!featuredRecipesWrapper) return;
-        
-        featuredRecipesWrapper.innerHTML = '';
-        
-        if (recipes.length === 0) {
-            featuredRecipesWrapper.innerHTML = `
-                <div class="no-recipes-state">
-                    <i class="fas fa-utensils"></i>
-                    <h3>No Recipes Yet</h3>
-                    <p>Import your chicken recipes to get started.</p>
-                    <button class="btn btn-primary" onclick="document.getElementById('importRecipesFile').click()">
-                        <i class="fas fa-file-import"></i>
-                        Import Your First Recipe
-                    </button>
-                </div>
-            `;
-            return;
-        }
-        
-        let filteredRecipes = [...recipes];
-        
-        if (currentFilters.length > 0) {
-            filteredRecipes = filteredRecipes.filter(recipe => 
-                recipe.badges && recipe.badges.some(badge => currentFilters.includes(badge))
-            );
-        }
-        
-        if (currentSearchTerm) {
-            const searchLower = currentSearchTerm.toLowerCase();
-            filteredRecipes = filteredRecipes.filter(recipe => 
-                recipe.title.toLowerCase().includes(searchLower) ||
-                recipe.description.toLowerCase().includes(searchLower)
-            );
-        }
-        
-        if (filteredRecipes.length === 0) {
-            featuredRecipesWrapper.innerHTML = `
-                <div class="no-recipes-state">
-                    <i class="fas fa-search"></i>
-                    <h3>No Recipes Found</h3>
-                    <p>Try different filters or search terms</p>
-                    <button class="btn btn-primary" onclick="clearFilters()">
-                        <i class="fas fa-times"></i>
-                        Clear Filters
-                    </button>
-                </div>
-            `;
-            return;
-        }
-        
-        filteredRecipes.forEach((recipe) => {
-            const recipeCard = createRecipeCard(recipe, 'featured');
-            featuredRecipesWrapper.appendChild(recipeCard);
-        });
-        
-        // Setup mobile features after loading
-        if (isMobile()) {
-            setTimeout(() => {
-                setupMobileCarousel('featured');
-                updateScrollIndicator('featured');
-            }, 100);
-        }
-        
-        updateFilterTags();
-        updateSectionTitle();
-        
-        // Update nav buttons after render
-        setTimeout(() => {
-            updateNavButtons('featured');
-        }, 100);
+function loadFeaturedRecipes() {
+    console.log('🎯 Loading featured recipes...');
+    if (!featuredRecipesWrapper) return;
+    
+    featuredRecipesWrapper.innerHTML = '';
+    
+    if (recipes.length === 0) {
+        featuredRecipesWrapper.innerHTML = `
+            <div class="no-recipes-state">
+                <i class="fas fa-utensils"></i>
+                <h3>No Recipes Yet</h3>
+                <p>Import your chicken recipes to get started.</p>
+                <button class="btn btn-primary" onclick="document.getElementById('importRecipesFile').click()">
+                    <i class="fas fa-file-import"></i>
+                    Import Your First Recipe
+                </button>
+            </div>
+        `;
+        return;
     }
-
-    function loadTopRatedRecipes() {
-        console.log('⭐ Loading top rated recipes...');
-        if (!topRatedRecipesWrapper) return;
-        
-        topRatedRecipesWrapper.innerHTML = '';
-        const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
-        
-        if (ratedRecipes.length === 0) {
-            topRatedRecipesWrapper.innerHTML = `
-                <div class="no-recipes-state">
-                    <i class="fas fa-star"></i>
-                    <h3>No Ratings Yet</h3>
-                    <p>Rate recipes to see them here!</p>
-                </div>
-            `;
-            return;
-        }
-        
-        const sortedRecipes = ratedRecipes.sort((a, b) => {
-            const ratingA = recipeRatings[a.id]?.average || 0;
-            const ratingB = recipeRatings[b.id]?.average || 0;
-            return ratingB - ratingA;
-        });
-        
-        const topRecipes = sortedRecipes.slice(0, 10);
-        
-        topRecipes.forEach((recipe) => {
-            const recipeCard = createRecipeCard(recipe, 'topRated');
-            topRatedRecipesWrapper.appendChild(recipeCard);
-        });
-        
-        // Setup mobile features after loading
-        if (isMobile()) {
-            setTimeout(() => {
-                setupMobileCarousel('topRated');
-                updateScrollIndicator('topRated');
-            }, 100);
-        }
-        
-        // Update nav buttons after render
-        setTimeout(() => {
-            updateNavButtons('topRated');
-        }, 100);
+    
+    let filteredRecipes = [...recipes];
+    
+    if (currentFilters.length > 0) {
+        filteredRecipes = filteredRecipes.filter(recipe => 
+            recipe.badges && recipe.badges.some(badge => currentFilters.includes(badge))
+        );
     }
+    
+    if (currentSearchTerm) {
+        const searchLower = currentSearchTerm.toLowerCase();
+        filteredRecipes = filteredRecipes.filter(recipe => 
+            recipe.title.toLowerCase().includes(searchLower) ||
+            recipe.description.toLowerCase().includes(searchLower)
+        );
+    }
+    
+    if (filteredRecipes.length === 0) {
+        featuredRecipesWrapper.innerHTML = `
+            <div class="no-recipes-state">
+                <i class="fas fa-search"></i>
+                <h3>No Recipes Found</h3>
+                <p>Try different filters or search terms</p>
+                <button class="btn btn-primary" onclick="clearFilters()">
+                    <i class="fas fa-times"></i>
+                    Clear Filters
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    filteredRecipes.forEach((recipe) => {
+        const recipeCard = createRecipeCard(recipe, 'featured');
+        featuredRecipesWrapper.appendChild(recipeCard);
+    });
+    
+    // Setup mobile features after loading
+    if (isMobile()) {
+        // Add scroll snap behavior
+        featuredRecipesWrapper.style.scrollSnapType = 'x mandatory';
+        featuredRecipesWrapper.style.scrollSnapStop = 'always';
+        
+        // Add snap alignment to cards
+        const cards = featuredRecipesWrapper.querySelectorAll('.recipe-card');
+        cards.forEach(card => {
+            card.style.scrollSnapAlign = 'start';
+        });
+        
+        // Setup mobile carousel
+        setupMobileCarousel('featured');
+        setupMobileNavigationArrows('featured');
+    }
+    
+    updateFilterTags();
+    updateSectionTitle();
+    
+    // Update nav buttons after render
+    setTimeout(() => {
+        updateNavButtons('featured');
+    }, 100);
+}
 
+// Update the loadTopRatedRecipes function similarly
+function loadTopRatedRecipes() {
+    console.log('⭐ Loading top rated recipes...');
+    if (!topRatedRecipesWrapper) return;
+    
+    topRatedRecipesWrapper.innerHTML = '';
+    const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
+    
+    if (ratedRecipes.length === 0) {
+        topRatedRecipesWrapper.innerHTML = `
+            <div class="no-recipes-state">
+                <i class="fas fa-star"></i>
+                <h3>No Ratings Yet</h3>
+                <p>Rate recipes to see them here!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const sortedRecipes = ratedRecipes.sort((a, b) => {
+        const ratingA = recipeRatings[a.id]?.average || 0;
+        const ratingB = recipeRatings[b.id]?.average || 0;
+        return ratingB - ratingA;
+    });
+    
+    const topRecipes = sortedRecipes.slice(0, 10);
+    
+    topRecipes.forEach((recipe) => {
+        const recipeCard = createRecipeCard(recipe, 'topRated');
+        topRatedRecipesWrapper.appendChild(recipeCard);
+    });
+    
+    // Setup mobile features after loading
+    if (isMobile()) {
+        // Add scroll snap behavior
+        topRatedRecipesWrapper.style.scrollSnapType = 'x mandatory';
+        topRatedRecipesWrapper.style.scrollSnapStop = 'always';
+        
+        // Add snap alignment to cards
+        const cards = topRatedRecipesWrapper.querySelectorAll('.recipe-card');
+        cards.forEach(card => {
+            card.style.scrollSnapAlign = 'start';
+        });
+        
+        // Setup mobile carousel
+        setupMobileCarousel('topRated');
+        setupMobileNavigationArrows('topRated');
+    }
+    
+    // Update nav buttons after render
+    setTimeout(() => {
+        updateNavButtons('topRated');
+    }, 100);
+}
     // ===== CREATE RECIPE CARD =====
     function createRecipeCard(recipe, section) {
         const isKrabbyPatty = recipe.badges && recipe.badges.includes('krabby-patty');
