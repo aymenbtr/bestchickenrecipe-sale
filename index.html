@@ -159,7 +159,7 @@
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json">
     
-  <style>
+ <style>
     /* ===== CSS RESET & BASE STYLES ===== */
 * {
     margin: 0;
@@ -208,6 +208,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior: contain;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -224,15 +226,54 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+/* Hardware acceleration for animations */
+.recipe-card,
+.featured-wrapper,
+.topRatedRecipesWrapper {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+    contain: content;
+}
+
+/* Optimize images */
+.recipe-image img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transform: translateZ(0);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize transitions */
+* {
+    backface-visibility: hidden;
+}
+
+/* Reduce expensive shadow operations */
+.recipe-card {
+    box-shadow: 
+        0 2px 4px rgba(0,0,0,0.05),
+        0 4px 8px rgba(0,0,0,0.05);
+}
+
+.recipe-card:hover {
+    box-shadow: 
+        0 4px 8px rgba(0,0,0,0.1),
+        0 8px 16px rgba(0,0,0,0.1);
+}
+
 /* ===== MAIN CONTENT WRAPPER ===== */
 .main-content {
     flex: 1;
     width: 100%;
-}
-
-/* ===== SMOOTH SCROLLING ===== */
-html {
-    scroll-behavior: smooth;
 }
 
 /* ===== HEADER - CENTERED ===== */
@@ -244,6 +285,7 @@ html {
     z-index: 1000;
     padding: 1rem 0;
     width: 100%;
+    backdrop-filter: blur(10px);
 }
 
 .header-content {
@@ -743,22 +785,22 @@ html {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translate3d(0, 30px, 0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
 @keyframes fadeInRight {
     from {
         opacity: 0;
-        transform: translateX(30px);
+        transform: translate3d(30px, 0, 0);
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -928,12 +970,12 @@ html {
     overflow-y: hidden;
     scroll-behavior: smooth;
     padding: 1rem 0.5rem;
-    will-change: transform;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-snap-type: x proximity;
     scroll-padding: 0 1.5rem;
+    will-change: scroll-position;
 }
 
 .featured-wrapper::-webkit-scrollbar {
@@ -947,11 +989,8 @@ html {
     background: var(--bg-white);
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
     scroll-snap-align: start;
     will-change: transform;
     position: relative;
@@ -960,7 +999,6 @@ html {
 
 .recipe-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-lg);
     border-color: var(--primary-color);
 }
 
@@ -1379,10 +1417,18 @@ html {
     font-size: 1.125rem;
 }
 
+/* ===== MOBILE NAVIGATION ARROWS ===== */
+.mobile-nav-arrows {
+    display: none;
+}
+
+.mobile-scroll-indicator {
+    display: none;
+}
+
 /* ===== KRABBY PATTY SPECIAL ===== */
 .krabby-patty-card {
     border: 3px solid var(--krabby-patty-gold);
-    box-shadow: var(--krabby-patty-glow);
     animation: krabbyPulse 2s infinite;
     position: relative;
     overflow: visible;
@@ -1631,7 +1677,6 @@ html {
     position: relative;
     background: var(--bg-white);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-lg);
     border: 2px solid var(--primary-color);
 }
 
@@ -1730,7 +1775,6 @@ html {
     position: relative;
     transform: scale(0.9);
     transition: var(--transition);
-    box-shadow: var(--shadow-lg);
     border: 2px solid var(--primary-color);
 }
 
@@ -1932,7 +1976,6 @@ html {
     background: var(--bg-white);
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-lg);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -1995,6 +2038,109 @@ html {
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* ===== RESPONSIVE DESIGN - MOBILE ===== */
+@media (max-width: 768px) {
+    /* MOBILE NAVIGATION ARROWS */
+    .mobile-nav-arrows {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .mobile-nav-arrow {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow-md);
+        position: relative;
+        z-index: 10;
+    }
+    
+    .mobile-nav-arrow:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .mobile-nav-arrow.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    /* MOBILE SCROLL INDICATOR */
+    .mobile-scroll-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .mobile-scroll-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border-color);
+        transition: var(--transition);
+    }
+    
+    .mobile-scroll-dot.active {
+        background: var(--primary-color);
+        transform: scale(1.2);
+    }
+    
+    /* HIDE DESKTOP ARROWS ON MOBILE */
+    .scroll-nav {
+        display: none !important;
+    }
+    
+    /* IMPROVED TOUCH SCROLLING */
+    .featured-wrapper {
+        touch-action: pan-y pinch-zoom !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+    }
+    
+    .recipe-card {
+        -webkit-tap-highlight-color: transparent;
+        scroll-snap-align: start;
+    }
+    
+    /* PERFORMANCE OPTIMIZATIONS FOR MOBILE */
+    .recipe-card:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+    
+    /* REDUCE ANIMATIONS FOR BETTER PERFORMANCE */
+    @media (prefers-reduced-motion: reduce) {
+        .recipe-card,
+        .view-recipe-btn,
+        .save-recipe {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-nav-arrows,
+    .mobile-scroll-indicator {
+        display: none;
+    }
 }
 
 /* ===== MOBILE RESPONSIVE - FIX RATING BUTTON ===== */
@@ -2130,17 +2276,15 @@ html {
         overflow-x: auto;
         overflow-y: hidden;
         padding: 1rem 0.5rem;
-        touch-action: pan-y pinch-zoom !important;
-        -webkit-overflow-scrolling: touch !important;
+        -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         -ms-overflow-style: none;
         scroll-snap-type: x mandatory;
-        will-change: transform;
         scroll-padding: 0 1.5rem;
         width: 100%;
         flex-wrap: nowrap;
         scroll-behavior: smooth;
-        
+        touch-action: pan-x pinch-zoom;
     }
     
     .featured-wrapper::-webkit-scrollbar {
@@ -2151,12 +2295,10 @@ html {
         flex: 0 0 auto;
         width: 280px !important;
         min-width: 280px !important;
-        height: 420px !important; /* Increased height to fit rating button */
+        height: 420px !important;
         scroll-snap-align: start;
         margin-right: 0 !important;
         display: block !important;
-        touch-action: pan-y pinch-zoom !important;
-        -webkit-overflow-scrolling: touch !important;
     }
     
     .recipe-image {
@@ -2239,26 +2381,16 @@ html {
         display: none;
     }
     
-    /* Scroll indicator dots for mobile */
-    .scroll-indicator {
+    /* Add mobile navigation arrows styling */
+    .featured-container {
+        position: relative;
+    }
+    
+    .mobile-nav-arrows {
         display: flex;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 1rem;
         margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .scroll-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--border-color);
-        transition: var(--transition);
-    }
-    
-    .scroll-dot.active {
-        background: var(--primary-color);
-        transform: scale(1.2);
     }
     
     .popup-content {
@@ -2314,7 +2446,7 @@ html {
     .recipe-card {
         width: 250px !important;
         min-width: 250px !important;
-        height: 410px !important; /* Slightly shorter but still fits button */
+        height: 410px !important;
     }
     
     .recipe-image {
@@ -2446,7 +2578,41 @@ html {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
-  </style>
+
+/* ===== LAZY LOADING ===== */
+.lazy-load {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lazy-load.loaded {
+    opacity: 1;
+}
+
+/* ===== OPTIMIZE IMAGES ===== */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+}
+
+/* ===== REDUCE LAYOUT SHIFTS ===== */
+.recipe-image {
+    position: relative;
+    width: 100%;
+    padding-bottom: 70%; /* Aspect ratio placeholder */
+}
+
+.recipe-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+ </style>
 </head>
 <body>
     <!-- Recipe Ad Overlay -->
@@ -2820,43 +2986,56 @@ html {
 
     // ===== INITIALIZATION =====
  document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Initializing website...');
+    console.log('🚀 Initializing website with performance optimizations...');
+    
+    // Initialize performance optimizations
+    const { smoothScrollTo, batchDOMUpdates } = optimizePerformance();
+    
+    // Store for global use
+    window.smoothScrollTo = smoothScrollTo;
+    window.batchDOMUpdates = batchDOMUpdates;
     
     // Load data first
-    loadRecipes();
-    loadFeaturedRecipes();
-    loadTopRatedRecipes();
-    populateCategoriesMenu();
-    initializeSearch();
-    initializeThemeToggle();
-    initializeScrollEvents();
-    initializeAdSystem();
+    batchDOMUpdates(() => {
+        loadRecipes();
+        loadFeaturedRecipes();
+        loadTopRatedRecipes();
+        populateCategoriesMenu();
+        initializeSearch();
+        initializeThemeToggle();
+        initializeScrollEvents();
+        initializeAdSystem();
+    });
     
     // Initialize carousel functionality with delay
     setTimeout(() => {
-        initCarouselScrolling('featured');
-        initCarouselScrolling('topRated');
-        initArrowNavigation();
-        updateNavButtons('featured');
-        updateNavButtons('topRated');
-        
-        // Setup mobile-specific features
-        if (isMobile()) {
-            setupMobileCarousel('featured');
-            setupMobileCarousel('topRated');
+        batchDOMUpdates(() => {
+            initCarouselScrolling('featured');
+            initCarouselScrolling('topRated');
+            initArrowNavigation();
+            updateNavButtons('featured');
+            updateNavButtons('topRated');
             
-            // Start mobile auto-scroll
-            setTimeout(() => {
-                startMobileAutoScroll('featured');
-                startMobileAutoScroll('topRated');
-            }, 1500); // Start after 1.5 seconds
-        } else {
-            // Desktop auto-scroll
-            setTimeout(() => {
-                startAutoScroll('featured');
-                startAutoScroll('topRated');
-            }, 1500); // Start after 1.5 seconds
-        }
+            // Setup mobile-specific features
+            if (isMobile()) {
+                setupMobileCarousel('featured');
+                setupMobileCarousel('topRated');
+                setupMobileNavigationArrows('featured');
+                setupMobileNavigationArrows('topRated');
+                
+                // Start mobile auto-scroll
+                setTimeout(() => {
+                    startMobileAutoScroll('featured');
+                    startMobileAutoScroll('topRated');
+                }, 1500);
+            } else {
+                // Desktop auto-scroll
+                setTimeout(() => {
+                    startAutoScroll('featured');
+                    startAutoScroll('topRated');
+                }, 1500);
+            }
+        });
     }, 300);
         
         // Show floating ad after 3 seconds
@@ -3130,7 +3309,210 @@ function initCarouselScrolling(section) {
             });
         }
     }
-
+// ===== MOBILE NAVIGATION ARROWS =====
+function setupMobileNavigationArrows(section) {
+    if (!isMobile()) return;
+    
+    const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+    const container = wrapper ? wrapper.closest('.featured-container') : null;
+    if (!wrapper || !container) return;
+    
+    // Remove existing mobile navigation if any
+    const existingNav = container.querySelector('.mobile-nav-arrows');
+    if (existingNav) existingNav.remove();
+    const existingIndicator = container.querySelector('.mobile-scroll-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    
+    // Create mobile navigation arrows
+    const mobileNav = document.createElement('div');
+    mobileNav.className = 'mobile-nav-arrows';
+    mobileNav.innerHTML = `
+        <button class="mobile-nav-arrow prev-mobile" aria-label="Previous recipes">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="mobile-nav-arrow next-mobile" aria-label="Next recipes">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+    
+    // Create scroll indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'mobile-scroll-indicator';
+    
+    const cardCount = Math.min(wrapper.children.length, 8);
+    for (let i = 0; i < cardCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'mobile-scroll-dot';
+        dot.dataset.index = i;
+        indicator.appendChild(dot);
+    }
+    
+    // Add to container
+    container.appendChild(mobileNav);
+    container.appendChild(indicator);
+    
+    // Setup event listeners for mobile arrows
+    const prevMobile = mobileNav.querySelector('.prev-mobile');
+    const nextMobile = mobileNav.querySelector('.next-mobile');
+    
+    // Mobile navigation function
+    function scrollToCardMobile(index) {
+        const card = wrapper.children[index];
+        if (!card) return;
+        
+        const containerRect = container.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        
+        const scrollPosition = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
+        
+        // Smooth scroll with hardware acceleration
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+        
+        // Update indicator
+        updateMobileScrollIndicator(section);
+        
+        // Update arrow states
+        updateMobileArrowStates(section);
+    }
+    
+    // Update mobile indicator
+    function updateMobileScrollIndicator(section) {
+        const indicator = container.querySelector('.mobile-scroll-indicator');
+        if (!indicator) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const currentIndex = Math.round(scrollLeft / scrollAmount);
+        
+        const dots = indicator.querySelectorAll('.mobile-scroll-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    // Update mobile arrow states
+    function updateMobileArrowStates(section) {
+        const scrollLeft = wrapper.scrollLeft;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const tolerance = 5;
+        
+        if (prevMobile) {
+            if (scrollLeft <= tolerance) {
+                prevMobile.classList.add('disabled');
+                prevMobile.disabled = true;
+            } else {
+                prevMobile.classList.remove('disabled');
+                prevMobile.disabled = false;
+            }
+        }
+        
+        if (nextMobile) {
+            if (scrollLeft >= maxScroll - tolerance) {
+                nextMobile.classList.add('disabled');
+                nextMobile.disabled = true;
+            } else {
+                nextMobile.classList.remove('disabled');
+                nextMobile.disabled = false;
+            }
+        }
+    }
+    
+    // Click handlers for mobile arrows
+    prevMobile.addEventListener('click', () => {
+        if (prevMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const targetScroll = Math.max(0, scrollLeft - scrollAmount);
+        
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 3000);
+        }, 300);
+    });
+    
+    nextMobile.addEventListener('click', () => {
+        if (nextMobile.disabled) return;
+        
+        const scrollLeft = wrapper.scrollLeft;
+        const cardWidth = wrapper.querySelector('.recipe-card')?.offsetWidth || 0;
+        const gap = 16;
+        const scrollAmount = cardWidth + gap;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        let targetScroll = scrollLeft + scrollAmount;
+        
+        // If at end, loop to start
+        if (targetScroll >= maxScroll - 50) {
+            targetScroll = 0;
+        }
+        
+        wrapper.style.scrollBehavior = 'smooth';
+        wrapper.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        // Stop auto-scroll when user interacts
+        stopMobileAutoScroll(section);
+        
+        // Update UI after scroll
+        setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+            
+            // Restart auto-scroll after delay
+            setTimeout(() => {
+                startMobileAutoScroll(section);
+            }, 3000);
+        }, 300);
+    });
+    
+    // Initialize states
+    updateMobileScrollIndicator(section);
+    updateMobileArrowStates(section);
+    
+    // Update on scroll
+    let scrollUpdateTimeout;
+    wrapper.addEventListener('scroll', () => {
+        clearTimeout(scrollUpdateTimeout);
+        scrollUpdateTimeout = setTimeout(() => {
+            updateMobileScrollIndicator(section);
+            updateMobileArrowStates(section);
+        }, 50); // Faster update for mobile
+    }, { passive: true });
+    
+    // Click on indicator dots
+    indicator.addEventListener('click', (e) => {
+        const dot = e.target.closest('.mobile-scroll-dot');
+        if (!dot) return;
+        
+        const index = parseInt(dot.dataset.index);
+        scrollToCardMobile(index);
+    });
+}
 function scrollCarousel(section, direction) {
     const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
     if (!wrapper || !wrapper.children.length) return;
@@ -3837,7 +4219,131 @@ function setupCardEvents(card, recipeId) {
             showNotification(recipe.saved ? '❤️ Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
         }
     }
-
+function optimizePerformance() {
+    // Request Animation Frame for smooth animations
+    let lastScrollTime = 0;
+    const SCROLL_THROTTLE = 16; // ~60fps
+    
+    // Throttle scroll events
+    window.addEventListener('scroll', () => {
+        const now = Date.now();
+        if (now - lastScrollTime >= SCROLL_THROTTLE) {
+            lastScrollTime = now;
+            // Your scroll-related updates here
+        }
+    }, { passive: true });
+    
+    // Use requestAnimationFrame for animations
+    function smoothScrollTo(element, target, duration = 300) {
+        const start = element.scrollLeft;
+        const change = target - start;
+        const startTime = performance.now();
+        
+        function animateScroll(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeInOutCubic = t => 
+                t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            
+            element.scrollLeft = start + change * easeInOutCubic(progress);
+            
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+        
+        requestAnimationFrame(animateScroll);
+    }
+    
+    // Lazy load images
+    function lazyLoadImages() {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.classList.add('loaded');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.1
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        } else {
+            // Fallback for older browsers
+            images.forEach(img => {
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                }
+            });
+        }
+    }
+    
+    // Debounce resize events
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Update carousel metrics after resize
+            updateCarouselMetrics();
+        }, 150);
+    });
+    function updateCarouselMetrics() {
+    // Update metrics for all carousels
+    const sections = ['featured', 'topRated'];
+    sections.forEach(section => {
+        const wrapper = section === 'featured' ? featuredRecipesWrapper : topRatedRecipesWrapper;
+        if (!wrapper) return;
+        
+        batchDOMUpdates(() => {
+            updateNavButtons(section);
+            if (isMobile()) {
+                updateMobileScrollIndicator(section);
+                updateMobileArrowStates(section);
+            }
+        });
+    });
+}
+    // Optimize CSS animations
+    function optimizeAnimations() {
+        // Ensure animations are hardware accelerated
+        const animatedElements = document.querySelectorAll('.recipe-card, .featured-wrapper, .scroll-nav');
+        animatedElements.forEach(el => {
+            el.style.transform = 'translateZ(0)';
+        });
+    }
+    
+    // Initialize optimizations
+    lazyLoadImages();
+    optimizeAnimations();
+    
+    // Reduce layout thrashing
+    let pendingAnimationFrame = null;
+    
+    function batchDOMUpdates(callback) {
+        if (pendingAnimationFrame === null) {
+            pendingAnimationFrame = requestAnimationFrame(() => {
+                callback();
+                pendingAnimationFrame = null;
+            });
+        }
+    }
+    
+    return {
+        smoothScrollTo,
+        batchDOMUpdates
+    };
+}
     function handleRecipeClick(recipeId, event) {
         if (event) {
             event.preventDefault();
