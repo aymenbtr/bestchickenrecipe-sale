@@ -2664,26 +2664,22 @@ img {
  </style>
 </head>
 <body>
-    <!-- Recipe Ad Overlay -->
+     <!-- Recipe Ad Overlay -->
     <div class="recipe-ad-overlay" id="recipeAdOverlay">
         <div class="recipe-ad-container" id="recipeAdContainer">
             <div class="video-container" id="recipeVideoContainer">
-                <video id="recipeAdVideo" preload="metadata" playsinline>
-                    <!-- Video source will be loaded dynamically -->
-                </video>
+                <video id="recipeAdVideo" preload="metadata" playsinline></video>
                 <div class="ad-loading" id="recipeAdLoading">
                     <div class="spinner"></div>
                     <p>Loading advertisement...</p>
                 </div>
             </div>
             
-            <!-- Skip Button for Recipe Ad -->
             <button class="recipe-skip-button" id="recipeSkipButton" disabled onclick="skipRecipeAd()">
                 <span class="recipe-skip-timer" id="recipeSkipTimer">8</span>
                 Skip Ad
             </button>
             
-            <!-- Ad marker -->
             <div class="ad-marker">
                 <i class="fas fa-ad"></i> Advertisement
             </div>
@@ -2719,9 +2715,7 @@ img {
                             <span>Categories</span>
                             <i class="fas fa-chevron-down" style="font-size: 0.875rem;"></i>
                         </div>
-                        <div class="categories-menu" id="categoriesMenu">
-                            <!-- Categories will be populated by JavaScript -->
-                        </div>
+                        <div class="categories-menu" id="categoriesMenu"></div>
                     </div>
                 </nav>
 
@@ -2729,14 +2723,11 @@ img {
                     <div class="search-box">
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search recipes..." id="searchInput" aria-label="Search recipes">
-                        <div class="search-suggestions" id="searchSuggestions">
-                            <!-- Search suggestions will be populated by JavaScript -->
-                        </div>
+                        <div class="search-suggestions" id="searchSuggestions"></div>
                     </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -2759,31 +2750,27 @@ img {
                         </div>
                     </div>
                     <div class="hero-image">
-                        <img src="daniel-hooper-PaaboPF3dVY-unsplash (1).jpg" 
-                            alt="Professional Chicken Cooking" loading="lazy">
+                        <img src="daniel-hooper-PaaboPF3dVY-unsplash (1).jpg" alt="Professional Chicken Cooking" loading="lazy">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Ad Container 1: Top Banner -->
+        <!-- Ad Container 1: Top Banner with IN-PAGE PUSH AD -->
         <section class="ad-container top-banner-ad">
             <div class="container">
                 <div class="ad-placeholder">
-                    <i class="fas fa-ad"></i>
-                    <h4>Google Ad Space</h4>
-                    <p>Top banner ad - 728x90</p>
+                    <!-- IN-PAGE PUSH AD TAG INTEGRATED HERE -->
+                    <script>(function(s){s.dataset.zone='10303988',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
                 </div>
             </div>
         </section>
 
-        <!-- Featured Recipes Section - HORIZONTAL SCROLL -->
+        <!-- Featured Recipes Section -->
         <section class="featured-section">
             <div class="container">
                 <div class="filter-controls" id="filterControls">
-                    <div class="filter-tags" id="filterTags">
-                        <!-- Filter tags will be populated by JavaScript -->
-                    </div>
+                    <div class="filter-tags" id="filterTags"></div>
                     <button class="clear-filters" onclick="clearFilters()">
                         <i class="fas fa-times"></i>
                         Clear Filters
@@ -2799,15 +2786,12 @@ img {
                     <button class="scroll-nav prev" id="scrollPrevFeatured">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <div class="featured-wrapper" id="featuredRecipesWrapper">
-                        <!-- Recipes loaded by JavaScript -->
-                    </div>
+                    <div class="featured-wrapper" id="featuredRecipesWrapper"></div>
                     <button class="scroll-nav next" id="scrollNextFeatured">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 
-                <!-- Show More Button -->
                 <div class="show-more-container" id="featuredShowMore">
                     <a href="recipes.html?category=featured" class="btn btn-primary show-more-btn">
                         <span>View All Featured Recipes</span>
@@ -2817,18 +2801,18 @@ img {
             </div>
         </section>
 
-        <!-- Ad Container 2: Middle Rectangle -->
+        <!-- Ad Container 2: Middle Rectangle - LEFT BLANK -->
         <section class="ad-container rectangle-ad">
             <div class="container">
                 <div class="ad-placeholder">
                     <i class="fas fa-ad"></i>
-                    <h4>Google Ad Space</h4>
+                    <h4>Ad Space</h4>
                     <p>Medium rectangle - 300x250</p>
                 </div>
             </div>
         </section>
 
-        <!-- Top Rated Recipes Section - HORIZONTAL SCROLL -->
+        <!-- Top Rated Recipes Section -->
         <section class="top-rated-section">
             <div class="container">
                 <div class="section-header">
@@ -2840,15 +2824,12 @@ img {
                     <button class="scroll-nav prev" id="scrollPrevTopRated">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <div class="featured-wrapper" id="topRatedRecipesWrapper">
-                        <!-- Top rated recipes will be populated by JavaScript -->
-                    </div>
+                    <div class="featured-wrapper" id="topRatedRecipesWrapper"></div>
                     <button class="scroll-nav next" id="scrollNextTopRated">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 
-                <!-- Show More Button -->
                 <div class="show-more-container" id="topRatedShowMore">
                     <a href="recipes.html?sort=rating" class="btn btn-primary show-more-btn">
                         <span>View All Top Rated Recipes</span>
@@ -2858,12 +2839,12 @@ img {
             </div>
         </section>
 
-        <!-- Ad Container 3: Bottom Banner -->
+        <!-- Ad Container 3: Bottom Banner - LEFT BLANK -->
         <section class="ad-container bottom-banner-ad">
             <div class="container">
                 <div class="ad-placeholder">
                     <i class="fas fa-ad"></i>
-                    <h4>Google Ad Space</h4>
+                    <h4>Ad Space</h4>
                     <p>Bottom banner ad - 728x90</p>
                 </div>
             </div>
@@ -2903,26 +2884,27 @@ img {
                     <p>Your trusted source for professional chicken recipes and cooking techniques.</p>
                 </div>
 
-               <div class="footer-section">
-    <h4>Contact & Legal</h4>
-    <ul class="footer-links">
-        <li><a href="contact.html">Contact Me</a></li>
-        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="terms-of-service.html">Terms of Service</a></li>
-    </ul>
-</div>
+                <div class="footer-section">
+                    <h4>Contact & Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Me</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer-bottom">
                 <p>&copy; 2023 BestChickenRecipes. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Floating Ad -->
+    <!-- Floating Ad - LEFT BLANK -->
     <div class="floating-ad-container" id="floatingAd">
         <div class="floating-ad-content">
             <div class="ad-placeholder small">
                 <i class="fas fa-ad"></i>
-                <h4>Google Ad Space</h4>
+                <h4>Ad Space</h4>
                 <p>Floating Ad</p>
             </div>
             <span class="close-ad" onclick="closeFloatingAd()" role="button" tabindex="0" aria-label="Close ad">×</span>
@@ -2933,6 +2915,9 @@ img {
     <button class="back-to-top" id="backToTop" role="button" tabindex="0" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- VIGNETTE AD TAG INTEGRATED HERE -->
+    <script>(function(s){s.dataset.zone='10303881',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
     <!-- Newsletter Popup -->
     <div class="newsletter-popup" id="newsletterPopup">
@@ -2947,7 +2932,6 @@ img {
             </form>
         </div>
     </div>
-
     <script>
     // ===== CONFIGURATION =====
     let recipes = [];
