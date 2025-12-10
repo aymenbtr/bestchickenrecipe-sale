@@ -2273,1095 +2273,860 @@
     </footer>
 
     <script>
-        // ===== CONFIGURATION & INITIALIZATION =====
-        // Recipe data - loaded from localStorage or empty array
-        let recipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+    // ===== CONFIGURATION & INITIALIZATION =====
+    // Recipe data - loaded from localStorage or empty array
+    let recipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+    
+    // Rating system
+    let recipeRatings = JSON.parse(localStorage.getItem('recipeRatings')) || {};
+    let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+
+    // Categories with icons (ADDED Krabby Patty as FIRST category)
+    const categories = [
+        { id: 'krabby-patty', name: 'Krabby Patty Special', icon: 'fas fa-burger' },
+        { id: 'fried', name: 'Fried', icon: 'fas fa-fire' },
+        { id: 'baked', name: 'Baked', icon: 'fas fa-oven' },
+        { id: 'grilled', name: 'Grilled', icon: 'fas fa-grill' },
+        { id: 'soup', name: 'Soup', icon: 'fas fa-bowl-food' },
+        { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart' },
+        { id: 'traditional', name: 'Traditional', icon: 'fas fa-landmark' },
+        { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot' },
+        { id: 'quick', name: 'Quick', icon: 'fas fa-bolt' }
+    ];
+
+    // Carousel states
+    const carouselStates = {};
+
+    // ===== DOM ELEMENTS =====
+    const themeToggle = document.getElementById('themeToggle');
+    const backToTop = document.getElementById('backToTop');
+
+    // ===== INITIALIZATION =====
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize theme
+        initializeThemeToggle();
         
-        // Rating system
-        let recipeRatings = JSON.parse(localStorage.getItem('recipeRatings')) || {};
-        let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
-
-        // Categories with icons (ADDED Krabby Patty as FIRST category)
-        const categories = [
-            { id: 'krabby-patty', name: 'Krabby Patty Special', icon: 'fas fa-burger' },
-            { id: 'fried', name: 'Fried', icon: 'fas fa-fire' },
-            { id: 'baked', name: 'Baked', icon: 'fas fa-oven' },
-            { id: 'grilled', name: 'Grilled', icon: 'fas fa-grill' },
-            { id: 'soup', name: 'Soup', icon: 'fas fa-bowl-food' },
-            { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart' },
-            { id: 'traditional', name: 'Traditional', icon: 'fas fa-landmark' },
-            { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot' },
-            { id: 'quick', name: 'Quick', icon: 'fas fa-bolt' }
-        ];
-
-        // Carousel states
-        const carouselStates = {};
-
-        // ===== ADS SYSTEM =====
-        // Ads variables
-        let adsTimer;
-        let skipTimer;
-        let recipeSkipTimer;
-        let skipCountdown = 15;
-        let recipeSkipCountdown = 8;
-        let isAdShowing = false;
-        let isRecipeAdShowing = false;
-        let adInterval = 120000; // 2 minutes in milliseconds
-        let adVideoElement = null;
-        let recipeAdVideoElement = null;
-        let targetRecipeUrl = null;
-
-        // ===== DOM ELEMENTS =====
-        const themeToggle = document.getElementById('themeToggle');
-        const backToTop = document.getElementById('backToTop');
-
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize theme
-            initializeThemeToggle();
+        // Initialize scroll events
+        initializeScrollEvents();
+        
+        // Load all carousels with a delay for mobile optimization
+        setTimeout(() => {
+            loadKrabbyPattyCarousel();
+            loadTopRatedCarousel();
             
-            // Initialize scroll events
-            initializeScrollEvents();
-            
-            // Load all carousels with a delay for mobile optimization
-            setTimeout(() => {
-                loadKrabbyPattyCarousel();
-                loadTopRatedCarousel();
-                
-                // Load other categories
-                categories.slice(1).forEach(category => {
-                    loadCategoryCarousel(category.id);
-                });
-                
-                // Initialize all carousel navigation with a delay
-                setTimeout(() => {
-                    initializeCarouselNavigation('KrabbyPatty', 'krabbyPattyCarousel');
-                    initializeCarouselNavigation('TopRated', 'topRatedCarousel');
-                    categories.slice(1).forEach(category => {
-                        const capitalized = category.id.charAt(0).toUpperCase() + category.id.slice(1);
-                        initializeCarouselNavigation(capitalized, `${category.id}Carousel`);
-                    });
-                    
-                    // Initialize auto-scroll for carousels
-                    initializeAutoScroll();
-                }, 300);
-                
-                // Add special sound effect for Krabby Patty section
-                addKrabbyPattyEffects();
-            }, 100);
-            
-            // Initialize ads system
-            initializeAds();
-            
-            // Schedule first ad
-            scheduleAd();
-            
-            // Initialize keyboard navigation
-            initializeKeyboardNavigation();
-        });
-
-        // ===== SPECIAL KRABBY PATTY FUNCTIONS =====
-        function loadKrabbyPattyCarousel() {
-            const container = document.getElementById('krabbyPattyCarousel');
-            const section = document.getElementById('krabbyPattySection');
-            
-            // Get Krabby Patty recipes
-            const krabbyPattyRecipes = recipes.filter(recipe => 
-                recipe.badges && recipe.badges.includes('krabby-patty')
-            );
-            
-            if (krabbyPattyRecipes.length === 0) {
-                container.innerHTML = `
-                    <div class="no-krabby-patty-state" style="width: 100%; text-align: center; padding: 60px 20px; color: #FFD700;">
-                        <i class="fas fa-burger" style="font-size: 4rem; margin-bottom: 20px; animation: burgerBounce 2s infinite;"></i>
-                        <h3 style="color: #FFD700; font-size: 2em; margin-bottom: 15px;">No Krabby Patty Recipes Yet!</h3>
-                        <p style="color: #FFD700; opacity: 0.9; margin-bottom: 25px; font-size: 1.2em;">
-                            🍔 The Secret Formula is still locked! 🍔
-                        </p>
-                        <p style="color: #FFD700; opacity: 0.7; font-size: 0.9em;">
-                            Import Krabby Patty recipes to unlock the secret formula!
-                        </p>
-                        <div style="margin-top: 30px; animation: secretLabelPulse 3s infinite;">
-                            <i class="fas fa-lock" style="font-size: 2rem; color: #FF4500; margin-bottom: 10px;"></i>
-                            <p style="color: #FF4500; font-weight: bold; letter-spacing: 1px;">SECRET FORMULA LOCKED</p>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = '';
-            krabbyPattyRecipes.forEach(recipe => {
-                const card = createKrabbyPattyCard(recipe);
-                container.appendChild(card);
+            // Load other categories
+            categories.slice(1).forEach(category => {
+                loadCategoryCarousel(category.id);
             });
             
-            // Show special notification if there are Krabby Patty recipes
-            if (krabbyPattyRecipes.length > 0) {
-                setTimeout(() => {
-                    showNotification(`⚡ KRABBY PATTY SECRETS FOUND! ${krabbyPattyRecipes.length} special recipe(s) loaded! ⚡`, 'success');
-                }, 1000);
-            }
-        }
+            // Initialize all carousel navigation with a delay
+            setTimeout(() => {
+                initializeCarouselNavigation('KrabbyPatty', 'krabbyPattyCarousel');
+                initializeCarouselNavigation('TopRated', 'topRatedCarousel');
+                categories.slice(1).forEach(category => {
+                    const capitalized = category.id.charAt(0).toUpperCase() + category.id.slice(1);
+                    initializeCarouselNavigation(capitalized, `${category.id}Carousel`);
+                });
+                
+                // Initialize auto-scroll for carousels
+                initializeAutoScroll();
+            }, 300);
+            
+            // Add special sound effect for Krabby Patty section
+            addKrabbyPattyEffects();
+        }, 100);
+        
+        // Initialize keyboard navigation
+        initializeKeyboardNavigation();
+    });
 
-        function createKrabbyPattyCard(recipe) {
-            const card = document.createElement('div');
-            card.className = 'recipe-card-carousel krabby-patty-card';
-            card.dataset.recipeId = recipe.id;
-            card.setAttribute('role', 'article');
-            card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
-            
-            const ratingData = recipeRatings[recipe.id];
-            const averageRating = ratingData?.average || 0;
-            const ratingCount = ratingData?.count || 0;
-            
-            card.innerHTML = `
-                <div class="krabby-patty-image">
-                    <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-                </div>
-                <div class="krabby-patty-badge">
-                    ⭐ KRABBY PATTY ⭐
-                </div>
-                <div class="krabby-patty-content">
-                    <h3>${recipe.title}</h3>
-                    <p>${recipe.description}</p>
-                    ${ratingCount > 0 ? `
-                        <div class="recipe-rating-display" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255, 215, 0, 0.3);">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <div class="stars" role="img" aria-label="${averageRating.toFixed(1)} out of 5 stars">
-                                    ${Array(5).fill().map((_, i) => {
-                                        if (i < Math.floor(averageRating)) {
-                                            return '<i class="fas fa-star" style="color: #FFD700;"></i>';
-                                        } else if (i === Math.floor(averageRating) && averageRating % 1 >= 0.5) {
-                                            return '<i class="fas fa-star-half-alt" style="color: #FFD700;"></i>';
-                                        } else {
-                                            return '<i class="far fa-star" style="color: rgba(255, 215, 0, 0.5);"></i>';
-                                        }
-                                    }).join('')}
-                                </div>
-                                <span class="rating-text" style="color: #FFD700; font-weight: bold;">
-                                    ${averageRating.toFixed(1)} ⭐
-                                </span>
-                            </div>
-                            <p style="color: rgba(255, 215, 0, 0.8); font-size: 0.9em; margin: 0;">
-                                ${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'}
-                            </p>
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="krabby-patty-overlay">
-                    <button class="krabby-patty-view-btn" onclick="handleKrabbyPattyClick(${recipe.id}, event)">
-                        <i class="fas fa-key" style="animation: secretLabelPulse 1.5s infinite;"></i>
-                        UNLOCK SECRET
-                    </button>
+    // ===== SPECIAL KRABBY PATTY FUNCTIONS =====
+    function loadKrabbyPattyCarousel() {
+        const container = document.getElementById('krabbyPattyCarousel');
+        const section = document.getElementById('krabbyPattySection');
+        
+        // Get Krabby Patty recipes
+        const krabbyPattyRecipes = recipes.filter(recipe => 
+            recipe.badges && recipe.badges.includes('krabby-patty')
+        );
+        
+        if (krabbyPattyRecipes.length === 0) {
+            container.innerHTML = `
+                <div class="no-krabby-patty-state" style="width: 100%; text-align: center; padding: 60px 20px; color: #FFD700;">
+                    <i class="fas fa-burger" style="font-size: 4rem; margin-bottom: 20px; animation: burgerBounce 2s infinite;"></i>
+                    <h3 style="color: #FFD700; font-size: 2em; margin-bottom: 15px;">No Krabby Patty Recipes Yet!</h3>
+                    <p style="color: #FFD700; opacity: 0.9; margin-bottom: 25px; font-size: 1.2em;">
+                        🍔 The Secret Formula is still locked! 🍔
+                    </p>
+                    <p style="color: #FFD700; opacity: 0.7; font-size: 0.9em;">
+                        Import Krabby Patty recipes to unlock the secret formula!
+                    </p>
+                    <div style="margin-top: 30px; animation: secretLabelPulse 3s infinite;">
+                        <i class="fas fa-lock" style="font-size: 2rem; color: #FF4500; margin-bottom: 10px;"></i>
+                        <p style="color: #FF4500; font-weight: bold; letter-spacing: 1px;">SECRET FORMULA LOCKED</p>
+                    </div>
                 </div>
             `;
-            
-            // Add click event to the entire card
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.krabby-patty-view-btn')) {
-                    handleKrabbyPattyClick(recipe.id, e);
-                }
-            });
-            
-            // Add keyboard navigation for the card
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleKrabbyPattyClick(recipe.id, e);
-                }
-            });
-            
-            return card;
+            return;
         }
-
-        function handleKrabbyPattyClick(recipeId, event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            // Special animation for Krabby Patty click
-            const card = event.target.closest('.krabby-patty-card');
-            if (card) {
-                card.style.animation = 'cardHoverPulse 0.5s infinite alternate';
-                card.style.boxShadow = '0 0 80px rgba(255, 215, 0, 0.8)';
-                
-                // Show special notification
-                showNotification('⚡ ACTIVATING SECRET FORMULA... ⚡', 'info');
-                
-                // Reset animation after a delay
-                setTimeout(() => {
-                    card.style.animation = '';
-                    card.style.boxShadow = '';
-                }, 1000);
-            }
-            
-            // Store the target URL
-            targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-            
-            // Show recipe ad overlay
+        
+        container.innerHTML = '';
+        krabbyPattyRecipes.forEach(recipe => {
+            const card = createKrabbyPattyCard(recipe);
+            container.appendChild(card);
+        });
+        
+        // Show special notification if there are Krabby Patty recipes
+        if (krabbyPattyRecipes.length > 0) {
             setTimeout(() => {
-                showRecipeAd();
-            }, 800);
+                showNotification(`⚡ KRABBY PATTY SECRETS FOUND! ${krabbyPattyRecipes.length} special recipe(s) loaded! ⚡`, 'success');
+            }, 1000);
         }
+    }
 
-        function addKrabbyPattyEffects() {
-            // Add special effects when hovering over the Krabby Patty section
-            const krabbySection = document.getElementById('krabbyPattySection');
-            if (krabbySection) {
-                krabbySection.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 25px 60px rgba(0,0,0,0.8), 0 0 100px rgba(255, 215, 0, 0.4)';
-                });
-                
-                krabbySection.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '';
-                });
-            }
-        }
-
-        // ===== EXISTING FUNCTIONS (UPDATED TO INCLUDE KRABBY PATTY) =====
-        function loadTopRatedCarousel() {
-            const container = document.getElementById('topRatedCarousel');
-            const section = document.getElementById('topRatedSection');
-            
-            // Get recipes with ratings
-            const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
-            
-            if (ratedRecipes.length === 0) {
-                container.innerHTML = `
-                    <div class="no-recipes-state" style="width: 100%;">
-                        <i class="fas fa-star"></i>
-                        <h3>No Ratings Yet</h3>
-                        <p>Rate recipes on the homepage to see them here!</p>
-                        <a href="index.html" class="btn btn-primary">
-                            <i class="fas fa-home"></i>
-                            Go to Homepage
-                        </a>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Sort by rating
-            const sortedRecipes = ratedRecipes.sort((a, b) => {
-                const ratingA = recipeRatings[a.id]?.average || 0;
-                const ratingB = recipeRatings[b.id]?.average || 0;
-                return ratingB - ratingA;
-            });
-            
-            container.innerHTML = '';
-            sortedRecipes.forEach(recipe => {
-                const card = createRecipeCard(recipe, true);
-                container.appendChild(card);
-            });
-        }
-
-        function loadCategoryCarousel(categoryId) {
-            const container = document.getElementById(`${categoryId}Carousel`);
-            const section = document.getElementById(`${categoryId}Section`);
-            
-            const categoryRecipes = recipes.filter(recipe => 
-                recipe.badges && recipe.badges.includes(categoryId)
-            );
-            
-            if (categoryRecipes.length === 0) {
-                container.innerHTML = `
-                    <div class="no-recipes-state" style="width: 100%;">
-                        <i class="fas fa-utensils"></i>
-                        <h3>No ${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Recipes</h3>
-                        <p>Import ${categoryId} recipes to see them here!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = '';
-            categoryRecipes.forEach(recipe => {
-                const card = createRecipeCard(recipe, false);
-                container.appendChild(card);
-            });
-        }
-
-        function createRecipeCard(recipe, showRating) {
-            const card = document.createElement('div');
-            card.className = 'recipe-card-carousel';
-            card.dataset.recipeId = recipe.id;
-            card.setAttribute('role', 'article');
-            card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
-            
-            const ratingData = recipeRatings[recipe.id];
-            const averageRating = ratingData?.average || 0;
-            const ratingCount = ratingData?.count || 0;
-            
-            const badges = recipe.badges ? recipe.badges.map(badge => 
-                `<span class="badge ${badge}">${badge.charAt(0).toUpperCase() + badge.slice(1)}</span>`
-            ).join('') : '';
-            
-            card.innerHTML = `
-                <div class="recipe-image">
-                    <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-                    <div class="recipe-overlay">
-                        <a href="#" class="view-recipe-btn" onclick="handleRecipeClick(${recipe.id}, event)" aria-label="View ${recipe.title} recipe">
-                            <i class="fas fa-book-open"></i> View Recipe
-                        </a>
-                    </div>
-                    <div class="recipe-badges">
-                        ${badges}
-                    </div>
-                    ${showRating && ratingCount > 0 ? `
-                        <div class="rating-badge">
-                            ${averageRating.toFixed(1)}
-                        </div>
-                    ` : ''}
-                    <button class="save-recipe ${recipe.saved ? 'active' : ''}" onclick="toggleSaveRecipe(${recipe.id}, event)" aria-label="${recipe.saved ? 'Remove from saved' : 'Save recipe'}">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">${recipe.title}</h3>
-                    <p class="recipe-description">${recipe.description}</p>
-                    ${ratingCount > 0 ? `
-                        <div class="recipe-rating-display">
+    function createKrabbyPattyCard(recipe) {
+        const card = document.createElement('div');
+        card.className = 'recipe-card-carousel krabby-patty-card';
+        card.dataset.recipeId = recipe.id;
+        card.setAttribute('role', 'article');
+        card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
+        
+        const ratingData = recipeRatings[recipe.id];
+        const averageRating = ratingData?.average || 0;
+        const ratingCount = ratingData?.count || 0;
+        
+        card.innerHTML = `
+            <div class="krabby-patty-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+            </div>
+            <div class="krabby-patty-badge">
+                ⭐ KRABBY PATTY ⭐
+            </div>
+            <div class="krabby-patty-content">
+                <h3>${recipe.title}</h3>
+                <p>${recipe.description}</p>
+                ${ratingCount > 0 ? `
+                    <div class="recipe-rating-display" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255, 215, 0, 0.3);">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                             <div class="stars" role="img" aria-label="${averageRating.toFixed(1)} out of 5 stars">
                                 ${Array(5).fill().map((_, i) => {
                                     if (i < Math.floor(averageRating)) {
-                                        return '<i class="fas fa-star" style="color: #f1c40f;"></i>';
+                                        return '<i class="fas fa-star" style="color: #FFD700;"></i>';
                                     } else if (i === Math.floor(averageRating) && averageRating % 1 >= 0.5) {
-                                        return '<i class="fas fa-star-half-alt" style="color: #f1c40f;"></i>';
+                                        return '<i class="fas fa-star-half-alt" style="color: #FFD700;"></i>';
                                     } else {
-                                        return '<i class="far fa-star" style="color: #ddd;"></i>';
+                                        return '<i class="far fa-star" style="color: rgba(255, 215, 0, 0.5);"></i>';
                                     }
                                 }).join('')}
                             </div>
-                            <span class="rating-text">
-                                ${averageRating.toFixed(1)} (${ratingCount})
+                            <span class="rating-text" style="color: #FFD700; font-weight: bold;">
+                                ${averageRating.toFixed(1)} ⭐
                             </span>
                         </div>
-                    ` : ''}
+                        <p style="color: rgba(255, 215, 0, 0.8); font-size: 0.9em; margin: 0;">
+                            ${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'}
+                        </p>
+                    </div>
+                ` : ''}
+            </div>
+            <div class="krabby-patty-overlay">
+                <button class="krabby-patty-view-btn" onclick="handleKrabbyPattyClick(${recipe.id}, event)">
+                    <i class="fas fa-key" style="animation: secretLabelPulse 1.5s infinite;"></i>
+                    UNLOCK SECRET
+                </button>
+            </div>
+        `;
+        
+        // Add click event to the entire card
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.krabby-patty-view-btn')) {
+                handleKrabbyPattyClick(recipe.id, e);
+            }
+        });
+        
+        // Add keyboard navigation for the card
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleKrabbyPattyClick(recipe.id, e);
+            }
+        });
+        
+        return card;
+    }
+
+    function handleKrabbyPattyClick(recipeId, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Special animation for Krabby Patty click
+        const card = event.target.closest('.krabby-patty-card');
+        if (card) {
+            card.style.animation = 'cardHoverPulse 0.5s infinite alternate';
+            card.style.boxShadow = '0 0 80px rgba(255, 215, 0, 0.8)';
+            
+            // Show special notification
+            showNotification('⚡ ACTIVATING SECRET FORMULA... ⚡', 'info');
+            
+            // Reset animation after a delay
+            setTimeout(() => {
+                card.style.animation = '';
+                card.style.boxShadow = '';
+            }, 1000);
+        }
+        
+        // Direct redirect after animation
+        setTimeout(() => {
+            window.location.href = `recipe-detail.html?id=${recipeId}`;
+        }, 800);
+    }
+
+    function addKrabbyPattyEffects() {
+        // Add special effects when hovering over the Krabby Patty section
+        const krabbySection = document.getElementById('krabbyPattySection');
+        if (krabbySection) {
+            krabbySection.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 25px 60px rgba(0,0,0,0.8), 0 0 100px rgba(255, 215, 0, 0.4)';
+            });
+            
+            krabbySection.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '';
+            });
+        }
+    }
+
+    // ===== REGULAR RECIPE FUNCTIONS =====
+    function loadTopRatedCarousel() {
+        const container = document.getElementById('topRatedCarousel');
+        const section = document.getElementById('topRatedSection');
+        
+        // Get recipes with ratings
+        const ratedRecipes = recipes.filter(recipe => recipeRatings[recipe.id]);
+        
+        if (ratedRecipes.length === 0) {
+            container.innerHTML = `
+                <div class="no-recipes-state" style="width: 100%;">
+                    <i class="fas fa-star"></i>
+                    <h3>No Ratings Yet</h3>
+                    <p>Rate recipes on the homepage to see them here!</p>
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i>
+                        Go to Homepage
+                    </a>
                 </div>
             `;
-            
-            // Add click event to the entire card
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.save-recipe') && !e.target.closest('.view-recipe-btn')) {
-                    handleRecipeClick(recipe.id, e);
-                }
-            });
-            
-            // Add keyboard navigation for the card
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleRecipeClick(recipe.id, e);
-                }
-            });
-            
-            return card;
+            return;
         }
+        
+        // Sort by rating
+        const sortedRecipes = ratedRecipes.sort((a, b) => {
+            const ratingA = recipeRatings[a.id]?.average || 0;
+            const ratingB = recipeRatings[b.id]?.average || 0;
+            return ratingB - ratingA;
+        });
+        
+        container.innerHTML = '';
+        sortedRecipes.forEach(recipe => {
+            const card = createRecipeCard(recipe, true);
+            container.appendChild(card);
+        });
+    }
 
-        // ===== IMPROVED CAROUSEL NAVIGATION (FIXED FOR MOBILE) =====
-        function initializeCarouselNavigation(id, carouselId) {
-            // Wait for the DOM to be fully loaded and images to be ready
-            setTimeout(() => {
-                const carouselWrapper = document.getElementById(carouselId);
-                const prevButton = carouselId === 'krabbyPattyCarousel' 
-                    ? document.getElementById(`prev${id}`)
-                    : document.getElementById(`prev${id}`);
-                const nextButton = carouselId === 'krabbyPattyCarousel' 
-                    ? document.getElementById(`next${id}`)
-                    : document.getElementById(`next${id}`);
-                
-                if (!carouselWrapper || !prevButton || !nextButton) {
-                    console.log(`Carousel elements not found: ${carouselId}`);
-                    return;
-                }
-                
-                // Check if there are cards in the carousel
-                const card = carouselWrapper.querySelector('.recipe-card-carousel') || 
-                            carouselWrapper.querySelector('.krabby-patty-card');
-                
-                if (!card) {
-                    console.log(`No cards found in carousel: ${carouselId}`);
-                    return;
-                }
-                
-                // Initialize carousel state
-                const initCarousel = () => {
-                    const cardWidth = card.offsetWidth || card.getBoundingClientRect().width;
-                    const cardGap = parseInt(getComputedStyle(card).marginRight) || 24;
-                    const cardTotalWidth = cardWidth + cardGap;
-                    
-                    // Get container width (adjusted for mobile)
-                    const container = carouselWrapper.parentElement;
-                    const containerWidth = container.offsetWidth - 120; // Account for navigation arrows
-                    
-                    // Calculate how many cards fit in the container
-                    const visibleCards = Math.max(1, Math.floor(containerWidth / cardTotalWidth));
-                    
-                    // Store state for this carousel
-                    carouselStates[carouselId] = {
-                        currentPosition: 0,
-                        maxPosition: 0,
-                        cardTotalWidth: cardTotalWidth,
-                        visibleCards: visibleCards,
-                        cardCount: carouselWrapper.children.length,
-                        scrollStep: cardTotalWidth * visibleCards,
-                        containerWidth: containerWidth
-                    };
-                    
-                    // Calculate max scroll position
-                    const updateCarouselMetrics = () => {
-                        const state = carouselStates[carouselId];
-                        if (!state) return;
-                        
-                        const totalWidth = state.cardCount * state.cardTotalWidth;
-                        state.maxPosition = Math.max(0, totalWidth - state.containerWidth);
-                        
-                        // Update button states
-                        updateNavButtons(state, prevButton, nextButton);
-                    };
-                    
-                    // Initial calculation
-                    updateCarouselMetrics();
-                    
-                    // Add touch/swipe support for mobile
-                    let touchStartX = 0;
-                    let touchEndX = 0;
-                    const minSwipeDistance = 50;
-                    
-                    carouselWrapper.addEventListener('touchstart', (e) => {
-                        touchStartX = e.changedTouches[0].screenX;
-                    }, { passive: true });
-                    
-                    carouselWrapper.addEventListener('touchend', (e) => {
-                        touchEndX = e.changedTouches[0].screenX;
-                        handleSwipe();
-                    }, { passive: true });
-                    
-                    function handleSwipe() {
-                        const swipeDistance = touchEndX - touchStartX;
-                        const state = carouselStates[carouselId];
-                        
-                        if (Math.abs(swipeDistance) > minSwipeDistance) {
-                            if (swipeDistance > 0) {
-                                // Swipe right - go previous
-                                scrollCarousel('prev', state);
-                            } else {
-                                // Swipe left - go next
-                                scrollCarousel('next', state);
-                            }
-                        }
-                    }
-                    
-                    // Previous button - fixed click handler
-                    prevButton.addEventListener('click', function() {
-                        const state = carouselStates[carouselId];
-                        if (state) {
-                            scrollCarousel('prev', state);
-                        }
-                    }, { passive: true });
-                    
-                    // Next button - fixed click handler
-                    nextButton.addEventListener('click', function() {
-                        const state = carouselStates[carouselId];
-                        if (state) {
-                            scrollCarousel('next', state);
-                        }
-                    }, { passive: true });
-                    
-                    // Helper function for scrolling
-                    function scrollCarousel(direction, state) {
-                        if (direction === 'prev') {
-                            state.currentPosition -= state.scrollStep;
-                            if (state.currentPosition < 0) {
-                                state.currentPosition = 0;
-                            }
-                        } else {
-                            state.currentPosition += state.scrollStep;
-                            if (state.currentPosition > state.maxPosition) {
-                                state.currentPosition = state.maxPosition;
-                            }
-                        }
-                        
-                        // Apply the transform
-                        carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
-                        
-                        // Update navigation buttons
-                        updateNavButtons(state, prevButton, nextButton);
-                    }
-                    
-                    // Update on resize
-                    let resizeTimeout;
-                    window.addEventListener('resize', function() {
-                        clearTimeout(resizeTimeout);
-                        resizeTimeout = setTimeout(() => {
-                            const cardWidth = card.offsetWidth || card.getBoundingClientRect().width;
-                            const cardGap = parseInt(getComputedStyle(card).marginRight) || 24;
-                            const cardTotalWidth = cardWidth + cardGap;
-                            
-                            const container = carouselWrapper.parentElement;
-                            const containerWidth = container.offsetWidth - 120;
-                            const visibleCards = Math.max(1, Math.floor(containerWidth / cardTotalWidth));
-                            
-                            const state = carouselStates[carouselId];
-                            if (state) {
-                                state.cardTotalWidth = cardTotalWidth;
-                                state.visibleCards = visibleCards;
-                                state.scrollStep = cardTotalWidth * visibleCards;
-                                state.containerWidth = containerWidth;
-                                
-                                // Recalculate max position
-                                const totalWidth = state.cardCount * state.cardTotalWidth;
-                                state.maxPosition = Math.max(0, totalWidth - state.containerWidth);
-                                
-                                // Ensure current position is still valid
-                                if (state.currentPosition > state.maxPosition) {
-                                    state.currentPosition = state.maxPosition;
-                                    carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
+    function loadCategoryCarousel(categoryId) {
+        const container = document.getElementById(`${categoryId}Carousel`);
+        const section = document.getElementById(`${categoryId}Section`);
+        
+        const categoryRecipes = recipes.filter(recipe => 
+            recipe.badges && recipe.badges.includes(categoryId)
+        );
+        
+        if (categoryRecipes.length === 0) {
+            container.innerHTML = `
+                <div class="no-recipes-state" style="width: 100%;">
+                    <i class="fas fa-utensils"></i>
+                    <h3>No ${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Recipes</h3>
+                    <p>Import ${categoryId} recipes to see them here!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = '';
+        categoryRecipes.forEach(recipe => {
+            const card = createRecipeCard(recipe, false);
+            container.appendChild(card);
+        });
+    }
+
+    function createRecipeCard(recipe, showRating) {
+        const card = document.createElement('div');
+        card.className = 'recipe-card-carousel';
+        card.dataset.recipeId = recipe.id;
+        card.setAttribute('role', 'article');
+        card.setAttribute('aria-label', `${recipe.title} - ${recipe.description}`);
+        
+        const ratingData = recipeRatings[recipe.id];
+        const averageRating = ratingData?.average || 0;
+        const ratingCount = ratingData?.count || 0;
+        
+        const badges = recipe.badges ? recipe.badges.map(badge => 
+            `<span class="badge ${badge}">${badge.charAt(0).toUpperCase() + badge.slice(1)}</span>`
+        ).join('') : '';
+        
+        card.innerHTML = `
+            <div class="recipe-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-overlay">
+                    <a href="#" class="view-recipe-btn" onclick="handleRecipeClick(${recipe.id}, event)" aria-label="View ${recipe.title} recipe">
+                        <i class="fas fa-book-open"></i> View Recipe
+                    </a>
+                </div>
+                <div class="recipe-badges">
+                    ${badges}
+                </div>
+                ${showRating && ratingCount > 0 ? `
+                    <div class="rating-badge">
+                        ${averageRating.toFixed(1)}
+                    </div>
+                ` : ''}
+                <button class="save-recipe ${recipe.saved ? 'active' : ''}" onclick="toggleSaveRecipe(${recipe.id}, event)" aria-label="${recipe.saved ? 'Remove from saved' : 'Save recipe'}">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+            <div class="recipe-content">
+                <h3 class="recipe-title">${recipe.title}</h3>
+                <p class="recipe-description">${recipe.description}</p>
+                ${ratingCount > 0 ? `
+                    <div class="recipe-rating-display">
+                        <div class="stars" role="img" aria-label="${averageRating.toFixed(1)} out of 5 stars">
+                            ${Array(5).fill().map((_, i) => {
+                                if (i < Math.floor(averageRating)) {
+                                    return '<i class="fas fa-star" style="color: #f1c40f;"></i>';
+                                } else if (i === Math.floor(averageRating) && averageRating % 1 >= 0.5) {
+                                    return '<i class="fas fa-star-half-alt" style="color: #f1c40f;"></i>';
+                                } else {
+                                    return '<i class="far fa-star" style="color: #ddd;"></i>';
                                 }
-                                
-                                updateNavButtons(state, prevButton, nextButton);
-                            }
-                        }, 250);
-                    });
-                    
-                    // Initialize button states
-                    updateCarouselMetrics();
+                            }).join('')}
+                        </div>
+                        <span class="rating-text">
+                            ${averageRating.toFixed(1)} (${ratingCount})
+                        </span>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
+        // Add click event to the entire card
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.save-recipe') && !e.target.closest('.view-recipe-btn')) {
+                handleRecipeClick(recipe.id, e);
+            }
+        });
+        
+        // Add keyboard navigation for the card
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleRecipeClick(recipe.id, e);
+            }
+        });
+        
+        return card;
+    }
+
+    // ===== RECIPE CLICK HANDLING (SIMPLIFIED - NO ADS) =====
+    function handleRecipeClick(recipeId, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Direct redirect to recipe detail page
+        window.location.href = `recipe-detail.html?id=${recipeId}`;
+    }
+
+    function toggleSaveRecipe(recipeId, event) {
+        event.stopPropagation();
+        const recipe = recipes.find(r => r.id === recipeId);
+        if (recipe) {
+            recipe.saved = !recipe.saved;
+            const saveButtons = document.querySelectorAll(`.save-recipe[onclick*="${recipeId}"]`);
+            saveButtons.forEach(btn => {
+                btn.classList.toggle('active', recipe.saved);
+                btn.setAttribute('aria-label', recipe.saved ? 'Remove from saved' : 'Save recipe');
+            });
+            localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
+            
+            // Show notification
+            showNotification(recipe.saved ? 'Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
+        }
+    }
+
+    // ===== IMPROVED CAROUSEL NAVIGATION =====
+    function initializeCarouselNavigation(id, carouselId) {
+        // Wait for the DOM to be fully loaded and images to be ready
+        setTimeout(() => {
+            const carouselWrapper = document.getElementById(carouselId);
+            const prevButton = carouselId === 'krabbyPattyCarousel' 
+                ? document.getElementById(`prev${id}`)
+                : document.getElementById(`prev${id}`);
+            const nextButton = carouselId === 'krabbyPattyCarousel' 
+                ? document.getElementById(`next${id}`)
+                : document.getElementById(`next${id}`);
+            
+            if (!carouselWrapper || !prevButton || !nextButton) {
+                console.log(`Carousel elements not found: ${carouselId}`);
+                return;
+            }
+            
+            // Check if there are cards in the carousel
+            const card = carouselWrapper.querySelector('.recipe-card-carousel') || 
+                        carouselWrapper.querySelector('.krabby-patty-card');
+            
+            if (!card) {
+                console.log(`No cards found in carousel: ${carouselId}`);
+                return;
+            }
+            
+            // Initialize carousel state
+            const initCarousel = () => {
+                const cardWidth = card.offsetWidth || card.getBoundingClientRect().width;
+                const cardGap = parseInt(getComputedStyle(card).marginRight) || 24;
+                const cardTotalWidth = cardWidth + cardGap;
+                
+                // Get container width (adjusted for mobile)
+                const container = carouselWrapper.parentElement;
+                const containerWidth = container.offsetWidth - 120; // Account for navigation arrows
+                
+                // Calculate how many cards fit in the container
+                const visibleCards = Math.max(1, Math.floor(containerWidth / cardTotalWidth));
+                
+                // Store state for this carousel
+                carouselStates[carouselId] = {
+                    currentPosition: 0,
+                    maxPosition: 0,
+                    cardTotalWidth: cardTotalWidth,
+                    visibleCards: visibleCards,
+                    cardCount: carouselWrapper.children.length,
+                    scrollStep: cardTotalWidth * visibleCards,
+                    containerWidth: containerWidth
                 };
                 
-                // Initialize carousel after a small delay to ensure DOM is ready
-                if (carouselWrapper.children.length > 0) {
-                    initCarousel();
-                } else {
-                    // If no children yet, wait a bit more
-                    setTimeout(initCarousel, 500);
+                // Calculate max scroll position
+                const updateCarouselMetrics = () => {
+                    const state = carouselStates[carouselId];
+                    if (!state) return;
+                    
+                    const totalWidth = state.cardCount * state.cardTotalWidth;
+                    state.maxPosition = Math.max(0, totalWidth - state.containerWidth);
+                    
+                    // Update button states
+                    updateNavButtons(state, prevButton, nextButton);
+                };
+                
+                // Initial calculation
+                updateCarouselMetrics();
+                
+                // Add touch/swipe support for mobile
+                let touchStartX = 0;
+                let touchEndX = 0;
+                const minSwipeDistance = 50;
+                
+                carouselWrapper.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                carouselWrapper.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                }, { passive: true });
+                
+                function handleSwipe() {
+                    const swipeDistance = touchEndX - touchStartX;
+                    const state = carouselStates[carouselId];
+                    
+                    if (Math.abs(swipeDistance) > minSwipeDistance) {
+                        if (swipeDistance > 0) {
+                            // Swipe right - go previous
+                            scrollCarousel('prev', state);
+                        } else {
+                            // Swipe left - go next
+                            scrollCarousel('next', state);
+                        }
+                    }
                 }
-            }, 100);
-        }
-
-        function updateNavButtons(state, prevButton, nextButton) {
-            if (!state || !prevButton || !nextButton) return;
-            
-            // Disable prev button if at start
-            if (state.currentPosition <= 0) {
-                prevButton.classList.add('disabled');
-                prevButton.setAttribute('aria-disabled', 'true');
-                prevButton.style.pointerEvents = 'none';
-                prevButton.style.opacity = '0.3';
-            } else {
-                prevButton.classList.remove('disabled');
-                prevButton.setAttribute('aria-disabled', 'false');
-                prevButton.style.pointerEvents = 'auto';
-                prevButton.style.opacity = '1';
-            }
-            
-            // Disable next button if at end
-            if (state.currentPosition >= state.maxPosition) {
-                nextButton.classList.add('disabled');
-                nextButton.setAttribute('aria-disabled', 'true');
-                nextButton.style.pointerEvents = 'none';
-                nextButton.style.opacity = '0.3';
-            } else {
-                nextButton.classList.remove('disabled');
-                nextButton.setAttribute('aria-disabled', 'false');
-                nextButton.style.pointerEvents = 'auto';
-                nextButton.style.opacity = '1';
-            }
-        }
-
-        // ===== AUTO SCROLL FUNCTIONALITY =====
-        function initializeAutoScroll() {
-            // Start with Krabby Patty carousel
-            const krabbyCarousel = document.getElementById('krabbyPattyCarousel');
-            if (krabbyCarousel && krabbyCarousel.children.length > 0) {
-                startAutoScroll('krabbyPattyCarousel');
-            }
-            
-            // Then other categories
-            categories.forEach(category => {
-                const carouselId = `${category.id}Carousel`;
-                const carouselWrapper = document.getElementById(carouselId);
                 
-                if (carouselWrapper && carouselWrapper.children.length > 0 && carouselId !== 'krabbyPattyCarousel') {
-                    startAutoScroll(carouselId);
-                }
-            });
-        }
-
-        function startAutoScroll(carouselId) {
-            const carouselWrapper = document.getElementById(carouselId);
-            if (!carouselWrapper) return;
-            
-            let autoScrollInterval;
-            let isHovering = false;
-            
-            const state = carouselStates[carouselId];
-            if (!state || state.maxPosition <= 0) return;
-            
-            // Start auto-scroll
-            autoScrollInterval = setInterval(() => {
-                if (isHovering) return; // Pause on hover
+                // Previous button - fixed click handler
+                prevButton.addEventListener('click', function() {
+                    const state = carouselStates[carouselId];
+                    if (state) {
+                        scrollCarousel('prev', state);
+                    }
+                }, { passive: true });
                 
-                state.currentPosition += state.cardTotalWidth;
+                // Next button - fixed click handler
+                nextButton.addEventListener('click', function() {
+                    const state = carouselStates[carouselId];
+                    if (state) {
+                        scrollCarousel('next', state);
+                    }
+                }, { passive: true });
                 
-                // If at the end, reset to beginning
-                if (state.currentPosition > state.maxPosition) {
-                    state.currentPosition = 0;
-                    carouselWrapper.style.transition = 'none';
+                // Helper function for scrolling
+                function scrollCarousel(direction, state) {
+                    if (direction === 'prev') {
+                        state.currentPosition -= state.scrollStep;
+                        if (state.currentPosition < 0) {
+                            state.currentPosition = 0;
+                        }
+                    } else {
+                        state.currentPosition += state.scrollStep;
+                        if (state.currentPosition > state.maxPosition) {
+                            state.currentPosition = state.maxPosition;
+                        }
+                    }
+                    
+                    // Apply the transform
                     carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
                     
-                    // Force reflow
-                    carouselWrapper.offsetHeight;
-                    
-                    // Restore transition
-                    carouselWrapper.style.transition = 'transform 0.5s ease';
-                }
-                
-                carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
-                
-                // Update navigation buttons
-                const capitalized = carouselId.replace('Carousel', '');
-                const capitalizedId = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
-                const prevButton = document.getElementById(`prev${capitalizedId}`);
-                const nextButton = document.getElementById(`next${capitalizedId}`);
-                
-                if (prevButton && nextButton) {
+                    // Update navigation buttons
                     updateNavButtons(state, prevButton, nextButton);
                 }
-            }, carouselId === 'krabbyPattyCarousel' ? 2500 : 3000); // Faster scroll for Krabby Patty
+                
+                // Update on resize
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        const cardWidth = card.offsetWidth || card.getBoundingClientRect().width;
+                        const cardGap = parseInt(getComputedStyle(card).marginRight) || 24;
+                        const cardTotalWidth = cardWidth + cardGap;
+                        
+                        const container = carouselWrapper.parentElement;
+                        const containerWidth = container.offsetWidth - 120;
+                        const visibleCards = Math.max(1, Math.floor(containerWidth / cardTotalWidth));
+                        
+                        const state = carouselStates[carouselId];
+                        if (state) {
+                            state.cardTotalWidth = cardTotalWidth;
+                            state.visibleCards = visibleCards;
+                            state.scrollStep = cardTotalWidth * visibleCards;
+                            state.containerWidth = containerWidth;
+                            
+                            // Recalculate max position
+                            const totalWidth = state.cardCount * state.cardTotalWidth;
+                            state.maxPosition = Math.max(0, totalWidth - state.containerWidth);
+                            
+                            // Ensure current position is still valid
+                            if (state.currentPosition > state.maxPosition) {
+                                state.currentPosition = state.maxPosition;
+                                carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
+                            }
+                            
+                            updateNavButtons(state, prevButton, nextButton);
+                        }
+                    }, 250);
+                });
+                
+                // Initialize button states
+                updateCarouselMetrics();
+            };
             
-            // Pause on hover
-            carouselWrapper.addEventListener('mouseenter', () => {
-                isHovering = true;
-            });
+            // Initialize carousel after a small delay to ensure DOM is ready
+            if (carouselWrapper.children.length > 0) {
+                initCarousel();
+            } else {
+                // If no children yet, wait a bit more
+                setTimeout(initCarousel, 500);
+            }
+        }, 100);
+    }
+
+    function updateNavButtons(state, prevButton, nextButton) {
+        if (!state || !prevButton || !nextButton) return;
+        
+        // Disable prev button if at start
+        if (state.currentPosition <= 0) {
+            prevButton.classList.add('disabled');
+            prevButton.setAttribute('aria-disabled', 'true');
+            prevButton.style.pointerEvents = 'none';
+            prevButton.style.opacity = '0.3';
+        } else {
+            prevButton.classList.remove('disabled');
+            prevButton.setAttribute('aria-disabled', 'false');
+            prevButton.style.pointerEvents = 'auto';
+            prevButton.style.opacity = '1';
+        }
+        
+        // Disable next button if at end
+        if (state.currentPosition >= state.maxPosition) {
+            nextButton.classList.add('disabled');
+            nextButton.setAttribute('aria-disabled', 'true');
+            nextButton.style.pointerEvents = 'none';
+            nextButton.style.opacity = '0.3';
+        } else {
+            nextButton.classList.remove('disabled');
+            nextButton.setAttribute('aria-disabled', 'false');
+            nextButton.style.pointerEvents = 'auto';
+            nextButton.style.opacity = '1';
+        }
+    }
+
+    // ===== AUTO SCROLL FUNCTIONALITY =====
+    function initializeAutoScroll() {
+        // Start with Krabby Patty carousel
+        const krabbyCarousel = document.getElementById('krabbyPattyCarousel');
+        if (krabbyCarousel && krabbyCarousel.children.length > 0) {
+            startAutoScroll('krabbyPattyCarousel');
+        }
+        
+        // Then other categories
+        categories.forEach(category => {
+            const carouselId = `${category.id}Carousel`;
+            const carouselWrapper = document.getElementById(carouselId);
             
-            carouselWrapper.addEventListener('mouseleave', () => {
-                isHovering = false;
-            });
+            if (carouselWrapper && carouselWrapper.children.length > 0 && carouselId !== 'krabbyPattyCarousel') {
+                startAutoScroll(carouselId);
+            }
+        });
+    }
+
+    function startAutoScroll(carouselId) {
+        const carouselWrapper = document.getElementById(carouselId);
+        if (!carouselWrapper) return;
+        
+        let autoScrollInterval;
+        let isHovering = false;
+        
+        const state = carouselStates[carouselId];
+        if (!state || state.maxPosition <= 0) return;
+        
+        // Start auto-scroll
+        autoScrollInterval = setInterval(() => {
+            if (isHovering) return; // Pause on hover
             
-            // Also pause when navigation buttons are hovered
+            state.currentPosition += state.cardTotalWidth;
+            
+            // If at the end, reset to beginning
+            if (state.currentPosition > state.maxPosition) {
+                state.currentPosition = 0;
+                carouselWrapper.style.transition = 'none';
+                carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
+                
+                // Force reflow
+                carouselWrapper.offsetHeight;
+                
+                // Restore transition
+                carouselWrapper.style.transition = 'transform 0.5s ease';
+            }
+            
+            carouselWrapper.style.transform = `translateX(-${state.currentPosition}px)`;
+            
+            // Update navigation buttons
             const capitalized = carouselId.replace('Carousel', '');
             const capitalizedId = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
             const prevButton = document.getElementById(`prev${capitalizedId}`);
             const nextButton = document.getElementById(`next${capitalizedId}`);
             
-            if (prevButton) {
-                prevButton.addEventListener('mouseenter', () => {
-                    isHovering = true;
-                });
-                prevButton.addEventListener('mouseleave', () => {
-                    isHovering = false;
-                });
+            if (prevButton && nextButton) {
+                updateNavButtons(state, prevButton, nextButton);
             }
-            
-            if (nextButton) {
-                nextButton.addEventListener('mouseenter', () => {
-                    isHovering = true;
-                });
-                nextButton.addEventListener('mouseleave', () => {
-                    isHovering = false;
-                });
-            }
-            
-            // Clean up interval on page unload
-            window.addEventListener('beforeunload', () => {
-                if (autoScrollInterval) {
-                    clearInterval(autoScrollInterval);
-                }
+        }, carouselId === 'krabbyPattyCarousel' ? 2500 : 3000); // Faster scroll for Krabby Patty
+        
+        // Pause on hover
+        carouselWrapper.addEventListener('mouseenter', () => {
+            isHovering = true;
+        });
+        
+        carouselWrapper.addEventListener('mouseleave', () => {
+            isHovering = false;
+        });
+        
+        // Also pause when navigation buttons are hovered
+        const capitalized = carouselId.replace('Carousel', '');
+        const capitalizedId = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
+        const prevButton = document.getElementById(`prev${capitalizedId}`);
+        const nextButton = document.getElementById(`next${capitalizedId}`);
+        
+        if (prevButton) {
+            prevButton.addEventListener('mouseenter', () => {
+                isHovering = true;
             });
-        }
-
-        // ===== RECIPE INTERACTIONS =====
-        function handleRecipeClick(recipeId, event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            // Store the target URL
-            targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-            
-            // Show recipe ad overlay (8-second version)
-            showRecipeAd();
-        }
-
-        function toggleSaveRecipe(recipeId, event) {
-            event.stopPropagation();
-            const recipe = recipes.find(r => r.id === recipeId);
-            if (recipe) {
-                recipe.saved = !recipe.saved;
-                const saveButtons = document.querySelectorAll(`.save-recipe[onclick*="${recipeId}"]`);
-                saveButtons.forEach(btn => {
-                    btn.classList.toggle('active', recipe.saved);
-                    btn.setAttribute('aria-label', recipe.saved ? 'Remove from saved' : 'Save recipe');
-                });
-                localStorage.setItem('chickenRecipes', JSON.stringify(recipes));
-                
-                // Show notification
-                showNotification(recipe.saved ? 'Recipe saved to favorites!' : 'Recipe removed from favorites', 'info');
-            }
+            prevButton.addEventListener('mouseleave', () => {
+                isHovering = false;
+            });
         }
         
-        // ===== ADS SYSTEM =====
-        function initializeAds() {
-            adVideoElement = document.getElementById('adVideo');
-            recipeAdVideoElement = document.getElementById('recipeAdVideo');
-            const skipButton = document.getElementById('skipButton');
-            const recipeSkipButton = document.getElementById('recipeSkipButton');
-            
-            // Video event listeners for main ad
-            adVideoElement.addEventListener('loadeddata', function() {
-                document.getElementById('adLoading').style.display = 'none';
+        if (nextButton) {
+            nextButton.addEventListener('mouseenter', () => {
+                isHovering = true;
             });
-            
-            adVideoElement.addEventListener('error', function() {
-                skipAd();
+            nextButton.addEventListener('mouseleave', () => {
+                isHovering = false;
             });
-            
-            adVideoElement.addEventListener('ended', function() {
-                hideAd();
-            });
-            
-            // Video event listeners for recipe ad
-            recipeAdVideoElement.addEventListener('loadeddata', function() {
-                document.getElementById('recipeAdLoading').style.display = 'none';
-            });
-            
-            recipeAdVideoElement.addEventListener('error', function() {
-                skipRecipeAd();
-            });
-            
-            recipeAdVideoElement.addEventListener('ended', function() {
-                hideRecipeAd();
-            });
-            
-            // Skip button events
-            skipButton.addEventListener('click', skipAd);
-            recipeSkipButton.addEventListener('click', skipRecipeAd);
-            
-            // Add keyboard support for skip buttons
-            skipButton.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    skipAd();
-                }
-            });
-            
-            recipeSkipButton.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    skipRecipeAd();
-                }
-            });
-            
-            // For demo: show first timed ad after 10 seconds (instead of waiting full 2 minutes)
-            setTimeout(showAd, 10000);
-        }
-
-        // Schedule timed ad (every 2 minutes)
-        function scheduleAd() {
-            // Clear any existing timer
-            if (adsTimer) {
-                clearTimeout(adsTimer);
-            }
-            
-            // Schedule next ad
-            adsTimer = setTimeout(showAd, adInterval);
-            
-            console.log(`Next ad scheduled in ${adInterval/1000/60} minutes`);
-        }
-
-        // Show main timed ad (15-second version)
-        async function showAd() {
-            if (isAdShowing) return;
-            
-            isAdShowing = true;
-            const adsOverlay = document.getElementById('adsOverlay');
-            const skipButton = document.getElementById('skipButton');
-            const skipTimerElement = document.getElementById('skipTimer');
-            
-            // Show overlay
-            adsOverlay.classList.add('show');
-            document.body.style.overflow = 'hidden';
-            
-            // Reset skip timer
-            skipCountdown = 15;
-            skipTimerElement.textContent = skipCountdown;
-            skipButton.disabled = true;
-            skipButton.setAttribute('aria-label', `Skip ad in ${skipCountdown} seconds`);
-            
-            // Show loading spinner
-            document.getElementById('adLoading').style.display = 'flex';
-            
-            // Start countdown for skip button
-            skipTimer = setInterval(() => {
-                skipCountdown--;
-                skipTimerElement.textContent = skipCountdown;
-                skipButton.setAttribute('aria-label', `Skip ad in ${skipCountdown} seconds`);
-                
-                if (skipCountdown <= 0) {
-                    clearInterval(skipTimer);
-                    skipButton.disabled = false;
-                    skipTimerElement.textContent = 'Skip';
-                    skipButton.setAttribute('aria-label', 'Skip ad now');
-                }
-            }, 1000);
-        }
-
-        // Show recipe ad (8-second version)
-        async function showRecipeAd() {
-            if (isRecipeAdShowing) return;
-            
-            isRecipeAdShowing = true;
-            const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-            const recipeSkipButton = document.getElementById('recipeSkipButton');
-            const recipeSkipTimerElement = document.getElementById('recipeSkipTimer');
-            
-            // Show overlay
-            recipeAdOverlay.classList.add('show');
-            document.body.style.overflow = 'hidden';
-            
-            // Reset skip timer
-            recipeSkipCountdown = 8;
-            recipeSkipTimerElement.textContent = recipeSkipCountdown;
-            recipeSkipButton.disabled = true;
-            recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
-            
-            // Show loading spinner
-            document.getElementById('recipeAdLoading').style.display = 'flex';
-            
-            // Start countdown for skip button
-            recipeSkipTimer = setInterval(() => {
-                recipeSkipCountdown--;
-                recipeSkipTimerElement.textContent = recipeSkipCountdown;
-                recipeSkipButton.setAttribute('aria-label', `Skip ad in ${recipeSkipCountdown} seconds`);
-                
-                if (recipeSkipCountdown <= 0) {
-                    clearInterval(recipeSkipTimer);
-                    recipeSkipButton.disabled = false;
-                    recipeSkipTimerElement.textContent = 'Skip';
-                    recipeSkipButton.setAttribute('aria-label', 'Skip ad now');
-                }
-            }, 1000);
-        }
-
-        // Skip main ad function
-        function skipAd() {
-            if (isAdShowing && skipCountdown <= 0) {
-                if (adVideoElement && !adVideoElement.paused) {
-                    adVideoElement.pause();
-                }
-                
-                hideAd();
-            }
-        }
-
-        // Skip recipe ad function
-        function skipRecipeAd() {
-            if (isRecipeAdShowing && recipeSkipCountdown <= 0) {
-                if (recipeAdVideoElement && !recipeAdVideoElement.paused) {
-                    recipeAdVideoElement.pause();
-                }
-                
-                hideRecipeAd();
-            }
-        }
-
-        // Hide main timed ad
-        function hideAd() {
-            isAdShowing = false;
-            const adsOverlay = document.getElementById('adsOverlay');
-            
-            clearInterval(skipTimer);
-            
-            if (adVideoElement) {
-                adVideoElement.pause();
-                adVideoElement.currentTime = 0;
-            }
-            
-            adsOverlay.classList.remove('show');
-            document.body.style.overflow = '';
-            
-            // Schedule next ad
-            scheduleAd();
         }
         
-        // Hide recipe ad and redirect to recipe
-        function hideRecipeAd() {
-            isRecipeAdShowing = false;
-            const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-            
-            clearInterval(recipeSkipTimer);
-            
-            if (recipeAdVideoElement) {
-                recipeAdVideoElement.pause();
-                recipeAdVideoElement.currentTime = 0;
+        // Clean up interval on page unload
+        window.addEventListener('beforeunload', () => {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
             }
-            
-            recipeAdOverlay.classList.remove('show');
-            document.body.style.overflow = '';
-            
-            // Redirect to the recipe page
-            if (targetRecipeUrl) {
-                window.location.href = targetRecipeUrl;
+        });
+    }
+
+    // ===== THEME MANAGEMENT =====
+    function initializeThemeToggle() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        // Add keyboard support
+        themeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
             }
-        }
+        });
+    }
 
-        // ===== THEME MANAGEMENT =====
-        function initializeThemeToggle() {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            updateThemeIcon(currentTheme);
-            
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-            
-            // Add keyboard support
-            themeToggle.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.className = 'fas fa-moon';
+            themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+        } else {
+            icon.className = 'fas fa-sun';
+            themeToggle.setAttribute('aria-label', 'Switch to light theme');
         }
+    }
 
-        function updateThemeIcon(theme) {
-            const icon = themeToggle.querySelector('i');
-            if (theme === 'light') {
-                icon.className = 'fas fa-moon';
-                themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+    // ===== SCROLL MANAGEMENT =====
+    function initializeScrollEvents() {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
             } else {
-                icon.className = 'fas fa-sun';
-                themeToggle.setAttribute('aria-label', 'Switch to light theme');
+                backToTop.classList.remove('show');
             }
-        }
-
-        // ===== SCROLL MANAGEMENT =====
-        function initializeScrollEvents() {
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTop.classList.add('show');
-                } else {
-                    backToTop.classList.remove('show');
-                }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-            
-            backToTop.addEventListener('click', function() {
+        });
+        
+        backToTop.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
-            });
-            
-            backToTop.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        }
-
-        // ===== KEYBOARD NAVIGATION =====
-        function initializeKeyboardNavigation() {
-            // Close ads with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    if (document.getElementById('adsOverlay').classList.contains('show')) {
-                        skipAd();
-                    }
-                    if (document.getElementById('recipeAdOverlay').classList.contains('show')) {
-                        skipRecipeAd();
-                    }
-                }
-            });
-        }
-
-        // ===== NOTIFICATION SYSTEM =====
-        function showNotification(message, type = 'info') {
-            const existingNotification = document.querySelector('.import-notification');
-            if (existingNotification) {
-                existingNotification.remove();
             }
-            
-            const notification = document.createElement('div');
-            notification.className = `import-notification import-notification-${type}`;
-            notification.setAttribute('role', 'alert');
-            
-            // Special styling for Krabby Patty notifications
-            const isKrabbyPatty = message.includes('KRABBY PATTY') || message.includes('SECRET');
-            
-            notification.style.cssText = `
-                position: fixed;
-                top: var(--space-xl);
-                right: var(--space-xl);
-                background-color: ${isKrabbyPatty ? 'linear-gradient(135deg, #000, #1a1a1a)' : 'var(--surface)'};
-                color: ${isKrabbyPatty ? '#FFD700' : 'var(--text-dark)'};
-                padding: var(--space-md) var(--space-lg);
-                border-radius: var(--radius-md);
-                box-shadow: 0 10px 30px var(--shadow-strong);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: var(--space-lg);
-                z-index: var(--z-tooltip);
-                animation: slideInRight 0.3s ease-out;
-                max-width: 400px;
-                border-left: 4px solid ${isKrabbyPatty ? '#FFD700' : (type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--info)')};
-                font-weight: ${isKrabbyPatty ? 'bold' : 'normal'};
-                text-shadow: ${isKrabbyPatty ? '0 2px 5px rgba(0,0,0,0.5)' : 'none'};
-                border: ${isKrabbyPatty ? '2px solid #FFD700' : 'none'};
-            `;
-            
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    ${isKrabbyPatty ? '⚡' : `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>`}
-                    <span>${message}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;" aria-label="Close notification">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Auto-remove after 5 seconds (longer for Krabby Patty)
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, isKrabbyPatty ? 7000 : 5000);
-        }
+        });
+    }
 
-        // ===== PERFORMANCE OPTIMIZATION =====
-        // Lazy load images
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                        }
-                        img.classList.add('loaded');
-                        observer.unobserve(img);
+    // ===== KEYBOARD NAVIGATION =====
+    function initializeKeyboardNavigation() {
+        // Close ads with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // No ad overlay to close anymore
+            }
+        });
+    }
+
+    // ===== NOTIFICATION SYSTEM =====
+    function showNotification(message, type = 'info') {
+        const existingNotification = document.querySelector('.import-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = `import-notification import-notification-${type}`;
+        notification.setAttribute('role', 'alert');
+        
+        // Special styling for Krabby Patty notifications
+        const isKrabbyPatty = message.includes('KRABBY PATTY') || message.includes('SECRET');
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: var(--space-xl);
+            right: var(--space-xl);
+            background-color: ${isKrabbyPatty ? 'linear-gradient(135deg, #000, #1a1a1a)' : 'var(--surface)'};
+            color: ${isKrabbyPatty ? '#FFD700' : 'var(--text-dark)'};
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px var(--shadow-strong);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-lg);
+            z-index: var(--z-tooltip);
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            border-left: 4px solid ${isKrabbyPatty ? '#FFD700' : (type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--info)')};
+            font-weight: ${isKrabbyPatty ? 'bold' : 'normal'};
+            text-shadow: ${isKrabbyPatty ? '0 2px 5px rgba(0,0,0,0.5)' : 'none'};
+            border: ${isKrabbyPatty ? '2px solid #FFD700' : 'none'};
+        `;
+        
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                ${isKrabbyPatty ? '⚡' : `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>`}
+                <span>${message}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;" aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 5 seconds (longer for Krabby Patty)
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, isKrabbyPatty ? 7000 : 5000);
+    }
+
+    // ===== PERFORMANCE OPTIMIZATION =====
+    // Lazy load images
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
                     }
-                });
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
             });
+        });
 
-            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-                if (img.complete) return;
-                imageObserver.observe(img);
-            });
-        }
-    </script>
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            if (img.complete) return;
+            imageObserver.observe(img);
+        });
+    }
+</script>
 </body>
 </html>
+
 
 
