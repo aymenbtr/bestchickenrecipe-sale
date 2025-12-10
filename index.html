@@ -3312,7 +3312,7 @@ function stopMobileAutoScroll(section) {
     }
 
     // ===== INITIALIZATION =====
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Initializing website with mobile optimizations...');
     
     // Load data first
@@ -3323,7 +3323,7 @@ function stopMobileAutoScroll(section) {
     initializeSearch();
     initializeThemeToggle();
     initializeScrollEvents();
-    initializeAdSystem();
+    // REMOVE THIS LINE: initializeAdSystem();
     
     // Initialize carousel functionality with delay
     setTimeout(() => {
@@ -4214,34 +4214,35 @@ function loadTopRatedRecipes() {
         }
     }
 
-    function handleRecipeClick(recipeId, event) {
-        if (event) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        
-        const recipe = recipes.find(r => r.id === recipeId);
-        if (recipe && recipe.badges && recipe.badges.includes('krabby-patty')) {
-            showNotification('🍔 SECRET FORMULA ACTIVATED! 🍔 Preparing Krabby Patty...', 'info');
-            const button = event ? (event.target.closest('.view-recipe-btn') || event.target) : null;
-            if (button && button.classList.contains('view-recipe-btn')) {
-                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Secret Formula...';
-                button.disabled = true;
-                setTimeout(() => {
-                    button.innerHTML = '<i class="fas fa-utensils"></i> Secret Formula Ready!';
-                    button.disabled = false;
-                }, 1000);
-            }
-            setTimeout(() => {
-                targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-                showRecipeAd();
-            }, 1500);
-            return;
-        }
-        
-        targetRecipeUrl = `recipe-detail.html?id=${recipeId}`;
-        showRecipeAd();
+ function handleRecipeClick(recipeId, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
+    
+    const recipe = recipes.find(r => r.id === recipeId);
+    
+    // Special handling for Krabby Patty recipes
+    if (recipe && recipe.badges && recipe.badges.includes('krabby-patty')) {
+        showNotification('🍔 SECRET FORMULA ACTIVATED! 🍔 Preparing Krabby Patty...', 'info');
+        const button = event ? (event.target.closest('.view-recipe-btn') || event.target) : null;
+        if (button && button.classList.contains('view-recipe-btn')) {
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Secret Formula...';
+            button.disabled = true;
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-utensils"></i> Secret Formula Ready!';
+                button.disabled = false;
+            }, 1000);
+        }
+        setTimeout(() => {
+            window.location.href = `recipe-detail.html?id=${recipeId}`;
+        }, 1500);
+        return;
+    }
+    
+    // Direct redirect for regular recipes
+    window.location.href = `recipe-detail.html?id=${recipeId}`;
+}
 
     // ===== AD SYSTEM =====
     function initializeAdSystem() {
@@ -4625,31 +4626,6 @@ function loadTopRatedRecipes() {
             });
         }
     }
-
-    function initializeKeyboardNavigation() {
-        document.addEventListener('keydown', function(e) {
-            // Escape key closes modals and popups
-            if (e.key === 'Escape') {
-                const recipeAdOverlay = document.getElementById('recipeAdOverlay');
-                if (recipeAdOverlay && recipeAdOverlay.classList.contains('show')) {
-                    skipRecipeAd();
-                }
-                
-                if (newsletterPopup && newsletterPopup.classList.contains('show')) {
-                    newsletterPopup.classList.remove('show');
-                }
-                
-                if (floatingAd && floatingAd.classList.contains('show')) {
-                    closeFloatingAd();
-                }
-                
-                if (searchSuggestionsContainer && searchSuggestionsContainer.classList.contains('active')) {
-                    searchSuggestionsContainer.classList.remove('active');
-                }
-            }
-        });
-    }
-
     // ===== UI FUNCTIONS =====
     function closeFloatingAd() {
         if (floatingAd) floatingAd.classList.remove('show');
@@ -8346,4 +8322,5 @@ function loadTopRatedRecipes() {
 </script>
 </body>
 </html>
+
 
