@@ -152,7 +152,7 @@
     <!-- MS Application Tile -->
     <meta name="msapplication-TileImage" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAHsklEQVR4nO3dT4hVZRzG8e+dGf+MqYWJUS4sI4Iggggi2rQIIoiIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKIIIKI/kBE9Jbvhbepe+fec+95z3vO+X7gWcy9c97nPL/3nHvPnDkD5ERE5kTkXhF5SETuE5F7RORuEblLRO4UkTtE5HYRuU1EbhWRW0TkZhG5SURuFJEbRGRBRK4XketE5FoRuUZErhKRK0XkChG5XEQuE5FLReQSEblYRC4SkQtF5AIRmReR80TkXBE5R0TOFpGzROTM//2+iJz5v98TkTNE5HQRmROR00RkVkROFZFTRGRGRE4WkZNE5EQROUFEjheR40TkWBE5RkSOFpFpETlKRKZEZFJEjhCRCRE5XETGReQwETlURA4RkYNF5CARORBEDhCR/UVkPxHZV0QOEJEFERkXkXNEZIGIXCAiC0RkoYgsEJEFInKBiCwQkfNF5HwROV9EzhOR80TkXBE5R0TOFpGzROQsETlTRM4QkdNFZE5E5kRkVkROFZFTRGRGRE4WkZNE5EQROUFEjheR40TkWBE5RkSOFpFpETlKRKZEZFJEjhCRCRE5XETGReQwETlURA4RkYNF5CARORBEDhCR/UVkPxHZV0QOEJEFERkXkXNEZIGIXCAiC0RkoYgsEJEFInKBiCwQkfNF5HwROV9EzhOR80TkXBE5R0TOFpGzROQsETlTRM4QkdNFZE5E5kRkVkROFZFTRGRGRE4WkZNE5EQROUFEjheR40TkWBE5RkSOFpFpETlKRKZEZFJEjhCRCRE5XETGReQwETlURA4RkYNF5CARORBEDhCR/UVkPxHZV0QOEJEFERkXkXNEZIGIXCAiC0RkoYgsEJEFInKBiCwQkfNF5HwROV9EzhOR80TkXBE5R0TOFpGzROQsETlTRM4QkdNFZE5E5kRkVkROFZFTRGRGRE4WkZNE5EQROUFEjheR40TkWBE5RkSOFpFpETlKRKZEZFJEjhCRCRE5XETGReQwETlURA4RkYNF5CARORBEDhCR/UVkPxHZV0QOEJH/AdcF2uAAAAAASUVORK5CYII=">
     <meta name="msapplication-config" content="/browserconfig.xml">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065" crossorigin="anonymous"></script>
+    
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json">
         <style>
@@ -1632,11 +1632,12 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
-  <script>
+    <script>
         // ===== CONFIGURATION =====
         const recipeDetail = document.getElementById('recipeDetail');
         const themeToggle = document.getElementById('themeToggle');
         const backToTop = document.getElementById('backToTop');
+        const floatingAd = document.getElementById('floatingAd');
         const planktonWarning = document.getElementById('planktonWarning');
         let currentRecipe = null;
         let isKrabbyPattyRecipe = false;
@@ -1648,42 +1649,9 @@
             initializeScrollEvents();
             initializeScrollAnimations();
             initializeKeyboardNavigation();
-            initializeAdvertisements(); // Initialize ads after DOM is loaded
+            
+            setTimeout(() => floatingAd.classList.add('show'), 3000);
         });
-
-        // ===== ADVERTISEMENT INITIALIZATION =====
-        function initializeAdvertisements() {
-            // Wait a bit for the DOM to be fully ready
-            setTimeout(() => {
-                // Initialize top banner ad
-                const topBannerAd = document.querySelector('.top-banner-ad');
-                if (topBannerAd) {
-                    topBannerAd.innerHTML = `
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-format="fluid"
-                             data-ad-layout-key="-6f+ci+1t-1m+ak"
-                             data-ad-client="ca-pub-2743935903829065"
-                             data-ad-slot="3529984149"></ins>
-                    `;
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-
-                // Initialize bottom banner ad
-                const bottomBannerAd = document.querySelector('.bottom-banner-ad');
-                if (bottomBannerAd) {
-                    bottomBannerAd.innerHTML = `
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-format="fluid"
-                             data-ad-layout-key="-6f+ci+1t-1m+ak"
-                             data-ad-client="ca-pub-2743935903829065"
-                             data-ad-slot="3529984149"></ins>
-                    `;
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            }, 500);
-        }
 
         // ===== RECIPE DETAILS =====
         function loadRecipeDetail() {
@@ -1771,9 +1739,12 @@
                         </ul>
                     </div>
                     
-                    <!-- Inline Ad 1 -->
                     <div class="inline-ad" id="inlineAd1">
-                        <!-- This ad will be loaded dynamically when scrolled into view -->
+                        <div class="ad-placeholder">
+                            <i class="fas fa-ad"></i>
+                            <h4>Advertisement</h4>
+                            <p>Inline Ad - 728x90</p>
+                        </div>
                     </div>
                     
                     <div class="recipe-detail-instructions" id="instructionsSection">
@@ -1783,9 +1754,12 @@
                         </ol>
                     </div>
                     
-                    <!-- Inline Ad 2 -->
                     <div class="inline-ad" id="inlineAd2">
-                        <!-- This ad will be loaded dynamically when scrolled into view -->
+                        <div class="ad-placeholder">
+                            <i class="fas fa-ad"></i>
+                            <h4>Advertisement</h4>
+                            <p>Inline Ad - 728x90</p>
+                        </div>
                     </div>
                     
                     <div class="recipe-detail-actions" id="actionsSection">
@@ -1807,53 +1781,11 @@
             }
             
             updateSaveButton();
+            document.getElementById('inlineAd1').style.display = 'none';
+            document.getElementById('inlineAd2').style.display = 'none';
             window.addEventListener('scroll', showInlineAd);
         }
 
-        // ===== INLINE ADVERTISEMENTS =====
-        function showInlineAd() {
-            const scrollPosition = window.pageYOffset;
-            const documentHeight = document.documentElement.scrollHeight;
-            const windowHeight = window.innerHeight;
-            
-            const inlineAd1 = document.getElementById('inlineAd1');
-            const inlineAd2 = document.getElementById('inlineAd2');
-            
-            // Show first inline ad when scrolled past 25% of the page
-            if (inlineAd1 && !inlineAd1.dataset.loaded && scrollPosition > documentHeight * 0.25) {
-                loadInlineAd(inlineAd1, '3529984149');
-            }
-            
-            // Show second inline ad when scrolled past 60% of the page
-            if (inlineAd2 && !inlineAd2.dataset.loaded && scrollPosition > documentHeight * 0.6) {
-                loadInlineAd(inlineAd2, '3529984149');
-            }
-        }
-
-        function loadInlineAd(adElement, adSlot) {
-            adElement.dataset.loaded = 'true';
-            adElement.style.display = 'flex';
-            
-            // Create the ad HTML structure
-            adElement.innerHTML = `
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-format="fluid"
-                     data-ad-layout-key="-6f+ci+1t-1m+ak"
-                     data-ad-client="ca-pub-2743935903829065"
-                     data-ad-slot="${adSlot}"></ins>
-            `;
-            
-            // Push the ad to Google AdSense
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            
-            // Add show animation
-            setTimeout(() => {
-                adElement.classList.add('show');
-            }, 100);
-        }
-
-        // ===== RECIPE SAVING =====
         function updateSaveButton() {
             const saveBtn = document.getElementById('saveRecipeBtn');
             if (saveBtn && currentRecipe) {
@@ -1955,6 +1887,25 @@
             });
         }
 
+        function showInlineAd() {
+            const scrollPosition = window.pageYOffset;
+            const documentHeight = document.documentElement.scrollHeight;
+            const windowHeight = window.innerHeight;
+            
+            const inlineAd1 = document.getElementById('inlineAd1');
+            const inlineAd2 = document.getElementById('inlineAd2');
+            
+            if (inlineAd1 && scrollPosition > documentHeight * 0.25) {
+                inlineAd1.style.display = 'flex';
+                setTimeout(() => inlineAd1.classList.add('show'), 100);
+            }
+            
+            if (inlineAd2 && scrollPosition > documentHeight * 0.6) {
+                inlineAd2.style.display = 'flex';
+                setTimeout(() => inlineAd2.classList.add('show'), 100);
+            }
+        }
+
         // ===== NOTIFICATION SYSTEM =====
         function showNotification(message) {
             const existingNotification = document.querySelector('.recipe-notification');
@@ -1980,12 +1931,14 @@
         function initializeKeyboardNavigation() {
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
-                    // Close any open modals or notifications
-                    const notification = document.querySelector('.recipe-notification');
-                    if (notification) notification.remove();
+                    closeFloatingAd();
                 }
             });
         }
-</script>
+
+        function closeFloatingAd() {
+            floatingAd.classList.remove('show');
+        }
+    </script>
 </body>
 </html>
