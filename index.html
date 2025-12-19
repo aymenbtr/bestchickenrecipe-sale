@@ -1437,7 +1437,18 @@
                     <h2 id="sectionTitle">Featured Recipes</h2>
                     <p id="sectionSubtitle">Handpicked by our culinary experts</p>
                 </div>
-                 <div class="show-more-container" id="featuredShowMore">
+
+                <div class="featured-container">
+                    <button class="scroll-nav prev" id="scrollPrevFeatured">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="featured-wrapper" id="featuredRecipesWrapper"></div>
+                    <button class="scroll-nav next" id="scrollNextFeatured">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="show-more-container" id="featuredShowMore">
                     <a href="recipes.html?category=featured" class="btn btn-primary show-more-btn">
                         <span>View All Featured Recipes</span>
                         <i class="fas fa-arrow-right"></i>
@@ -3894,6 +3905,17 @@
                     <h2>Top Rated Recipes</h2>
                     <p>Highest rated by our community</p>
                 </div>
+
+                <div class="featured-container">
+                    <button class="scroll-nav prev" id="scrollPrevTopRated">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="featured-wrapper" id="topRatedRecipesWrapper"></div>
+                    <button class="scroll-nav next" id="scrollNextTopRated">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
                 <div class="show-more-container" id="topRatedShowMore">
                     <a href="recipes.html?sort=rating" class="btn btn-primary show-more-btn">
                         <span>View All Top Rated Recipes</span>
