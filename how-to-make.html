@@ -1647,6 +1647,193 @@
     </div>
 
     <script>
+        const newRecipes = [
+    {
+        id: 301,
+        title: "Chicken Makhani Lasagna",
+        image: "https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc18c-6724-69f0-8dbb-e933c5aa24b2/seedream-4.0_Food_photography_golden-brown_lasagna_with_visible_layers_of_lasagna_noodles_cre-0.jpg",
+        description: "Layers of lasagna noodles with butter chicken sauce, ricotta, and mozzarella, baked to golden perfection.",
+        badges: ["baked", "cheesy", "halal"],
+        time: "75 min",
+        calories: "520 cal",
+        protein: "32g",
+        carbs: "45g",
+        fat: "22g",
+        ingredients: [
+            "12 lasagna noodles",
+            "500g chicken breast, cubed",
+            "2 cups ricotta cheese",
+            "2 cups mozzarella cheese, shredded",
+            "1 cup Parmesan cheese, grated",
+            "3 tbsp butter",
+            "1 onion, finely chopped",
+            "4 garlic cloves, minced",
+            "2 tbsp ginger paste",
+            "2 cups tomato puree",
+            "1 cup heavy cream",
+            "2 tbsp garam masala",
+            "1 tbsp paprika",
+            "1 tsp turmeric",
+            "1 tsp chili powder",
+            "Salt to taste",
+            "Fresh cilantro for garnish"
+        ],
+        instructions: `Preheat oven to 375°F (190°C). Cook lasagna noodles according to package directions.
+In a large pan, melt butter and sauté onions until golden. Add garlic and ginger, cook for 2 minutes.
+Add chicken cubes and cook until browned on all sides.
+Stir in tomato puree, garam masala, paprika, turmeric, and chili powder. Simmer for 10 minutes.
+Add heavy cream and simmer for another 5 minutes. Season with salt.
+In a 9x13 inch baking dish, spread a layer of butter chicken sauce.
+Layer with lasagna noodles, ricotta cheese, mozzarella, and more sauce. Repeat layers 3-4 times.
+Top with remaining mozzarella and Parmesan cheese.
+Cover with foil and bake for 30 minutes. Remove foil and bake for 15 more minutes until golden and bubbly.
+Let rest for 10 minutes before serving. Garnish with fresh cilantro.`
+    },
+    {
+        id: 302,
+        title: "Arabic 7-Spice Fried Chicken",
+        image: "https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc18e-b1e6-6950-acd6-a1cf599d8bbd/seedream-4.0_Professional_food_photography_crispy_golden-brown_fried_chicken_pieces_heavily_s-0.jpg",
+        description: "Crispy chicken marinated in baharat spices, sumac, and lemon, double-fried for extra crunch.",
+        badges: ["fried", "spicy", "halal"],
+        time: "50 min",
+        calories: "480 cal",
+        protein: "38g",
+        carbs: "28g",
+        fat: "24g",
+        ingredients: [
+            "1 kg chicken pieces (thighs and drumsticks)",
+            "2 cups buttermilk",
+            "3 tbsp baharat spice mix",
+            "2 tbsp sumac",
+            "Juice of 2 lemons",
+            "4 garlic cloves, minced",
+            "2 cups all-purpose flour",
+            "1 cup cornstarch",
+            "1 tbsp paprika",
+            "1 tsp cayenne pepper",
+            "2 tsp salt",
+            "1 tsp black pepper",
+            "Oil for deep frying",
+            "Lemon wedges for serving"
+        ],
+        instructions: `Marinate chicken in buttermilk, baharat spices, sumac, lemon juice, and garlic for at least 4 hours or overnight.
+In a large bowl, mix flour, cornstarch, paprika, cayenne, salt, and black pepper.
+Heat oil to 325°F (160°C) for the first fry.
+Remove chicken from marinade, letting excess drip off. Dredge in flour mixture, coating thoroughly.
+Fry chicken in batches for 8-10 minutes until cooked through but not too brown. Remove and let rest.
+Increase oil temperature to 375°F (190°C).
+Fry chicken again for 3-4 minutes until deep golden and extra crispy.
+Drain on paper towels and season immediately with salt.
+Serve hot with lemon wedges and your favorite dipping sauce.`
+    },
+    {
+        id: 303,
+        title: "Za'atar Grilled Chicken with Freekeh Salad",
+        image: "https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc190-aad5-6470-aa9a-8c2a2a8ed436/seedream-4.0_Prompt_Food_photography_grilled_chicken_breast_with_visible_za_atar_spice_crust_-0.jpg",
+        description: "Chicken marinated in za'atar, olive oil, and lemon, grilled and served with freekeh, pomegranate, and mint.",
+        badges: ["grilled", "healthy", "halal"],
+        time: "45 min",
+        calories: "380 cal",
+        protein: "42g",
+        carbs: "35g",
+        fat: "12g",
+        ingredients: [
+            "4 chicken breasts",
+            "4 tbsp za'atar spice blend",
+            "1/4 cup olive oil",
+            "Juice of 2 lemons",
+            "3 garlic cloves, minced",
+            "1 cup freekeh",
+            "2 cups chicken broth",
+            "1 cucumber, diced",
+            "2 tomatoes, diced",
+            "1/2 cup pomegranate seeds",
+            "1/4 cup fresh mint, chopped",
+            "1/4 cup fresh parsley, chopped",
+            "2 tbsp lemon juice",
+            "Salt and pepper to taste"
+        ],
+        instructions: `Mix za'atar, olive oil, lemon juice, and garlic. Coat chicken breasts and marinate for 30 minutes.
+Cook freekeh in chicken broth according to package directions. Let cool.
+Preheat grill to medium-high heat.
+Season chicken with salt and pepper, then grill for 6-7 minutes per side until cooked through.
+In a large bowl, combine cooked freekeh, cucumber, tomatoes, pomegranate seeds, mint, and parsley.
+Dress with lemon juice, olive oil, salt, and pepper. Toss well.
+Slice grilled chicken and serve over freekeh salad.
+Garnish with extra pomegranate seeds and fresh herbs.`
+    },
+    {
+        id: 304,
+        title: "Harissa Chicken Traybake with Chickpeas",
+        image: "https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc192-7fab-6400-9ab7-82dd9deef563/seedream-4.0_One-pan_food_photography_harissa-marinated_chicken_thighs_baked_with_chickpeas_b-0.jpg",
+        description: "One-pan baked chicken with North African harissa paste, chickpeas, and seasonal vegetables.",
+        badges: ["baked", "quick", "spicy"],
+        time: "40 min",
+        calories: "420 cal",
+        protein: "36g",
+        carbs: "32g",
+        fat: "18g",
+        ingredients: [
+            "6 chicken thighs",
+            "3 tbsp harissa paste",
+            "2 cans chickpeas, drained",
+            "2 red bell peppers, sliced",
+            "1 red onion, sliced",
+            "3 garlic cloves, sliced",
+            "1 lemon, sliced",
+            "3 tbsp olive oil",
+            "1 tsp cumin",
+            "1 tsp coriander",
+            "Fresh cilantro for garnish",
+            "Salt and pepper to taste"
+        ],
+        instructions: `Preheat oven to 400°F (200°C).
+Coat chicken thighs with harissa paste and let sit for 10 minutes.
+In a large baking tray, combine chickpeas, bell peppers, onion, and garlic.
+Drizzle with olive oil and season with cumin, coriander, salt, and pepper. Toss well.
+Nestle chicken thighs among the vegetables. Add lemon slices.
+Roast for 35-40 minutes until chicken is cooked through and vegetables are tender.
+Garnish with fresh cilantro before serving.
+Serve with couscous or flatbread.`
+    },
+    {
+        id: 305,
+        title: "Pakistani Chicken Pakora (Spiced Fritters)",
+        image: "https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc194-b661-6600-ac58-e9302afcbf18/seedream-4.0_Prompt_Close-up_food_photography_golden_crispy_chicken_pakora_fritters_spiced_ch-0.jpg",
+        description: "Chicken pieces coated in spiced chickpea flour batter, deep-fried until golden and crispy.",
+        badges: ["fried", "traditional", "spicy"],
+        time: "35 min",
+        calories: "320 cal",
+        protein: "28g",
+        carbs: "24g",
+        fat: "14g",
+        ingredients: [
+            "500g chicken breast, cut into bite-sized pieces",
+            "1.5 cups chickpea flour (besan)",
+            "2 tbsp rice flour",
+            "1 tbsp ginger-garlic paste",
+            "2 green chilies, finely chopped",
+            "1 tsp red chili powder",
+            "1 tsp garam masala",
+            "1/2 tsp turmeric",
+            "1 tsp cumin seeds",
+            "1/2 tsp baking soda",
+            "Fresh cilantro, chopped",
+            "Salt to taste",
+            "Water as needed",
+            "Oil for deep frying"
+        ],
+        instructions: `In a large bowl, mix chickpea flour, rice flour, ginger-garlic paste, green chilies, red chili powder, garam masala, turmeric, cumin seeds, and salt.
+Add water gradually to form a thick batter that coats the back of a spoon.
+Add baking soda and mix well. Let batter rest for 10 minutes.
+Add chicken pieces to the batter and coat thoroughly.
+Heat oil to 350°F (175°C).
+Drop chicken pieces one by one into hot oil. Don't overcrowd.
+Fry for 6-8 minutes until golden brown and crispy, turning occasionally.
+Remove and drain on paper towels.
+Serve hot with mint chutney and lemon wedges.`
+    }
+];
         // ===== CONFIGURATION =====
         const recipeDetail = document.getElementById('recipeDetail');
         const themeToggle = document.getElementById('themeToggle');
@@ -1663,6 +1850,7 @@
             initializeScrollEvents();
             initializeScrollAnimations();
             initializeKeyboardNavigation();
+            saveRecipesToStorage();
             
             setTimeout(() => floatingAd.classList.add('show'), 3000);
         });
@@ -1935,10 +2123,23 @@
         function closeFloatingAd() {
             floatingAd.classList.remove('show');
         }
-    </script>
+        function saveRecipesToStorage() {
+    // Get existing recipes
+    const existingRecipes = JSON.parse(localStorage.getItem('chickenRecipes')) || [];
+    
+    // Merge with new recipes
+    const allRecipes = [...existingRecipes, ...newRecipes];
+    
+    // Remove duplicates based on ID
+    const uniqueRecipes = allRecipes.filter((recipe, index, self) =>
+        index === self.findIndex((r) => r.id === recipe.id)
+    );
+    
+    // Save back to localStorage
+    localStorage.setItem('chickenRecipes', JSON.stringify(uniqueRecipes));
+    
+    console.log(`Added ${newRecipes.length} new recipes!`);
+}
+</script>
 </body>
 </html>
-
-
-
-
