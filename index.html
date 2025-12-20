@@ -4671,7 +4671,1403 @@ html {
         <i class="fas fa-arrow-up"></i>
     </button>
 <script>
-    const _0x169705=_0x447d;(function(_0x22c38d,_0x43cae1){const _0x2990ed=_0x447d,_0xbba365=_0x22c38d();while(!![]){try{const _0x1d58f8=-parseInt(_0x2990ed(0xe8))/0x1*(parseInt(_0x2990ed(0x1af))/0x2)+parseInt(_0x2990ed(0x136))/0x3+parseInt(_0x2990ed(0x1d1))/0x4*(parseInt(_0x2990ed(0x153))/0x5)+-parseInt(_0x2990ed(0x1d4))/0x6+-parseInt(_0x2990ed(0x134))/0x7*(parseInt(_0x2990ed(0x1d6))/0x8)+parseInt(_0x2990ed(0x1fa))/0x9+parseInt(_0x2990ed(0x1cf))/0xa;if(_0x1d58f8===_0x43cae1)break;else _0xbba365['push'](_0xbba365['shift']());}catch(_0x391c55){_0xbba365['push'](_0xbba365['shift']());}}}(_0x2d6f,0xc5450));let recipes=[],userRatings={},recipeRatings={},activeFilters={'categories':[],'search':''};const categories=[{'id':_0x169705(0x11e),'name':'Baked','icon':_0x169705(0x191),'color':_0x169705(0x16c)},{'id':'fried','name':_0x169705(0x1a7),'icon':_0x169705(0xeb),'color':_0x169705(0x15b)},{'id':_0x169705(0x161),'name':_0x169705(0x1e9),'icon':'fas\x20fa-fire','color':_0x169705(0x1ab)},{'id':_0x169705(0x17d),'name':_0x169705(0xee),'icon':_0x169705(0x149),'color':'#4CAF50'},{'id':_0x169705(0x11f),'name':'Cheesy','icon':'fas\x20fa-cheese','color':_0x169705(0x1f4)},{'id':_0x169705(0x13e),'name':'Spicy','icon':_0x169705(0x1ef),'color':_0x169705(0x156)},{'id':_0x169705(0x170),'name':_0x169705(0x1ae),'icon':'fas\x20fa-home','color':'#795548'},{'id':_0x169705(0x10c),'name':_0x169705(0x126),'icon':_0x169705(0x19f),'color':_0x169705(0x14e)},{'id':_0x169705(0x187),'name':_0x169705(0x1c1),'icon':_0x169705(0x192),'color':_0x169705(0xea)},{'id':_0x169705(0x101),'name':_0x169705(0x1d5),'icon':_0x169705(0x15e),'color':'#7B1FA2'},{'id':_0x169705(0x19d),'name':'Comfort\x20Food','icon':_0x169705(0x124),'color':_0x169705(0x1ed)},{'id':'gourmet','name':_0x169705(0x13c),'icon':_0x169705(0x14b),'color':_0x169705(0x198)},{'id':_0x169705(0x144),'name':'Italian','icon':_0x169705(0x118),'color':_0x169705(0x176)},{'id':_0x169705(0x166),'name':_0x169705(0x143),'icon':_0x169705(0xf0),'color':'#43A047'},{'id':'asian','name':_0x169705(0x1be),'icon':'fas\x20fa-utensil-spoon','color':'#1E88E5'},{'id':_0x169705(0x159),'name':_0x169705(0x16f),'icon':'fas\x20fa-mosque','color':_0x169705(0x140)}];document[_0x169705(0x105)](_0x169705(0x167),function(){const _0x14503c=_0x169705;console['log'](_0x14503c(0x199)),initializeRecipes(),initializeRatingData(),setupThemeToggle(),setupSearch(),setupCategories(),setupViewRecipeButtons(),setupFavoriteButtons(),setupRecipeCardClicks(),setupStarRatings(),loadTopRatedRecipes(),updateAllRecipes(),console[_0x14503c(0x169)](_0x14503c(0x1e6));});function setupThemeToggle(){const _0x51c800=_0x169705,_0x5a3f84=document[_0x51c800(0x1a1)](_0x51c800(0x1f3));if(!_0x5a3f84)return;const _0x54736f=localStorage[_0x51c800(0x163)](_0x51c800(0x188))||_0x51c800(0x16e);document[_0x51c800(0x1b6)][_0x51c800(0x1c9)]['toggle'](_0x51c800(0x1f9),_0x54736f===_0x51c800(0xe9)),updateThemeIcon(_0x54736f),_0x5a3f84[_0x51c800(0x105)](_0x51c800(0x133),function(){const _0x51b987=_0x51c800,_0x229bfd=document[_0x51b987(0x1b6)][_0x51b987(0x1c9)][_0x51b987(0x119)](_0x51b987(0x1f9)),_0x8b9f3d=_0x229bfd?_0x51b987(0xe9):_0x51b987(0x16e);localStorage[_0x51b987(0x13f)]('bestchickenrecipes_theme',_0x8b9f3d),updateThemeIcon(_0x8b9f3d),showNotification((_0x8b9f3d==='dark'?_0x51b987(0x172):_0x51b987(0x193))+'\x20mode\x20enabled',_0x51b987(0x16a));});}function updateThemeIcon(_0x1039ee){const _0x3602d7=_0x169705,_0xbc8fde=document[_0x3602d7(0x1a1)]('themeToggle');if(!_0xbc8fde)return;const _0x3d5d36=_0xbc8fde[_0x3602d7(0x15f)]('i');_0x3d5d36[_0x3602d7(0x1f6)]=_0x1039ee==='dark'?'fas\x20fa-sun':_0x3602d7(0x132);}function setupSearch(){const _0x54a9dc=_0x169705,_0x305644=document['getElementById'](_0x54a9dc(0x151)),_0x132f4f=document[_0x54a9dc(0x1a1)]('searchSuggestions'),_0x535934=document['getElementById']('searchClear');if(!_0x305644||!_0x132f4f)return;_0x132f4f['innerHTML']='',_0x132f4f[_0x54a9dc(0x129)]['display']='none',_0x305644[_0x54a9dc(0x105)]('input',function(){const _0x19b1d1=_0x54a9dc;_0x535934&&(_0x535934[_0x19b1d1(0x129)][_0x19b1d1(0x178)]=this[_0x19b1d1(0x18e)][_0x19b1d1(0x12d)]()?_0x19b1d1(0x1c4):'none');});_0x535934&&_0x535934['addEventListener'](_0x54a9dc(0x133),function(_0x326d9f){const _0x75f8a3=_0x54a9dc;_0x326d9f[_0x75f8a3(0x1c7)](),_0x326d9f[_0x75f8a3(0x108)](),_0x305644[_0x75f8a3(0x18e)]='',_0x305644[_0x75f8a3(0x142)](),_0x535934['style'][_0x75f8a3(0x178)]=_0x75f8a3(0x11d),clearSearchResults(),showNotification(_0x75f8a3(0x14d),'info');});_0x305644[_0x54a9dc(0x105)](_0x54a9dc(0x142),()=>{const _0x510cb1=_0x54a9dc,_0x44df6a=_0x305644[_0x510cb1(0x18e)]['trim']();_0x44df6a&&(updateSearchSuggestions(_0x44df6a),_0x132f4f[_0x510cb1(0x129)]['display']='block');}),_0x305644[_0x54a9dc(0x105)]('input',function(){const _0x398292=_0x54a9dc,_0x4637ba=this[_0x398292(0x18e)]['trim']();activeFilters['search']=_0x4637ba[_0x398292(0x154)](),updateSearchSuggestions(_0x4637ba),_0x4637ba[_0x398292(0x12a)]>0x0?(_0x132f4f['style'][_0x398292(0x178)]='block',showSearchResults(_0x4637ba)):(_0x132f4f['style'][_0x398292(0x178)]=_0x398292(0x11d),activeFilters[_0x398292(0x10a)]='',hideSearchResults()),clearTimeout(window[_0x398292(0x19e)]),window[_0x398292(0x19e)]=setTimeout(()=>{const _0x1923d8=_0x398292;_0x4637ba[_0x1923d8(0x12a)]>0x0?displaySearchResults(_0x4637ba):hideSearchResults();},0x12c);}),_0x305644['addEventListener'](_0x54a9dc(0xec),function(_0x2792e3){const _0x25c940=_0x54a9dc;_0x2792e3['key']===_0x25c940(0x1e3)&&(_0x132f4f[_0x25c940(0x129)]['display']=_0x25c940(0x11d),this['blur']());if(_0x2792e3[_0x25c940(0x114)]==='Enter'){const _0x326d9c=_0x132f4f[_0x25c940(0x15f)](_0x25c940(0x1b4));if(_0x326d9c){const _0x4a7a09=_0x326d9c[_0x25c940(0x1bc)][_0x25c940(0x135)];_0x4a7a09&&navigateToRecipe(_0x4a7a09);}else{if(this[_0x25c940(0x18e)]['trim']()[_0x25c940(0x12a)]>0x0){displaySearchResults(this[_0x25c940(0x18e)][_0x25c940(0x12d)]());const _0x24337b=document[_0x25c940(0x1a1)]('searchResultsSection');_0x24337b&&_0x24337b['scrollIntoView']({'behavior':_0x25c940(0x16b)});}}}}),document['addEventListener'](_0x54a9dc(0x133),_0x47210e=>{const _0xf4141f=_0x54a9dc;!_0x305644['contains'](_0x47210e[_0xf4141f(0x10e)])&&!_0x132f4f[_0xf4141f(0x110)](_0x47210e[_0xf4141f(0x10e)])&&(_0x132f4f[_0xf4141f(0x129)]['display']=_0xf4141f(0x11d));}),_0x132f4f[_0x54a9dc(0x105)](_0x54a9dc(0x133),_0x10b657=>{const _0x3c974a=_0x54a9dc,_0x221c91=_0x10b657['target']['closest'](_0x3c974a(0x1b4));if(_0x221c91){const _0x5b7cd0=_0x221c91[_0x3c974a(0x1bc)][_0x3c974a(0x135)];_0x5b7cd0&&navigateToRecipe(_0x5b7cd0);}});const _0x40fba3=document[_0x54a9dc(0x1a1)](_0x54a9dc(0x109));_0x40fba3&&_0x40fba3['addEventListener'](_0x54a9dc(0x133),clearSearchResults);}function showSearchResults(_0x54393a){const _0x4183dd=_0x169705,_0x35b868=document[_0x4183dd(0x1a1)](_0x4183dd(0x128)),_0x1f33ab=document[_0x4183dd(0x1a1)](_0x4183dd(0x182));_0x35b868&&(_0x35b868['style'][_0x4183dd(0x178)]=_0x4183dd(0x1c4),setTimeout(()=>{const _0x1e1cdb=_0x4183dd;_0x35b868['scrollIntoView']({'behavior':'smooth','block':_0x1e1cdb(0x186)});},0x190)),showSearchActiveBadge(_0x54393a);}function hideSearchResults(){const _0x5463de=_0x169705,_0xb1667b=document[_0x5463de(0x1a1)]('searchResultsSection');_0xb1667b&&(_0xb1667b[_0x5463de(0x129)][_0x5463de(0x178)]=_0x5463de(0x11d)),hideSearchActiveBadge();}function displaySearchResults(_0x257a0a){const _0x515b6b=_0x169705,_0x13056e=document[_0x515b6b(0x1a1)]('searchResultsContainer'),_0x213a79=document['getElementById'](_0x515b6b(0x182)),_0x3b04f2=document['getElementById'](_0x515b6b(0x128));if(!_0x13056e||!_0x213a79)return;const _0x52e39d=_0x257a0a[_0x515b6b(0x154)](),_0x418e37=recipes[_0x515b6b(0x1a2)](_0x1a84d6=>_0x1a84d6[_0x515b6b(0x155)][_0x515b6b(0x154)]()['includes'](_0x52e39d)||_0x1a84d6[_0x515b6b(0x15a)][_0x515b6b(0x154)]()['includes'](_0x52e39d)||_0x1a84d6['categories'][_0x515b6b(0x1aa)](_0x43ff05=>_0x43ff05[_0x515b6b(0x154)]()[_0x515b6b(0x1ee)](_0x52e39d)));_0x418e37[_0x515b6b(0x1f8)]((_0x450dea,_0x1af893)=>{const _0xeff2ea=_0x515b6b,_0x470733=_0x450dea[_0xeff2ea(0x155)]['toLowerCase']()[_0xeff2ea(0x1b9)](_0x52e39d),_0x1a26ea=_0x1af893['title']['toLowerCase']()['startsWith'](_0x52e39d);if(_0x470733&&!_0x1a26ea)return-0x1;if(!_0x470733&&_0x1a26ea)return 0x1;const _0x1bba65=recipeRatings[_0x450dea['id']]?.['average']||0x0,_0x13c574=recipeRatings[_0x1af893['id']]?.[_0xeff2ea(0x106)]||0x0;return _0x13c574-_0x1bba65;}),_0x213a79['textContent']=_0x515b6b(0x183)+_0x418e37[_0x515b6b(0x12a)]+_0x515b6b(0x1f2)+(_0x418e37[_0x515b6b(0x12a)]!==0x1?'s':'')+'\x20for\x20\x22'+_0x257a0a+'\x22',_0x418e37[_0x515b6b(0x12a)]===0x0?_0x13056e[_0x515b6b(0x102)]=_0x515b6b(0x12e)+_0x257a0a+'\x22</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Try\x20searching\x20for\x20different\x20keywords\x20or\x20browse\x20our\x20categories</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22clearSearchResults()\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x20Clear\x20Search\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20':(_0x13056e['innerHTML']=_0x418e37[_0x515b6b(0x1eb)](_0x25e728=>createSearchResultCardHTML(_0x25e728,_0x257a0a))['join'](''),setTimeout(()=>{setupViewRecipeButtons(),setupFavoriteButtons(),setupStarRatings();},0x64),setTimeout(setupScrollToSearchButton,0x1f4)),_0x3b04f2&&(_0x3b04f2[_0x515b6b(0x129)][_0x515b6b(0x178)]=_0x515b6b(0x1c4),setTimeout(()=>{const _0x604bd0=_0x515b6b;_0x3b04f2[_0x604bd0(0x17b)]({'behavior':_0x604bd0(0x16b),'block':_0x604bd0(0x186)});},0x64));}function updateSearchSuggestions(_0x6b086d){const _0x48333d=_0x169705,_0x19b76f=document['getElementById'](_0x48333d(0x1b7));if(!_0x19b76f)return;const _0x28ebe5=_0x6b086d['toLowerCase']();if(!_0x28ebe5||_0x28ebe5[_0x48333d(0x12a)]<0x1){_0x19b76f[_0x48333d(0x102)]='',_0x19b76f['style']['display']=_0x48333d(0x11d);return;}const _0x50dad7=recipes[_0x48333d(0x1a2)](_0x463713=>_0x463713[_0x48333d(0x155)][_0x48333d(0x154)]()[_0x48333d(0x1ee)](_0x28ebe5)||_0x463713[_0x48333d(0x15a)][_0x48333d(0x154)]()[_0x48333d(0x1ee)](_0x28ebe5)||_0x463713['categories']['some'](_0x3f5db5=>_0x3f5db5['toLowerCase']()['includes'](_0x28ebe5)));_0x50dad7[_0x48333d(0x1f8)]((_0x30fabc,_0x346195)=>{const _0x4bf8d7=_0x48333d,_0x1a7bc7=_0x30fabc[_0x4bf8d7(0x155)][_0x4bf8d7(0x154)]()['startsWith'](_0x28ebe5),_0x54e476=_0x346195[_0x4bf8d7(0x155)][_0x4bf8d7(0x154)]()['startsWith'](_0x28ebe5);if(_0x1a7bc7&&!_0x54e476)return-0x1;if(!_0x1a7bc7&&_0x54e476)return 0x1;return _0x30fabc[_0x4bf8d7(0x155)][_0x4bf8d7(0x160)](_0x346195['title']);})[_0x48333d(0x19b)](0x0,0x8),_0x50dad7[_0x48333d(0x12a)]===0x0?_0x19b76f[_0x48333d(0x102)]=_0x48333d(0x1d3)+_0x6b086d+_0x48333d(0x1e4):_0x19b76f['innerHTML']=_0x50dad7[_0x48333d(0x1eb)](_0x33f6d2=>_0x48333d(0x1e1)+_0x33f6d2['id']+_0x48333d(0x123)+(_0x33f6d2[_0x48333d(0xff)]||_0x48333d(0xfe))+_0x48333d(0x11a)+_0x33f6d2[_0x48333d(0x155)]+_0x48333d(0x185)+highlightText(_0x33f6d2['title'],_0x6b086d)+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22suggestion-category\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-tag\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x33f6d2['categories'][_0x48333d(0x1eb)](_0x190712=>categories[_0x48333d(0x117)](_0x7e7770=>_0x7e7770['id']===_0x190712)?.[_0x48333d(0x1da)]||_0x190712)[_0x48333d(0x19b)](0x0,0x2)['join'](',\x20')+_0x48333d(0x1ea)+(_0x33f6d2['categories']['length']>0x2?_0x48333d(0x1a4):'')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22suggestion-arrow\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-chevron-right\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20')[_0x48333d(0x141)]('');}function createSearchResultCardHTML(_0x235c6c,_0x415aaf){const _0x1f8ea2=_0x169705,_0x447f9b=favoritesManager[_0x1f8ea2(0xfb)](_0x235c6c['id']),_0x51e653=userRatings[_0x235c6c['id']],_0x43c0b1=recipeRatings[_0x235c6c['id']]?.['average']||0x0,_0x411ec0=_0x235c6c['title'][_0x1f8ea2(0x154)]()[_0x1f8ea2(0x1b9)](_0x415aaf[_0x1f8ea2(0x154)]());return _0x1f8ea2(0x116)+(_0x411ec0?_0x1f8ea2(0x1bf):'')+_0x1f8ea2(0x1f1)+_0x235c6c['id']+_0x1f8ea2(0x125)+_0x235c6c[_0x1f8ea2(0x111)][_0x1f8ea2(0x141)](',')+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-image\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+_0x235c6c[_0x1f8ea2(0xff)]+'\x22\x20alt=\x22'+_0x235c6c[_0x1f8ea2(0x155)]+_0x1f8ea2(0x13d)+(_0x411ec0?_0x1f8ea2(0x1c3):'')+_0x1f8ea2(0x1a0)+(_0x43c0b1>0x4?_0x1f8ea2(0x174):'')+_0x1f8ea2(0xf7)+_0x235c6c['id']+_0x1f8ea2(0x1d2)+(_0x447f9b?_0x1f8ea2(0x1d8):'')+'\x22\x20data-recipe-id=\x22'+_0x235c6c['id']+_0x1f8ea2(0x18a)+(_0x447f9b?'fas':_0x1f8ea2(0x13a))+_0x1f8ea2(0x1d7)+highlightSearchText(_0x235c6c[_0x1f8ea2(0x155)],_0x415aaf)+_0x1f8ea2(0x194)+highlightSearchText(_0x235c6c[_0x1f8ea2(0x15a)],_0x415aaf)+_0x1f8ea2(0x162)+_0x235c6c[_0x1f8ea2(0x1db)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-fire\x22></i>\x20'+_0x235c6c[_0x1f8ea2(0x1b5)]+_0x1f8ea2(0x103)+(_0x43c0b1>0x0?_0x43c0b1[_0x1f8ea2(0x1c0)](0x1)+'/5':_0x1f8ea2(0x1f0))+_0x1f8ea2(0x1e0)+(_0x51e653?_0x1f8ea2(0x121)+_0x51e653+_0x1f8ea2(0x1ac):_0x1f8ea2(0x1d9)+_0x235c6c['id']+_0x1f8ea2(0x122)+_0x235c6c['id']+_0x1f8ea2(0x137))+_0x1f8ea2(0x164);}function highlightSearchText(_0x5bf868,_0x2fd7ed){const _0x1d5296=_0x169705;if(!_0x2fd7ed||!_0x5bf868)return _0x5bf868;const _0x59d3a1=new RegExp('('+_0x2fd7ed[_0x1d5296(0x1cb)](/[.*+?^${}()|[\]\\]/g,_0x1d5296(0x1f5))+')','gi');return _0x5bf868[_0x1d5296(0x1cb)](_0x59d3a1,_0x1d5296(0x1a8));}function clearSearchResults(){const _0x7ee7ba=_0x169705,_0x595c2c=document[_0x7ee7ba(0x1a1)](_0x7ee7ba(0x151)),_0x46a0ad=document[_0x7ee7ba(0x1a1)]('searchClear'),_0xa7fd0a=document[_0x7ee7ba(0x1a1)](_0x7ee7ba(0x128));_0x595c2c&&(_0x595c2c['value']='',_0x595c2c[_0x7ee7ba(0x142)]());_0x46a0ad&&(_0x46a0ad[_0x7ee7ba(0x129)][_0x7ee7ba(0x178)]=_0x7ee7ba(0x11d));_0xa7fd0a&&(_0xa7fd0a['style'][_0x7ee7ba(0x178)]=_0x7ee7ba(0x11d));activeFilters[_0x7ee7ba(0x10a)]='';const _0x44ac67=document[_0x7ee7ba(0x1a1)](_0x7ee7ba(0x1b7));_0x44ac67&&(_0x44ac67['style'][_0x7ee7ba(0x178)]=_0x7ee7ba(0x11d),_0x44ac67[_0x7ee7ba(0x102)]=''),updateAllRecipes(),hideSearchActiveBadge(),showNotification(_0x7ee7ba(0x14d),_0x7ee7ba(0x16a));}function showSearchActiveBadge(_0x4ab4cc){const _0x1eee74=_0x169705;hideSearchActiveBadge();const _0x3f1bb2=document[_0x1eee74(0x1ad)]('div');_0x3f1bb2[_0x1eee74(0x1f6)]=_0x1eee74(0x10f),_0x3f1bb2['id']=_0x1eee74(0x1de),_0x3f1bb2['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-search\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span>Searching\x20for:\x20\x22'+_0x4ab4cc+_0x1eee74(0x17c),document['body'][_0x1eee74(0xf2)](_0x3f1bb2);}function hideSearchActiveBadge(){const _0x1f68c5=_0x169705,_0x4493ee=document[_0x1f68c5(0x1a1)](_0x1f68c5(0x1de));_0x4493ee&&_0x4493ee[_0x1f68c5(0xf1)]();}function setupScrollToSearchButton(){const _0x29b45a=_0x169705,_0x4ad3ad=document[_0x29b45a(0x1a1)](_0x29b45a(0x151));if(_0x4ad3ad&&_0x4ad3ad[_0x29b45a(0x18e)][_0x29b45a(0x12d)]()){const _0x1d8c24=document[_0x29b45a(0x1ad)](_0x29b45a(0x131));_0x1d8c24[_0x29b45a(0x1f6)]='scroll-to-search',_0x1d8c24['innerHTML']=_0x29b45a(0x1e2),_0x1d8c24[_0x29b45a(0x155)]=_0x29b45a(0xf9),_0x1d8c24[_0x29b45a(0x14a)]=()=>{const _0xcf2ee4=_0x29b45a,_0x31cbf7=document[_0xcf2ee4(0x1a1)](_0xcf2ee4(0x128));_0x31cbf7&&_0x31cbf7[_0xcf2ee4(0x17b)]({'behavior':'smooth'});},_0x1d8c24['id']=_0x29b45a(0x14f),document[_0x29b45a(0x1b6)][_0x29b45a(0xf2)](_0x1d8c24),window[_0x29b45a(0x105)](_0x29b45a(0x190),function(){const _0x5a19ae=_0x29b45a,_0x53db47=document[_0x5a19ae(0x1a1)](_0x5a19ae(0x128));if(_0x53db47){const _0x54fe15=_0x53db47[_0x5a19ae(0xfd)]();_0x54fe15['top']<window[_0x5a19ae(0x152)]/0x2&&(_0x1d8c24[_0x5a19ae(0x129)][_0x5a19ae(0xf3)]='0',setTimeout(()=>{const _0x140b28=_0x5a19ae;_0x1d8c24[_0x140b28(0x10d)]&&_0x1d8c24[_0x140b28(0x10d)][_0x140b28(0x1ca)](_0x1d8c24);},0x12c));}});}}function setupCategories(){const _0x10241c=_0x169705,_0x2318a8=document['getElementById'](_0x10241c(0x147)),_0x236e02=document['querySelector']('.categories-trigger');if(!_0x2318a8||!_0x236e02)return;_0x2318a8['innerHTML']=categories[_0x10241c(0x1eb)](_0x1e22aa=>_0x10241c(0x115)+_0x1e22aa['id']+_0x10241c(0x112)+_0x1e22aa[_0x10241c(0x15d)]+_0x10241c(0x107)+_0x1e22aa[_0x10241c(0x130)]+';\x20margin-right:\x208px;\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x1e22aa[_0x10241c(0x1da)]+_0x10241c(0x1c6)+_0x1e22aa['id']+'\x22>0</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20')[_0x10241c(0x141)](''),updateCategoryCounts(),_0x236e02[_0x10241c(0x105)]('click',_0x59bb10=>{const _0x285213=_0x10241c;_0x59bb10['stopPropagation'](),_0x2318a8['classList'][_0x285213(0x119)](_0x285213(0x1d8));}),_0x2318a8[_0x10241c(0x105)](_0x10241c(0x133),_0x513f75=>{const _0x391f7b=_0x10241c,_0x1acbf9=_0x513f75['target']['closest'](_0x391f7b(0x104));if(_0x1acbf9){const _0x3cb75f=_0x1acbf9[_0x391f7b(0x1bc)][_0x391f7b(0x12f)];toggleCategoryFilter(_0x3cb75f),updateAllRecipes();}}),document[_0x10241c(0x105)](_0x10241c(0x133),()=>{const _0x4ff5bd=_0x10241c;_0x2318a8['classList'][_0x4ff5bd(0xf1)](_0x4ff5bd(0x1d8));});}function toggleCategoryFilter(_0x338ce6){const _0x465c37=_0x169705,_0x5b6256=activeFilters[_0x465c37(0x111)][_0x465c37(0x1ce)](_0x338ce6),_0x220218=document[_0x465c37(0x15f)](_0x465c37(0x196)+_0x338ce6+'\x22]');_0x5b6256===-0x1?(activeFilters['categories']['push'](_0x338ce6),_0x220218&&_0x220218[_0x465c37(0x1c9)][_0x465c37(0x12c)]('filter-active')):(activeFilters[_0x465c37(0x111)][_0x465c37(0xfa)](_0x5b6256,0x1),_0x220218&&_0x220218[_0x465c37(0x1c9)][_0x465c37(0xf1)](_0x465c37(0x158)));updateCategoryCounts();const _0x5345f9=categories[_0x465c37(0x117)](_0x4442c5=>_0x4442c5['id']===_0x338ce6)?.['name']||_0x338ce6;showNotification(activeFilters[_0x465c37(0x111)]['includes'](_0x338ce6)?_0x465c37(0x1e5)+_0x5345f9:_0x465c37(0x145)+_0x5345f9+_0x465c37(0xf5),'info');}function updateCategoryCounts(){const _0x14086c=_0x169705;categories[_0x14086c(0x179)](_0x4d2d1a=>{const _0x568c42=_0x14086c,_0x32cdf7=document[_0x568c42(0x1a1)]('count-'+_0x4d2d1a['id']);if(_0x32cdf7){const _0x54ae1e=recipes[_0x568c42(0x1a2)](_0x13e145=>_0x13e145[_0x568c42(0x111)][_0x568c42(0x1ee)](_0x4d2d1a['id']))[_0x568c42(0x12a)];_0x32cdf7[_0x568c42(0x138)]=_0x54ae1e;}});}function initializeRecipes(){const _0xafb0db=_0x169705,_0x579e7d=document[_0xafb0db(0x1d0)](_0xafb0db(0x157));recipes=Array[_0xafb0db(0x19a)](_0x579e7d)[_0xafb0db(0x1eb)](_0x35b5d6=>{const _0x548c1c=_0xafb0db,_0x55e786=_0x35b5d6['dataset']['id'],_0x3bf9c2=_0x35b5d6[_0x548c1c(0x1bc)][_0x548c1c(0x111)]?_0x35b5d6[_0x548c1c(0x1bc)]['categories'][_0x548c1c(0x1e8)](','):[];return{'id':_0x55e786,'title':_0x35b5d6[_0x548c1c(0x15f)](_0x548c1c(0x1f7))?.[_0x548c1c(0x138)]||_0x548c1c(0xed),'description':_0x35b5d6['querySelector']('.recipe-description')?.[_0x548c1c(0x138)]||'','image':_0x35b5d6[_0x548c1c(0x15f)](_0x548c1c(0x148))?.[_0x548c1c(0x189)]||'','time':_0x35b5d6[_0x548c1c(0x15f)](_0x548c1c(0x177))?.['textContent']||_0x548c1c(0x120),'calories':_0x35b5d6['querySelector'](_0x548c1c(0x1bb))?.[_0x548c1c(0x138)]||_0x548c1c(0x19c),'categories':_0x3bf9c2,'rating':recipeRatings[_0x55e786]?.[_0x548c1c(0x106)]||0x0};}),console['log']('Initialized\x20'+recipes['length']+_0xafb0db(0x1c2));}function initializeRatingData(){const _0x274985=_0x169705,_0xf38237=localStorage['getItem'](_0x274985(0xfc));userRatings=_0xf38237?JSON[_0x274985(0x173)](_0xf38237):{};const _0xef1eff=localStorage['getItem'](_0x274985(0x10b));recipeRatings=_0xef1eff?JSON['parse'](_0xef1eff):{};}function _0x447d(_0x869aa7,_0x13dc84){_0x869aa7=_0x869aa7-0xe8;const _0x2d6f6e=_0x2d6f();let _0x447d15=_0x2d6f6e[_0x869aa7];return _0x447d15;}function setupStarRatings(){const _0x595d9a=_0x169705;document[_0x595d9a(0x1d0)](_0x595d9a(0x171))[_0x595d9a(0x179)](_0x5159a4=>{const _0x4b230f=_0x595d9a,_0x59d1c3=_0x5159a4[_0x4b230f(0x1bc)][_0x4b230f(0x135)];if(!_0x59d1c3)return;const _0xd14dde=_0x5159a4[_0x4b230f(0x1d0)]('.star'),_0x5cfb2f=document[_0x4b230f(0x15f)]('.rate-btn[data-recipe-id=\x22'+_0x59d1c3+'\x22]');if(!_0x5cfb2f)return;userRatings[_0x59d1c3]?(highlightStars(_0xd14dde,userRatings[_0x59d1c3]),_0x5cfb2f[_0x4b230f(0x139)]=!![],_0x5cfb2f['innerHTML']=_0x4b230f(0x12b),_0x5cfb2f[_0x4b230f(0x129)][_0x4b230f(0xf3)]='0.6'):(_0xd14dde[_0x4b230f(0x179)](_0x1515e0=>{const _0x2bf17c=_0x4b230f;_0x1515e0[_0x2bf17c(0x105)](_0x2bf17c(0x133),function(){const _0x10c5b1=_0x2bf17c,_0x279eeb=parseInt(this['dataset'][_0x10c5b1(0x18e)]);highlightStars(_0xd14dde,_0x279eeb),_0x5cfb2f[_0x10c5b1(0x139)]=![],_0x5cfb2f[_0x10c5b1(0x1bc)][_0x10c5b1(0x1dd)]=_0x279eeb,_0x5cfb2f[_0x10c5b1(0x102)]=_0x10c5b1(0x15c)+_0x279eeb+_0x10c5b1(0x1b0)+(_0x279eeb>0x1?'s':''),_0x5cfb2f[_0x10c5b1(0x129)][_0x10c5b1(0xf3)]='1';}),_0x1515e0[_0x2bf17c(0x105)]('mouseenter',function(){const _0x88ca64=_0x2bf17c,_0x33ab11=parseInt(this[_0x88ca64(0x1bc)][_0x88ca64(0x18e)]);highlightStars(_0xd14dde,_0x33ab11,!![]);}),_0x1515e0[_0x2bf17c(0x105)](_0x2bf17c(0x11b),function(){const _0x244af6=_0x2bf17c,_0x5a9e1d=_0x5cfb2f['dataset'][_0x244af6(0x1dd)]||0x0;highlightStars(_0xd14dde,parseInt(_0x5a9e1d));});}),_0x5cfb2f[_0x4b230f(0x105)]('click',function(){const _0x3bde3a=_0x4b230f,_0x587210=parseInt(this[_0x3bde3a(0x1bc)]['selectedRating']);if(!_0x587210||_0x587210<0x1||_0x587210>0x5){showNotification(_0x3bde3a(0x1dc),'info');return;}submitRating(_0x59d1c3,_0x587210);}));});}function highlightStars(_0x45e7d3,_0x5fc8da,_0xf9f3e8=![]){const _0x63651d=_0x169705;_0x45e7d3[_0x63651d(0x179)](_0x142840=>{const _0x360ec7=_0x63651d,_0x24eda5=parseInt(_0x142840[_0x360ec7(0x1bc)][_0x360ec7(0x18e)]);_0x142840[_0x360ec7(0x1c9)][_0x360ec7(0xf1)](_0x360ec7(0x1c5),'hover'),_0x24eda5<=_0x5fc8da&&_0x142840['classList'][_0x360ec7(0x12c)](_0xf9f3e8?'hover':_0x360ec7(0x1c5));});}function submitRating(_0x98e240,_0x50ee46){const _0x3bcbf3=_0x169705;userRatings[_0x98e240]=_0x50ee46,localStorage[_0x3bcbf3(0x13f)](_0x3bcbf3(0xfc),JSON[_0x3bcbf3(0x146)](userRatings));!recipeRatings[_0x98e240]&&(recipeRatings[_0x98e240]={'total':0x0,'count':0x0,'average':0x0});recipeRatings[_0x98e240][_0x3bcbf3(0xf8)]+=_0x50ee46,recipeRatings[_0x98e240][_0x3bcbf3(0x1b3)]+=0x1,recipeRatings[_0x98e240][_0x3bcbf3(0x106)]=recipeRatings[_0x98e240][_0x3bcbf3(0xf8)]/recipeRatings[_0x98e240][_0x3bcbf3(0x1b3)],localStorage['setItem'](_0x3bcbf3(0x10b),JSON['stringify'](recipeRatings));const _0xae2a45=document[_0x3bcbf3(0x15f)]('.rate-btn[data-recipe-id=\x22'+_0x98e240+'\x22]');_0xae2a45&&(_0xae2a45[_0x3bcbf3(0x139)]=!![],_0xae2a45[_0x3bcbf3(0x102)]=_0x3bcbf3(0x12b),_0xae2a45[_0x3bcbf3(0x129)]['opacity']=_0x3bcbf3(0x11c));const _0x26198b=document[_0x3bcbf3(0x1d0)](_0x3bcbf3(0x180)+_0x98e240+'\x22]\x20.star');highlightStars(_0x26198b,_0x50ee46);const _0xdf5df0=document[_0x3bcbf3(0x15f)](_0x3bcbf3(0x18b)+_0x98e240+_0x3bcbf3(0x127));_0xdf5df0&&(_0xdf5df0[_0x3bcbf3(0x129)][_0x3bcbf3(0x178)]='flex'),showNotification(_0x3bcbf3(0x17e)+_0x50ee46+_0x3bcbf3(0x1c8),_0x3bcbf3(0x18f)),setTimeout(()=>{const _0x2da579=_0x3bcbf3;typeof loadTopRatedRecipes===_0x2da579(0x1ec)&&loadTopRatedRecipes(),updateAllRecipes();},0x1f4);}function loadTopRatedRecipes(){const _0x597541=_0x169705,_0x2a4b6a=document[_0x597541(0x1a1)]('topRatedRecipesWrapper');if(!_0x2a4b6a)return;const _0x3a650f=recipes[_0x597541(0x1a2)](_0x177103=>recipeRatings[_0x177103['id']]&&recipeRatings[_0x177103['id']][_0x597541(0x106)]>0x0);if(_0x3a650f[_0x597541(0x12a)]===0x0){_0x2a4b6a[_0x597541(0x102)]=_0x597541(0x175);return;}const _0x21ae5c=_0x3a650f[_0x597541(0x1f8)]((_0x410316,_0x42b3bc)=>{const _0x589700=_0x597541,_0x4c75a3=recipeRatings[_0x410316['id']]?.[_0x589700(0x106)]||0x0,_0x322233=recipeRatings[_0x42b3bc['id']]?.[_0x589700(0x106)]||0x0;return _0x322233-_0x4c75a3;})[_0x597541(0x19b)](0x0,0xa);_0x2a4b6a['innerHTML']=_0x21ae5c[_0x597541(0x1eb)](_0x26eb4f=>createRecipeCardHTML(_0x26eb4f))[_0x597541(0x141)](''),setTimeout(()=>{setupViewRecipeButtons(),setupFavoriteButtons(),setupStarRatings();},0x64);}function updateAllRecipes(){const _0x1f7462=_0x169705,_0x32455e=document['querySelectorAll'](_0x1f7462(0x157));_0x32455e[_0x1f7462(0x179)](_0x56b894=>{const _0x21c6ac=_0x1f7462,_0x3343cd=_0x56b894[_0x21c6ac(0x1bc)]['id'],_0x38739d=recipes[_0x21c6ac(0x117)](_0xd34865=>_0xd34865['id']===_0x3343cd);if(!_0x38739d){_0x56b894[_0x21c6ac(0x129)][_0x21c6ac(0x178)]=_0x21c6ac(0x11d);return;}const _0x1c1e8b=!activeFilters['search']||_0x38739d[_0x21c6ac(0x155)][_0x21c6ac(0x154)]()[_0x21c6ac(0x1ee)](activeFilters['search'])||_0x38739d[_0x21c6ac(0x15a)]['toLowerCase']()[_0x21c6ac(0x1ee)](activeFilters[_0x21c6ac(0x10a)])||_0x38739d[_0x21c6ac(0x111)][_0x21c6ac(0x1aa)](_0x457bac=>_0x457bac['toLowerCase']()[_0x21c6ac(0x1ee)](activeFilters['search'])),_0x3eaa95=activeFilters[_0x21c6ac(0x111)]['length']===0x0||activeFilters[_0x21c6ac(0x111)][_0x21c6ac(0x181)](_0x28c816=>_0x38739d['categories'][_0x21c6ac(0x1ee)](_0x28c816));_0x56b894[_0x21c6ac(0x129)][_0x21c6ac(0x178)]=_0x1c1e8b&&_0x3eaa95?_0x21c6ac(0x1c4):'none',updateRecipeBadges(_0x56b894,_0x38739d);}),_0x32455e[_0x1f7462(0x179)](_0x4285ae=>{const _0x5b2ca3=_0x1f7462;_0x4285ae[_0x5b2ca3(0x1c9)][_0x5b2ca3(0x12c)](_0x5b2ca3(0x18d)),setTimeout(()=>_0x4285ae[_0x5b2ca3(0x1c9)][_0x5b2ca3(0xf1)](_0x5b2ca3(0x18d)),0x12c);});}function updateRecipeBadges(_0x30fbbd,_0x1739cd){const _0x5cb2e6=_0x169705,_0x10b36a=_0x30fbbd[_0x5cb2e6(0x15f)](_0x5cb2e6(0x1e7));if(!_0x10b36a)return;const _0x341d3a=_0x10b36a['querySelectorAll'](_0x5cb2e6(0xf4));_0x341d3a[_0x5cb2e6(0x179)](_0x4927fb=>_0x4927fb['remove']()),activeFilters[_0x5cb2e6(0x111)]['forEach'](_0x433175=>{const _0x42552f=_0x5cb2e6;if(_0x1739cd[_0x42552f(0x111)]['includes'](_0x433175)){const _0x131cb9=categories[_0x42552f(0x117)](_0xa35fad=>_0xa35fad['id']===_0x433175);if(_0x131cb9){const _0x414d1=document[_0x42552f(0x1ad)](_0x42552f(0x1b8));_0x414d1[_0x42552f(0x1f6)]=_0x42552f(0x1a5)+_0x433175,_0x414d1[_0x42552f(0x138)]=_0x131cb9['name'],_0x414d1[_0x42552f(0x129)][_0x42552f(0x1cc)]=_0x131cb9[_0x42552f(0x130)],_0x10b36a[_0x42552f(0xf2)](_0x414d1);}}}),activeFilters['categories'][_0x5cb2e6(0x12a)]===0x0&&_0x1739cd[_0x5cb2e6(0x111)][_0x5cb2e6(0x179)](_0x384d67=>{const _0x3adf79=_0x5cb2e6,_0x423f44=categories[_0x3adf79(0x117)](_0x527685=>_0x527685['id']===_0x384d67);if(_0x423f44){const _0x258beb=document[_0x3adf79(0x1ad)](_0x3adf79(0x1b8));_0x258beb[_0x3adf79(0x1f6)]=_0x3adf79(0x1a5)+_0x384d67,_0x258beb[_0x3adf79(0x138)]=_0x423f44['name'],_0x258beb[_0x3adf79(0x129)][_0x3adf79(0x1cc)]=_0x423f44[_0x3adf79(0x130)],_0x10b36a[_0x3adf79(0xf2)](_0x258beb);}});}function createRecipeCardHTML(_0x5c3123){const _0x496a40=_0x169705,_0x467ccc=favoritesManager[_0x496a40(0xfb)](_0x5c3123['id']),_0xdea434=userRatings[_0x5c3123['id']],_0x5ec611=recipeRatings[_0x5c3123['id']]?.[_0x496a40(0x106)]||0x0;return _0x496a40(0x14c)+_0x5c3123['id']+_0x496a40(0x1fb)+_0x5c3123[_0x496a40(0x111)][_0x496a40(0x141)](',')+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-image\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+_0x5c3123[_0x496a40(0xff)]+'\x22\x20alt=\x22'+_0x5c3123[_0x496a40(0x155)]+_0x496a40(0x13d)+(_0x5ec611>0x4?'<span\x20class=\x22badge\x20featured\x22>Top\x20Rated</span>':'')+_0x496a40(0x1a0)+(_0x5c3123[_0x496a40(0x111)][_0x496a40(0x1ee)]('premium')?'<span\x20class=\x22badge\x20premium\x22>Premium</span>':'')+_0x496a40(0xef)+_0x5c3123['id']+_0x496a40(0x1d2)+(_0x467ccc?_0x496a40(0x1d8):'')+'\x22\x20data-recipe-id=\x22'+_0x5c3123['id']+_0x496a40(0x18a)+(_0x467ccc?_0x496a40(0x17a):_0x496a40(0x13a))+'\x20fa-heart\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-content\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20class=\x22recipe-title\x22>'+_0x5c3123[_0x496a40(0x155)]+_0x496a40(0x194)+_0x5c3123[_0x496a40(0x15a)]+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-meta\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-clock\x22></i>\x20'+_0x5c3123[_0x496a40(0x1db)]+_0x496a40(0x195)+_0x5c3123[_0x496a40(0x1b5)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-star\x22></i>\x20'+(_0x5ec611>0x0?_0x5ec611['toFixed'](0x1)+'/5':_0x496a40(0x1f0))+_0x496a40(0x1e0)+(_0xdea434?_0x496a40(0x121)+_0xdea434+_0x496a40(0x1ac):_0x496a40(0x1d9)+_0x5c3123['id']+_0x496a40(0x122)+_0x5c3123['id']+_0x496a40(0x137))+_0x496a40(0x164);}function navigateToRecipe(_0x1b0e15){const _0x3b2aa7=_0x169705,_0x377323=recipes[_0x3b2aa7(0x117)](_0x71b3ac=>_0x71b3ac['id']===_0x1b0e15);if(_0x377323){const _0x4f5904=_0x377323[_0x3b2aa7(0x155)][_0x3b2aa7(0x154)]()[_0x3b2aa7(0x1cb)](/[^a-z0-9\s-]/g,'')[_0x3b2aa7(0x1cb)](/\s+/g,'-')[_0x3b2aa7(0x1cb)](/[^\w\-]+/g,'')['replace'](/\-\-+/g,'-')[_0x3b2aa7(0x12d)]();window['location'][_0x3b2aa7(0x150)]='how-to-make.html#'+_0x4f5904+'-'+_0x1b0e15;}}function createRecipeSlug(_0x4c44f1){const _0x4f2200=_0x169705;return _0x4c44f1[_0x4f2200(0x154)]()['replace'](/[^a-z0-9\s-]/g,'')[_0x4f2200(0x1cb)](/\s+/g,'-')['replace'](/-+/g,'-');}class FavoritesManager{constructor(){const _0x3d6177=_0x169705;this[_0x3d6177(0x1ba)]='bestchickenrecipes_favorites',this[_0x3d6177(0x165)]=this[_0x3d6177(0x184)]();}[_0x169705(0x184)](){const _0x53febd=_0x169705,_0x5936f0=localStorage[_0x53febd(0x163)](this['favoritesKey']);return _0x5936f0?JSON[_0x53febd(0x173)](_0x5936f0):[];}[_0x169705(0x197)](){const _0x6bf7b8=_0x169705;localStorage['setItem'](this[_0x6bf7b8(0x1ba)],JSON[_0x6bf7b8(0x146)](this['favorites']));}[_0x169705(0x1b1)](_0x2a6e11){const _0x1679f3=_0x169705,_0x451d11=this[_0x1679f3(0x165)][_0x1679f3(0x1ce)](_0x2a6e11);return _0x451d11===-0x1?(this[_0x1679f3(0x165)]['push'](_0x2a6e11),!![]):(this[_0x1679f3(0x165)][_0x1679f3(0xfa)](_0x451d11,0x1),![]);}[_0x169705(0xfb)](_0x2f1539){const _0x351ebe=_0x169705;return this[_0x351ebe(0x165)][_0x351ebe(0x1ee)](_0x2f1539[_0x351ebe(0x1cd)]());}}const favoritesManager=new FavoritesManager();function showNotification(_0x355476,_0x15d943=_0x169705(0x16a)){const _0x3d9e43=_0x169705,_0x4bba2f=document['querySelector']('.notification');if(_0x4bba2f)_0x4bba2f[_0x3d9e43(0xf1)]();const _0x24d468=document[_0x3d9e43(0x1ad)](_0x3d9e43(0x13b));_0x24d468[_0x3d9e43(0x1f6)]='notification\x20'+_0x15d943,_0x24d468[_0x3d9e43(0x102)]=_0x3d9e43(0x100)+(_0x15d943===_0x3d9e43(0x18f)?_0x3d9e43(0x1a6):_0x15d943==='error'?_0x3d9e43(0x1bd):_0x3d9e43(0x1df))+_0x3d9e43(0x168)+_0x355476+_0x3d9e43(0xf6),document[_0x3d9e43(0x1b6)][_0x3d9e43(0xf2)](_0x24d468),setTimeout(()=>_0x24d468[_0x3d9e43(0x1c9)][_0x3d9e43(0x12c)](_0x3d9e43(0x1b2)),0xa),setTimeout(()=>{const _0x502318=_0x3d9e43;_0x24d468[_0x502318(0x1c9)][_0x502318(0xf1)]('show'),setTimeout(()=>_0x24d468[_0x502318(0xf1)](),0x12c);},0xbb8);}function _0x2d6f(){const _0x25c27f=['calories','body','searchSuggestions','span','startsWith','favoritesKey','.recipe-meta\x20span:nth-child(2)','dataset','exclamation-circle','Asian','exact-match','toFixed','Halal','\x20recipes','<span\x20class=\x22badge\x20featured\x22>Exact\x20Match</span>','block','selected','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22category-count\x22\x20id=\x22count-','preventDefault','-star\x20rating!','classList','removeChild','replace','backgroundColor','toString','indexOf','13358120zzsuCX','querySelectorAll','183412fyyYQk','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-book-open\x22></i>\x20View\x20Recipe\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22save-recipe\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-suggestion-item\x20no-results\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-search\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>No\x20recipes\x20found\x20for\x20\x22','5386152amgUYQ','Savory','9669496GFLGbB','\x20fa-heart\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-content\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20class=\x22recipe-title\x22>','active','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22rating-label\x22>Rate\x20this\x20recipe:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22star-rating\x22\x20data-recipe-id=\x22','name','time','Please\x20select\x20a\x20rating\x20first','selectedRating','searchActiveBadge','info-circle','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-rating-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-suggestion-item\x22\x20data-recipe-id=\x22','<i\x20class=\x22fas\x20fa-search\x22></i>','Escape','\x22</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','Filtering\x20by:\x20','Initialization\x20complete!','.recipe-badges','split','Grilled','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','map','function','#5D4037','includes','fas\x20fa-pepper-hot','New','\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-id=\x22','\x20recipe','themeToggle','#FFC107','\x5c$&','className','.recipe-title','sort','dark-mode','11718054IfzcNu','\x22\x20data-categories=\x22','16773hdLacz','dark','#009688','fas\x20fa-temperature-high','keydown','Chicken\x20Recipe','Healthy','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-overlay\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22view-recipe-btn\x22\x20data-recipe-id=\x22','fas\x20fa-pepper','remove','appendChild','opacity','.badge:not(.featured):not(.premium)','\x20filter','</span>\x0a\x20\x20\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22badge\x20search-match\x22>Search\x20Result</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-overlay\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22view-recipe-btn\x22\x20data-recipe-id=\x22','total','Scroll\x20to\x20search\x20results','splice','isFavorite','bestchickenrecipes_userRatings','getBoundingClientRect','https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80','image','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-','savory','innerHTML','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-star\x22></i>\x20','.category-item','addEventListener','average','\x22\x20style=\x22color:\x20','stopPropagation','clearSearchResults','search','bestchickenrecipes_recipeRatings','quick','parentNode','target','search-highlight-badge','contains','categories','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-name\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22','Removed\x20from\x20favorites','key','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-item\x22\x20data-category=\x22','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-card\x20search-result-card\x20','find','fas\x20fa-pizza-slice','toggle','\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20alt=\x22','mouseleave','0.6','none','baked','cheesy','30\x20min','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22selected-rating\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-star\x22></i>\x20Your\x20rating:\x20','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22star-wrapper\x22><i\x20class=\x22fas\x20fa-star\x20star\x22\x20data-value=\x221\x22></i></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22star-wrapper\x22><i\x20class=\x22fas\x20fa-star\x20star\x22\x20data-value=\x222\x22></i></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22star-wrapper\x22><i\x20class=\x22fas\x20fa-star\x20star\x22\x20data-value=\x223\x22></i></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22star-wrapper\x22><i\x20class=\x22fas\x20fa-star\x20star\x22\x20data-value=\x224\x22></i></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22star-wrapper\x22><i\x20class=\x22fas\x20fa-star\x20star\x22\x20data-value=\x225\x22></i></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22rate-btn\x22\x20data-recipe-id=\x22','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-suggestion-image\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','fas\x20fa-couch','\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-categories=\x22','Quick','\x22]\x20.user-has-rated','searchResultsSection','style','length','<i\x20class=\x22fas\x20fa-check\x22></i>\x20Already\x20Rated','add','trim','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-results-empty\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-search\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3>No\x20recipes\x20found\x20for\x20\x22','category','color','button','fas\x20fa-moon','click','7IngZom','recipeId','956859GBwYxy','\x22\x20disabled>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-star\x22></i>\x20Rate\x20Recipe\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22user-has-rated\x22\x20style=\x22display:\x20none;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x20Thank\x20you\x20for\x20your\x20rating!\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','textContent','disabled','far','div','Gourmet','\x22\x20loading=\x22lazy\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-badges\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','spicy','setItem','#8E24AA','join','focus','Mexican','italian','Removed\x20','stringify','categoriesMenu','.recipe-image\x20img','fas\x20fa-heart','onclick','fas\x20fa-crown','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-card\x22\x20data-id=\x22','Search\x20cleared','#2196F3','scrollToSearchBtn','href','searchInput','innerHeight','85UumMGS','toLowerCase','title','#D32F2F','.recipe-card','filter-active','middle-eastern','description','#FF9800','<i\x20class=\x22fas\x20fa-star\x22></i>\x20Submit\x20','icon','fas\x20fa-utensils','querySelector','localeCompare','grilled','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-meta\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-clock\x22></i>\x20','getItem','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','favorites','mexican','DOMContentLoaded','\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span>','log','info','smooth','#E65100','closest','light','Middle\x20Eastern','traditional','.star-rating','Dark','parse','<span\x20class=\x22badge\x20new\x22>Top\x20Rated</span>','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22no-recipes-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-star\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3>No\x20Ratings\x20Yet</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Be\x20the\x20first\x20to\x20rate\x20recipes!</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','#E53935','.recipe-meta\x20span:first-child','display','forEach','fas','scrollIntoView','\x22</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22clearSearchResults()\x22\x20style=\x22background:\x20none;\x20border:\x20none;\x20color:\x20white;\x20cursor:\x20pointer;\x20margin-left:\x208px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20','healthy','Thank\x20you\x20for\x20your\x20','.recipe-overlay','.star-rating[data-recipe-id=\x22','every','searchResultsCount','Found\x20','loadFavorites','\x22\x20loading=\x22lazy\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-suggestion-content\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22search-suggestion-title\x22>','start','halal','bestchickenrecipes_theme','src','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22','.recipe-card[data-id=\x22','.save-recipe','loading','value','success','scroll','fas\x20fa-oven','fas\x20fa-star-and-crescent','Light','</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22recipe-description\x22>','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-fire\x22></i>\x20','.category-item[data-category=\x22','saveFavorites','#FFD700','Initializing\x20Best\x20Chicken\x20Recipes...','from','slice','350\x20cal','comfort','searchTimeout','fas\x20fa-bolt','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','getElementById','filter','.view-recipe-btn','...','badge\x20','check-circle','Fried','<span\x20class=\x22search-match-highlight\x22>$1</span>','Added\x20to\x20favorites!','some','#F57C00','/5\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22user-has-rated\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x20Thank\x20you\x20for\x20your\x20rating!\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','createElement','Traditional','98DoAwMp','\x20Star','toggleFavorite','show','count','.search-suggestion-item:not(.no-results)'];_0x2d6f=function(){return _0x25c27f;};return _0x2d6f();}function setupViewRecipeButtons(){const _0x3f64e9=_0x169705;document[_0x3f64e9(0x1d0)](_0x3f64e9(0x1a3))[_0x3f64e9(0x179)](_0x3c1428=>{const _0x1e0cef=_0x3f64e9;_0x3c1428[_0x1e0cef(0x105)]('click',function(_0x582c88){const _0x2088b2=_0x1e0cef;_0x582c88[_0x2088b2(0x1c7)](),_0x582c88[_0x2088b2(0x108)]();const _0xad8852=this[_0x2088b2(0x1bc)]['recipeId'];if(_0xad8852)navigateToRecipe(_0xad8852);});});}function setupFavoriteButtons(){const _0x33c3b6=_0x169705;document[_0x33c3b6(0x1d0)]('.save-recipe')['forEach'](_0x137813=>{const _0x40b688=_0x33c3b6;_0x137813['addEventListener'](_0x40b688(0x133),function(_0x5b8e10){const _0x393dd7=_0x40b688;_0x5b8e10[_0x393dd7(0x1c7)](),_0x5b8e10['stopPropagation']();const _0x213cf3=this[_0x393dd7(0x1bc)][_0x393dd7(0x135)];if(!_0x213cf3)return;const _0x57fd21=favoritesManager[_0x393dd7(0x1b1)](_0x213cf3);favoritesManager['saveFavorites']();const _0x203df1=this[_0x393dd7(0x15f)]('i');_0x57fd21?(this[_0x393dd7(0x1c9)][_0x393dd7(0x12c)](_0x393dd7(0x1d8)),_0x203df1[_0x393dd7(0x1c9)][_0x393dd7(0xf1)](_0x393dd7(0x13a)),_0x203df1[_0x393dd7(0x1c9)][_0x393dd7(0x12c)](_0x393dd7(0x17a))):(this[_0x393dd7(0x1c9)]['remove'](_0x393dd7(0x1d8)),_0x203df1[_0x393dd7(0x1c9)][_0x393dd7(0xf1)](_0x393dd7(0x17a)),_0x203df1[_0x393dd7(0x1c9)][_0x393dd7(0x12c)](_0x393dd7(0x13a))),showNotification(_0x57fd21?_0x393dd7(0x1a9):_0x393dd7(0x113),_0x57fd21?'success':_0x393dd7(0x16a));});});}function setupRecipeCardClicks(){const _0x2424c4=_0x169705;document['querySelectorAll']('.recipe-card')[_0x2424c4(0x179)](_0x428e78=>{const _0x254671=_0x2424c4;_0x428e78['addEventListener'](_0x254671(0x133),function(_0xfd73bb){const _0x39031e=_0x254671;if(_0xfd73bb['target'][_0x39031e(0x16d)](_0x39031e(0x18c))||_0xfd73bb[_0x39031e(0x10e)][_0x39031e(0x16d)]('.view-recipe-btn')||_0xfd73bb[_0x39031e(0x10e)][_0x39031e(0x16d)](_0x39031e(0x171))||_0xfd73bb['target'][_0x39031e(0x16d)]('.rate-btn')||_0xfd73bb[_0x39031e(0x10e)]['closest'](_0x39031e(0x1e7))||_0xfd73bb['target']['closest'](_0x39031e(0x17f)))return;const _0x105fdc=this[_0x39031e(0x1bc)]['id'];if(_0x105fdc)navigateToRecipe(_0x105fdc);});});}
+// ===== GLOBAL VARIABLES =====
+let recipes = [];
+let userRatings = {};
+let recipeRatings = {};
+let activeFilters = {
+    categories: [],
+    search: ''
+};
+
+// ===== CATEGORIES DEFINITION =====
+const categories = [
+    { id: 'baked', name: 'Baked', icon: 'fas fa-oven', color: '#E65100' },
+    { id: 'fried', name: 'Fried', icon: 'fas fa-temperature-high', color: '#FF9800' },
+    { id: 'grilled', name: 'Grilled', icon: 'fas fa-fire', color: '#F57C00' },
+    { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart', color: '#4CAF50' },
+    { id: 'cheesy', name: 'Cheesy', icon: 'fas fa-cheese', color: '#FFC107' },
+    { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot', color: '#D32F2F' },
+    { id: 'traditional', name: 'Traditional', icon: 'fas fa-home', color: '#795548' },
+    { id: 'quick', name: 'Quick', icon: 'fas fa-bolt', color: '#2196F3' },
+    { id: 'halal', name: 'Halal', icon: 'fas fa-star-and-crescent', color: '#009688' },
+    { id: 'savory', name: 'Savory', icon: 'fas fa-utensils', color: '#7B1FA2' },
+    { id: 'comfort', name: 'Comfort Food', icon: 'fas fa-couch', color: '#5D4037' },
+    { id: 'gourmet', name: 'Gourmet', icon: 'fas fa-crown', color: '#FFD700' },
+    { id: 'italian', name: 'Italian', icon: 'fas fa-pizza-slice', color: '#E53935' },
+    { id: 'mexican', name: 'Mexican', icon: 'fas fa-pepper', color: '#43A047' },
+    { id: 'asian', name: 'Asian', icon: 'fas fa-utensil-spoon', color: '#1E88E5' },
+    { id: 'middle-eastern', name: 'Middle Eastern', icon: 'fas fa-mosque', color: '#8E24AA' }
+];
+
+// ===== INITIALIZE =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing Best Chicken Recipes...');
+    
+    // Initialize data in correct order
+    initializeRecipes();
+    initializeRatingData();
+    
+    // CRITICAL: Save recipes to localStorage immediately after loading
+    saveRecipesToLocalStorage();
+    
+    // Setup functionality
+    setupThemeToggle();
+    setupSearch();
+    setupCategories();
+    setupViewRecipeButtons();
+    setupFavoriteButtons();
+    setupRecipeCardClicks();
+    setupStarRatings();
+    
+    // Load recipes sections
+    loadTopRatedRecipes();
+    updateAllRecipes();
+    
+    console.log('Total recipes:', recipes.length);
+    console.log('Favorites count:', favoritesManager.getFavorites().length);
+    console.log('Initialization complete!');
+});
+// ===== ADD CSS STYLES FOR BETTER VISUAL FEEDBACK =====
+function addFavoriteStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .save-recipe {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e0e0e0;
+        }
+        
+        .save-recipe.active {
+            background: #ff4757;
+            border-color: #ff4757;
+            transform: scale(1.1);
+        }
+        
+        .save-recipe.active i {
+            color: white !important;
+        }
+        
+        .save-recipe:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .badge.favorite {
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .badge.rating-count {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .recipe-card.top-rated-card {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .recipe-card.top-rated-card:hover {
+            border-color: #ffa502;
+            transform: translateY(-4px);
+        }
+        
+        .fas.fa-star.rated {
+            color: #ffa502;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Call this after DOM is loaded
+setTimeout(addFavoriteStyles, 500);
+
+// ===== DEBUG FUNCTION (OPTIONAL) =====
+function debugFavorites() {
+    console.log('=== DEBUG FAVORITES ===');
+    console.log('All recipes:', recipes.map(r => ({id: r.id, title: r.title})));
+    console.log('Favorites:', favoritesManager.getFavorites());
+    console.log('Recipe ratings:', recipeRatings);
+    console.log('User ratings:', userRatings);
+    
+    // Check each favorite button state
+    document.querySelectorAll('.save-recipe').forEach(button => {
+        const recipeId = button.dataset.recipeId;
+        const isFavorite = favoritesManager.isFavorite(recipeId);
+        console.log(`Recipe ${recipeId}: Button is ${isFavorite ? 'favorite' : 'not favorite'}`);
+    });
+}
+
+// You can call debugFavorites() in console if needed
+window.debugFavorites = debugFavorites;
+// ===== THEME TOGGLE =====
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('bestchickenrecipes_theme') || 'light';
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    updateThemeIcon(savedTheme);
+    
+    // Setup click handler
+    themeToggle.addEventListener('click', function() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        const theme = isDark ? 'dark' : 'light';
+        
+        localStorage.setItem('bestchickenrecipes_theme', theme);
+        updateThemeIcon(theme);
+        
+        showNotification(`${theme === 'dark' ? 'Dark' : 'Light'} mode enabled`, 'info');
+    });
+}
+
+function updateThemeIcon(theme) {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+    
+    const icon = themeToggle.querySelector('i');
+    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+// ===== SEARCH FUNCTIONALITY =====
+function setupSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    const searchClear = document.getElementById('searchClear');
+    
+    if (!searchInput || !searchSuggestions) return;
+    
+    // Initialize with empty suggestions
+    searchSuggestions.innerHTML = '';
+    searchSuggestions.style.display = 'none';
+    
+    // Show/hide clear button
+    searchInput.addEventListener('input', function() {
+        if (searchClear) {
+            searchClear.style.display = this.value.trim() ? 'block' : 'none';
+        }
+    });
+    
+    // Clear button functionality
+    if (searchClear) {
+        searchClear.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            searchInput.value = '';
+            searchInput.focus();
+            searchClear.style.display = 'none';
+            
+            // Clear search and hide results
+            clearSearchResults();
+            
+            showNotification('Search cleared', 'info');
+        });
+    }
+    
+    // Show/hide suggestions
+    searchInput.addEventListener('focus', () => {
+        const query = searchInput.value.trim();
+        if (query) {
+            updateSearchSuggestions(query);
+            searchSuggestions.style.display = 'block';
+        }
+    });
+    
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        // Update active filters
+        activeFilters.search = query.toLowerCase();
+        
+        // Update search suggestions
+        updateSearchSuggestions(query);
+        
+        // Show/hide suggestions dropdown
+        if (query.length > 0) {
+            searchSuggestions.style.display = 'block';
+            
+            // Show search results section
+            showSearchResults(query);
+        } else {
+            searchSuggestions.style.display = 'none';
+            activeFilters.search = '';
+            
+            // Hide search results section
+            hideSearchResults();
+        }
+        
+        // Filter recipes with debounce
+        clearTimeout(window.searchTimeout);
+        window.searchTimeout = setTimeout(() => {
+            if (query.length > 0) {
+                displaySearchResults(query);
+            } else {
+                hideSearchResults();
+            }
+        }, 300);
+    });
+    
+    // Handle keyboard navigation
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            searchSuggestions.style.display = 'none';
+            this.blur();
+        }
+        
+        if (e.key === 'Enter') {
+            const firstSuggestion = searchSuggestions.querySelector('.search-suggestion-item:not(.no-results)');
+            if (firstSuggestion) {
+                const recipeId = firstSuggestion.dataset.recipeId;
+                if (recipeId) {
+                    navigateToRecipe(recipeId);
+                }
+            } else if (this.value.trim().length > 0) {
+                // Scroll to search results if Enter is pressed with search query
+                displaySearchResults(this.value.trim());
+                const searchResultsSection = document.getElementById('searchResultsSection');
+                if (searchResultsSection) {
+                    searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    });
+    
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+            searchSuggestions.style.display = 'none';
+        }
+    });
+    
+    // Handle suggestion clicks
+    searchSuggestions.addEventListener('click', (e) => {
+        const suggestion = e.target.closest('.search-suggestion-item:not(.no-results)');
+        if (suggestion) {
+            const recipeId = suggestion.dataset.recipeId;
+            if (recipeId) {
+                navigateToRecipe(recipeId);
+            }
+        }
+    });
+    
+    // Setup clear search results button
+    const clearSearchResultsBtn = document.getElementById('clearSearchResults');
+    if (clearSearchResultsBtn) {
+        clearSearchResultsBtn.addEventListener('click', clearSearchResults);
+    }
+}
+function showSearchResults(query) {
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    const searchResultsCount = document.getElementById('searchResultsCount');
+    
+    if (searchResultsSection) {
+        searchResultsSection.style.display = 'block';
+        
+        // Scroll to search results
+        setTimeout(() => {
+            searchResultsSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 400);
+    }
+    
+    // Show search active badge
+    showSearchActiveBadge(query);
+}
+
+function hideSearchResults() {
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    if (searchResultsSection) {
+        searchResultsSection.style.display = 'none';
+    }
+    
+    // Hide search active badge
+    hideSearchActiveBadge();
+}
+
+function displaySearchResults(query) {
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+    const searchResultsCount = document.getElementById('searchResultsCount');
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    
+    if (!searchResultsContainer || !searchResultsCount) return;
+    
+    const normalizedQuery = query.toLowerCase();
+    
+    // Find matching recipes
+    const matchedRecipes = recipes.filter(recipe => 
+        recipe.title.toLowerCase().includes(normalizedQuery) ||
+        recipe.description.toLowerCase().includes(normalizedQuery) ||
+        recipe.categories.some(cat => 
+            cat.toLowerCase().includes(normalizedQuery)
+        )
+    );
+    
+    // Sort by relevance (exact title match first)
+    matchedRecipes.sort((a, b) => {
+        const aTitleMatch = a.title.toLowerCase().startsWith(normalizedQuery);
+        const bTitleMatch = b.title.toLowerCase().startsWith(normalizedQuery);
+        
+        if (aTitleMatch && !bTitleMatch) return -1;
+        if (!aTitleMatch && bTitleMatch) return 1;
+        
+        // Then by rating
+        const aRating = recipeRatings[a.id]?.average || 0;
+        const bRating = recipeRatings[b.id]?.average || 0;
+        return bRating - aRating;
+    });
+    
+    // Update count
+    searchResultsCount.textContent = `Found ${matchedRecipes.length} recipe${matchedRecipes.length !== 1 ? 's' : ''} for "${query}"`;
+    
+    if (matchedRecipes.length === 0) {
+        searchResultsContainer.innerHTML = `
+            <div class="search-results-empty">
+                <i class="fas fa-search"></i>
+                <h3>No recipes found for "${query}"</h3>
+                <p>Try searching for different keywords or browse our categories</p>
+                <button class="btn btn-primary" onclick="clearSearchResults()">
+                    <i class="fas fa-times"></i> Clear Search
+                </button>
+            </div>
+        `;
+    } else {
+        // Create search result cards
+        searchResultsContainer.innerHTML = matchedRecipes.map(recipe => createSearchResultCardHTML(recipe, query)).join('');
+        
+        // Reinitialize functionality for new cards
+        setTimeout(() => {
+            setupViewRecipeButtons();
+            setupFavoriteButtons();
+            setupStarRatings();
+        }, 100);
+            
+    // Setup scroll button
+    setTimeout(setupScrollToSearchButton, 500);
+    }
+    
+    // Show the section
+    if (searchResultsSection) {
+        searchResultsSection.style.display = 'block';
+        
+        // Scroll to results
+        setTimeout(() => {
+            searchResultsSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
+    }
+}
+function updateSearchSuggestions(query) {
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    if (!searchSuggestions) return;
+    
+    const normalizedQuery = query.toLowerCase();
+    
+    if (!normalizedQuery || normalizedQuery.length < 1) {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.style.display = 'none';
+        return;
+    }
+    
+    // Find matching recipes
+    const matchedRecipes = recipes.filter(recipe => 
+        recipe.title.toLowerCase().includes(normalizedQuery) ||
+        recipe.description.toLowerCase().includes(normalizedQuery) ||
+        recipe.categories.some(cat => 
+            cat.toLowerCase().includes(normalizedQuery)
+        )
+    );
+    
+    // Sort by relevance (exact title match first)
+    matchedRecipes.sort((a, b) => {
+        const aTitleMatch = a.title.toLowerCase().startsWith(normalizedQuery);
+        const bTitleMatch = b.title.toLowerCase().startsWith(normalizedQuery);
+        
+        if (aTitleMatch && !bTitleMatch) return -1;
+        if (!aTitleMatch && bTitleMatch) return 1;
+        
+        return a.title.localeCompare(b.title);
+    }).slice(0, 8); // Limit to 8 suggestions
+    
+    if (matchedRecipes.length === 0) {
+        searchSuggestions.innerHTML = `
+            <div class="search-suggestion-item no-results">
+                <i class="fas fa-search"></i>
+                <span>No recipes found for "${query}"</span>
+            </div>
+        `;
+    } else {
+        searchSuggestions.innerHTML = matchedRecipes.map(recipe => `
+            <div class="search-suggestion-item" data-recipe-id="${recipe.id}">
+                <div class="search-suggestion-image">
+                    <img src="${recipe.image || 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80'}" 
+                         alt="${recipe.title}" loading="lazy">
+                </div>
+                <div class="search-suggestion-content">
+                    <div class="search-suggestion-title">${highlightText(recipe.title, query)}</div>
+                    <div class="suggestion-category">
+                        <i class="fas fa-tag"></i>
+                        ${recipe.categories.map(cat => 
+                            categories.find(c => c.id === cat)?.name || cat
+                        ).slice(0, 2).join(', ')}
+                        ${recipe.categories.length > 2 ? '...' : ''}
+                    </div>
+                </div>
+                <div class="suggestion-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function createSearchResultCardHTML(recipe, searchQuery) {
+    const isFavorite = favoritesManager.isFavorite(recipe.id);
+    const userRating = userRatings[recipe.id];
+    const recipeRating = recipeRatings[recipe.id]?.average || 0;
+    const isExactMatch = recipe.title.toLowerCase().startsWith(searchQuery.toLowerCase());
+    
+    return `
+        <div class="recipe-card search-result-card ${isExactMatch ? 'exact-match' : ''}" 
+             data-id="${recipe.id}" 
+             data-categories="${recipe.categories.join(',')}">
+            <div class="recipe-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-badges">
+                    ${isExactMatch ? '<span class="badge featured">Exact Match</span>' : ''}
+                    ${recipeRating > 4 ? '<span class="badge new">Top Rated</span>' : ''}
+                    <span class="badge search-match">Search Result</span>
+                </div>
+                <div class="recipe-overlay">
+                    <button class="view-recipe-btn" data-recipe-id="${recipe.id}">
+                        <i class="fas fa-book-open"></i> View Recipe
+                    </button>
+                </div>
+                <button class="save-recipe ${isFavorite ? 'active' : ''}" data-recipe-id="${recipe.id}">
+                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+            </div>
+            <div class="recipe-content">
+                <h3 class="recipe-title">${highlightSearchText(recipe.title, searchQuery)}</h3>
+                <p class="recipe-description">${highlightSearchText(recipe.description, searchQuery)}</p>
+                <div class="recipe-meta">
+                    <span><i class="fas fa-clock"></i> ${recipe.time}</span>
+                    <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
+                    <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
+                </div>
+                <div class="recipe-rating-section">
+                    ${userRating ? `
+                        <div class="selected-rating">
+                            <i class="fas fa-star"></i> Your rating: ${userRating}/5
+                        </div>
+                        <div class="user-has-rated">
+                            <i class="fas fa-check-circle"></i> Thank you for your rating!
+                        </div>
+                    ` : `
+                        <span class="rating-label">Rate this recipe:</span>
+                        <div class="star-rating" data-recipe-id="${recipe.id}">
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="1"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="2"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="3"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="4"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="5"></i></span>
+                        </div>
+                        <button class="rate-btn" data-recipe-id="${recipe.id}" disabled>
+                            <i class="fas fa-star"></i> Rate Recipe
+                        </button>
+                        <div class="user-has-rated" style="display: none;">
+                            <i class="fas fa-check-circle"></i> Thank you for your rating!
+                        </div>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function highlightSearchText(text, query) {
+    if (!query || !text) return text;
+    
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<span class="search-match-highlight">$1</span>');
+}
+function clearSearchResults() {
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    
+    // Clear search input
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+    }
+    
+    // Hide clear button
+    if (searchClear) {
+        searchClear.style.display = 'none';
+    }
+    
+    // Hide search results section
+    if (searchResultsSection) {
+        searchResultsSection.style.display = 'none';
+    }
+    
+    // Clear active search filter
+    activeFilters.search = '';
+    
+    // Hide suggestions
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    if (searchSuggestions) {
+        searchSuggestions.style.display = 'none';
+        searchSuggestions.innerHTML = '';
+    }
+    
+    // Update all recipes to show everything
+    updateAllRecipes();
+    
+    // Hide search badge
+    hideSearchActiveBadge();
+    
+    showNotification('Search cleared', 'info');
+}
+
+function showSearchActiveBadge(query) {
+    // Remove existing badge
+    hideSearchActiveBadge();
+    
+    const badge = document.createElement('div');
+    badge.className = 'search-highlight-badge';
+    badge.id = 'searchActiveBadge';
+    badge.innerHTML = `
+        <i class="fas fa-search"></i>
+        <span>Searching for: "${query}"</span>
+        <button onclick="clearSearchResults()" style="background: none; border: none; color: white; cursor: pointer; margin-left: 8px;">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(badge);
+}
+
+function hideSearchActiveBadge() {
+    const existingBadge = document.getElementById('searchActiveBadge');
+    if (existingBadge) {
+        existingBadge.remove();
+    }
+}
+
+// Add scroll to search button functionality
+function setupScrollToSearchButton() {
+    // Check if we're on search results
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput && searchInput.value.trim()) {
+        const button = document.createElement('button');
+        button.className = 'scroll-to-search';
+        button.innerHTML = '<i class="fas fa-search"></i>';
+        button.title = 'Scroll to search results';
+        button.onclick = () => {
+            const searchResultsSection = document.getElementById('searchResultsSection');
+            if (searchResultsSection) {
+                searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+        
+        button.id = 'scrollToSearchBtn';
+        document.body.appendChild(button);
+        
+        // Remove button when scrolling near search results
+        window.addEventListener('scroll', function() {
+            const searchResultsSection = document.getElementById('searchResultsSection');
+            if (searchResultsSection) {
+                const rect = searchResultsSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight / 2) {
+                    button.style.opacity = '0';
+                    setTimeout(() => {
+                        if (button.parentNode) {
+                            button.parentNode.removeChild(button);
+                        }
+                    }, 300);
+                }
+            }
+        });
+    }
+}
+// ===== CATEGORIES FUNCTIONALITY =====
+function setupCategories() {
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const categoriesTrigger = document.querySelector('.categories-trigger');
+    
+    if (!categoriesMenu || !categoriesTrigger) return;
+    
+    // Populate categories menu
+    categoriesMenu.innerHTML = categories.map(category => `
+        <div class="category-item" data-category="${category.id}">
+            <div class="category-name">
+                <i class="${category.icon}" style="color: ${category.color}; margin-right: 8px;"></i>
+                ${category.name}
+            </div>
+            <span class="category-count" id="count-${category.id}">0</span>
+        </div>
+    `).join('');
+    
+    // Update category counts
+    updateCategoryCounts();
+    
+    // Toggle categories menu
+    categoriesTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        categoriesMenu.classList.toggle('active');
+    });
+    
+    // Handle category clicks
+    categoriesMenu.addEventListener('click', (e) => {
+        const categoryItem = e.target.closest('.category-item');
+        if (categoryItem) {
+            const category = categoryItem.dataset.category;
+            toggleCategoryFilter(category);
+            updateAllRecipes();
+        }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+        categoriesMenu.classList.remove('active');
+    });
+}
+
+function toggleCategoryFilter(category) {
+    const index = activeFilters.categories.indexOf(category);
+    const categoryElement = document.querySelector(`.category-item[data-category="${category}"]`);
+    
+    if (index === -1) {
+        // Add category
+        activeFilters.categories.push(category);
+        if (categoryElement) {
+            categoryElement.classList.add('filter-active');
+        }
+    } else {
+        // Remove category
+        activeFilters.categories.splice(index, 1);
+        if (categoryElement) {
+            categoryElement.classList.remove('filter-active');
+        }
+    }
+    
+    // Update UI
+    updateCategoryCounts();
+    
+    //  notification
+    const categoryName = categories.find(c => c.id === category)?.name || category;
+    showNotification(
+        activeFilters.categories.includes(category) 
+            ? `Filtering by: ${categoryName}` 
+            : `Removed ${categoryName} filter`,
+        'info'
+    );
+}
+
+function updateCategoryCounts() {
+    categories.forEach(category => {
+        const countElement = document.getElementById(`count-${category.id}`);
+        if (countElement) {
+            const count = recipes.filter(recipe => 
+                recipe.categories.includes(category.id)
+            ).length;
+            countElement.textContent = count;
+        }
+    });
+}
+
+// ===== RECIPES DATA =====
+function initializeRecipes() {
+    const recipeCards = document.querySelectorAll('.recipe-card');
+    recipes = Array.from(recipeCards).map(card => {
+        const id = card.dataset.id;
+        const categories = card.dataset.categories ? card.dataset.categories.split(',') : [];
+        
+        return {
+            id: id,
+            title: card.querySelector('.recipe-title')?.textContent.trim() || 'Chicken Recipe',
+            description: card.querySelector('.recipe-description')?.textContent.trim() || '',
+            image: card.querySelector('.recipe-image img')?.src || '',
+            time: card.querySelector('.recipe-meta span:first-child')?.textContent.trim() || '30 min',
+            calories: card.querySelector('.recipe-meta span:nth-child(2)')?.textContent.trim() || '350 cal',
+            categories: categories,
+            rating: recipeRatings[id]?.average || 0
+        };
+    });
+    
+    console.log(`Initialized ${recipes.length} recipes from DOM`);
+}
+// ===== RATING SYSTEM =====
+function initializeRatingData() {
+    // Load user ratings
+    const savedUserRatings = localStorage.getItem('bestchickenrecipes_userRatings');
+    userRatings = savedUserRatings ? JSON.parse(savedUserRatings) : {};
+    
+    // Load recipe ratings
+    const savedRecipeRatings = localStorage.getItem('bestchickenrecipes_recipeRatings');
+    recipeRatings = savedRecipeRatings ? JSON.parse(savedRecipeRatings) : {};
+}
+
+function setupStarRatings() {
+    // Setup for existing cards
+    document.querySelectorAll('.star-rating').forEach(rating => {
+        const recipeId = rating.dataset.recipeId;
+        if (!recipeId) return;
+        
+        const stars = rating.querySelectorAll('.star');
+        const rateBtn = document.querySelector(`.rate-btn[data-recipe-id="${recipeId}"]`);
+        
+        if (!rateBtn) return;
+        
+        // Check if already rated
+        if (userRatings[recipeId]) {
+            // Already rated
+            highlightStars(stars, userRatings[recipeId]);
+            rateBtn.disabled = true;
+            rateBtn.innerHTML = '<i class="fas fa-check"></i> Already Rated';
+            rateBtn.style.opacity = '0.6';
+        } else {
+            // Setup star interactions
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.dataset.value);
+                    highlightStars(stars, value);
+                    
+                    // Update rate button
+                    rateBtn.disabled = false;
+                    rateBtn.dataset.selectedRating = value;
+                    rateBtn.innerHTML = `<i class="fas fa-star"></i> Submit ${value} Star${value > 1 ? 's' : ''}`;
+                    rateBtn.style.opacity = '1';
+                });
+                
+                // Hover effects
+                star.addEventListener('mouseenter', function() {
+                    const value = parseInt(this.dataset.value);
+                    highlightStars(stars, value, true);
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    const currentRating = rateBtn.dataset.selectedRating || 0;
+                    highlightStars(stars, parseInt(currentRating));
+                });
+            });
+            
+            // Setup rate button
+            rateBtn.addEventListener('click', function() {
+                const rating = parseInt(this.dataset.selectedRating);
+                if (!rating || rating < 1 || rating > 5) {
+                    showNotification('Please select a rating first', 'info');
+                    return;
+                }
+                
+                submitRating(recipeId, rating);
+            });
+        }
+    });
+}
+
+function highlightStars(stars, rating, isHover = false) {
+    stars.forEach(star => {
+        const starValue = parseInt(star.dataset.value);
+        star.classList.remove('selected', 'hover');
+        
+        if (starValue <= rating) {
+            star.classList.add(isHover ? 'hover' : 'selected');
+        }
+    });
+}
+
+function submitRating(recipeId, rating) {
+    // Save user rating
+    userRatings[recipeId] = rating;
+    localStorage.setItem('bestchickenrecipes_userRatings', JSON.stringify(userRatings));
+    
+    // Update recipe ratings
+    if (!recipeRatings[recipeId]) {
+        recipeRatings[recipeId] = { total: 0, count: 0, average: 0 };
+    }
+    
+    recipeRatings[recipeId].total += rating;
+    recipeRatings[recipeId].count += 1;
+    recipeRatings[recipeId].average = recipeRatings[recipeId].total / recipeRatings[recipeId].count;
+    localStorage.setItem('bestchickenrecipes_recipeRatings', JSON.stringify(recipeRatings));
+    
+    // Update UI
+    const rateBtn = document.querySelector(`.rate-btn[data-recipe-id="${recipeId}"]`);
+    if (rateBtn) {
+        rateBtn.disabled = true;
+        rateBtn.innerHTML = '<i class="fas fa-check"></i> Already Rated';
+        rateBtn.style.opacity = '0.6';
+    }
+    
+    // Update stars
+    const stars = document.querySelectorAll(`.star-rating[data-recipe-id="${recipeId}"] .star`);
+    highlightStars(stars, rating);
+    
+    // Show success message
+    const userRatedDiv = document.querySelector(`.recipe-card[data-id="${recipeId}"] .user-has-rated`);
+    if (userRatedDiv) {
+        userRatedDiv.style.display = 'flex';
+    }
+    
+    showNotification(`Thank you for your ${rating}-star rating!`, 'success');
+    
+    // Reload top rated recipes
+    setTimeout(() => {
+        if (typeof loadTopRatedRecipes === 'function') {
+            loadTopRatedRecipes();
+        }
+        updateAllRecipes();
+    }, 500);
+}
+
+// ===== TOP RATED RECIPES =====
+function loadTopRatedRecipes() {
+    const topRatedRecipesWrapper = document.getElementById('topRatedRecipesWrapper');
+    if (!topRatedRecipesWrapper) {
+        console.log('Top rated recipes wrapper not found');
+        return;
+    }
+    
+    console.log('Loading top rated recipes...');
+    
+    // Get all recipes with ratings or at least some to display
+    let ratedRecipes = [];
+    
+    // First, try to get recipes with actual ratings
+    const recipesWithRatings = recipes.filter(recipe => 
+        recipeRatings[recipe.id] && recipeRatings[recipe.id].average > 0
+    );
+    
+    if (recipesWithRatings.length > 0) {
+        // Sort by rating
+        ratedRecipes = recipesWithRatings.sort((a, b) => {
+            const ratingA = recipeRatings[a.id]?.average || 0;
+            const ratingB = recipeRatings[b.id]?.average || 0;
+            
+            // Also consider favorite status for tie-breaking
+            const isFavoriteA = favoritesManager.isFavorite(a.id) ? 0.5 : 0;
+            const isFavoriteB = favoritesManager.isFavorite(b.id) ? 0.5 : 0;
+            
+            return (ratingB + isFavoriteB) - (ratingA + isFavoriteA);
+        }).slice(0, 10);
+    } else {
+        // If no ratings yet, show random recipes but indicate they need ratings
+        ratedRecipes = [...recipes]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map(recipe => ({
+                ...recipe,
+                rating: 0
+            }));
+    }
+    
+    if (ratedRecipes.length === 0) {
+        topRatedRecipesWrapper.innerHTML = `
+            <div class="no-recipes-state">
+                <i class="fas fa-star"></i>
+                <h3>No Recipes Yet</h3>
+                <p>Start exploring recipes to see ratings!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Create cards with proper favorite state
+    topRatedRecipesWrapper.innerHTML = ratedRecipes.map(recipe => createTopRatedCardHTML(recipe)).join('');
+    
+    // Reinitialize functionality for new cards
+    setTimeout(() => {
+        setupViewRecipeButtons();
+        setupFavoriteButtons(); // Reinitialize favorite buttons
+        setupStarRatings();
+    }, 100);
+    
+    console.log(`Loaded ${ratedRecipes.length} top rated recipes`);
+}
+
+// ===== NEW FUNCTION FOR TOP RATED CARD TEMPLATE =====
+function createTopRatedCardHTML(recipe) {
+    const isFavorite = favoritesManager.isFavorite(recipe.id);
+    const userRating = userRatings[recipe.id];
+    const recipeRating = recipeRatings[recipe.id]?.average || 0;
+    const ratingCount = recipeRatings[recipe.id]?.count || 0;
+    
+    return `
+        <div class="recipe-card top-rated-card" data-id="${recipe.id}" data-categories="${recipe.categories.join(',')}">
+            <div class="recipe-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-badges">
+                    ${recipeRating > 4 ? '<span class="badge featured">⭐ Top Rated</span>' : ''}
+                    ${isFavorite ? '<span class="badge favorite">❤️ Favorite</span>' : ''}
+                    ${ratingCount > 0 ? `<span class="badge rating-count">${ratingCount} rating${ratingCount !== 1 ? 's' : ''}</span>` : ''}
+                </div>
+                <div class="recipe-overlay">
+                    <button class="view-recipe-btn" data-recipe-id="${recipe.id}">
+                        <i class="fas fa-book-open"></i> View Recipe
+                    </button>
+                </div>
+                <button class="save-recipe ${isFavorite ? 'active' : ''}" data-recipe-id="${recipe.id}">
+                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+            </div>
+            <div class="recipe-content">
+                <h3 class="recipe-title">${recipe.title}</h3>
+                <p class="recipe-description">${recipe.description}</p>
+                <div class="recipe-meta">
+                    <span><i class="fas fa-clock"></i> ${recipe.time}</span>
+                    <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
+                    <span><i class="fas fa-star ${recipeRating > 0 ? 'rated' : ''}"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'Not rated'}</span>
+                </div>
+                <div class="recipe-rating-section">
+                    ${userRating ? `
+                        <div class="selected-rating">
+                            <i class="fas fa-star"></i> Your rating: ${userRating}/5
+                        </div>
+                        <div class="user-has-rated">
+                            <i class="fas fa-check-circle"></i> Thank you for rating!
+                        </div>
+                    ` : `
+                        <span class="rating-label">Rate this recipe:</span>
+                        <div class="star-rating" data-recipe-id="${recipe.id}">
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="1"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="2"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="3"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="4"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="5"></i></span>
+                        </div>
+                        <button class="rate-btn" data-recipe-id="${recipe.id}" disabled>
+                            <i class="fas fa-star"></i> Rate Recipe
+                        </button>
+                        <div class="user-has-rated" style="display: none;">
+                            <i class="fas fa-check-circle"></i> Thank you for rating!
+                        </div>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ===== FILTER AND UPDATE RECIPES =====
+function updateAllRecipes() {
+    const recipeCards = document.querySelectorAll('.recipe-card');
+    
+    recipeCards.forEach(card => {
+        const recipeId = card.dataset.id;
+        const recipe = recipes.find(r => r.id === recipeId);
+        
+        if (!recipe) {
+            card.style.display = 'none';
+            return;
+        }
+        
+        // Apply filters
+        const matchesSearch = !activeFilters.search || 
+            recipe.title.toLowerCase().includes(activeFilters.search) ||
+            recipe.description.toLowerCase().includes(activeFilters.search) ||
+            recipe.categories.some(cat => cat.toLowerCase().includes(activeFilters.search));
+        
+        const matchesCategories = activeFilters.categories.length === 0 ||
+            activeFilters.categories.every(filterCat => recipe.categories.includes(filterCat));
+        
+        // Update visibility
+        card.style.display = (matchesSearch && matchesCategories) ? 'block' : 'none';
+        
+        // Update badges based on active filters
+        updateRecipeBadges(card, recipe);
+    });
+    
+    // Smooth animation for filtering
+    recipeCards.forEach(card => {
+        card.classList.add('loading');
+        setTimeout(() => card.classList.remove('loading'), 300);
+    });
+}
+
+function updateRecipeBadges(card, recipe) {
+    const badgesContainer = card.querySelector('.recipe-badges');
+    if (!badgesContainer) return;
+    
+    // Clear existing badges (except premium/featured)
+    const existingBadges = badgesContainer.querySelectorAll('.badge:not(.featured):not(.premium)');
+    existingBadges.forEach(badge => badge.remove());
+    
+    // Add badges for active filters
+    activeFilters.categories.forEach(category => {
+        if (recipe.categories.includes(category)) {
+            const categoryInfo = categories.find(c => c.id === category);
+            if (categoryInfo) {
+                const badge = document.createElement('span');
+                badge.className = `badge ${category}`;
+                badge.textContent = categoryInfo.name;
+                badge.style.backgroundColor = categoryInfo.color;
+                badgesContainer.appendChild(badge);
+            }
+        }
+    });
+    
+    // If no active filters, show all categories
+    if (activeFilters.categories.length === 0) {
+        recipe.categories.forEach(category => {
+            const categoryInfo = categories.find(c => c.id === category);
+            if (categoryInfo) {
+                const badge = document.createElement('span');
+                badge.className = `badge ${category}`;
+                badge.textContent = categoryInfo.name;
+                badge.style.backgroundColor = categoryInfo.color;
+                badgesContainer.appendChild(badge);
+            }
+        });
+    }
+}
+
+// ===== RECIPE CARD TEMPLATE =====
+function createRecipeCardHTML(recipe) {
+    const isFavorite = favoritesManager.isFavorite(recipe.id);
+    const userRating = userRatings[recipe.id];
+    const recipeRating = recipeRatings[recipe.id]?.average || 0;
+    
+    return `
+        <div class="recipe-card" data-id="${recipe.id}" data-categories="${recipe.categories.join(',')}">
+            <div class="recipe-image">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-badges">
+                    ${recipeRating > 4 ? '<span class="badge featured">Top Rated</span>' : ''}
+                    ${recipe.categories.includes('premium') ? '<span class="badge premium">Premium</span>' : ''}
+                </div>
+                <div class="recipe-overlay">
+                    <button class="view-recipe-btn" data-recipe-id="${recipe.id}">
+                        <i class="fas fa-book-open"></i> View Recipe
+                    </button>
+                </div>
+                <button class="save-recipe ${isFavorite ? 'active' : ''}" data-recipe-id="${recipe.id}">
+                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+            </div>
+            <div class="recipe-content">
+                <h3 class="recipe-title">${recipe.title}</h3>
+                <p class="recipe-description">${recipe.description}</p>
+                <div class="recipe-meta">
+                    <span><i class="fas fa-clock"></i> ${recipe.time}</span>
+                    <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
+                    <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
+                </div>
+                <div class="recipe-rating-section">
+                    ${userRating ? `
+                        <div class="selected-rating">
+                            <i class="fas fa-star"></i> Your rating: ${userRating}/5
+                        </div>
+                        <div class="user-has-rated">
+                            <i class="fas fa-check-circle"></i> Thank you for your rating!
+                        </div>
+                    ` : `
+                        <span class="rating-label">Rate this recipe:</span>
+                        <div class="star-rating" data-recipe-id="${recipe.id}">
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="1"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="2"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="3"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="4"></i></span>
+                            <span class="star-wrapper"><i class="fas fa-star star" data-value="5"></i></span>
+                        </div>
+                        <button class="rate-btn" data-recipe-id="${recipe.id}" disabled>
+                            <i class="fas fa-star"></i> Rate Recipe
+                        </button>
+                        <div class="user-has-rated" style="display: none;">
+                            <i class="fas fa-check-circle"></i> Thank you for your rating!
+                        </div>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ===== NAVIGATION =====
+function navigateToRecipe(recipeId) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (recipe) {
+        const slug = recipe.title
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-')
+            .trim();
+        
+        window.location.href = `how-to-make.html#${slug}-${recipeId}`;
+    }
+}
+function createRecipeSlug(title) {
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+}
+
+// ===== FAVORITES MANAGER (keep existing) =====
+class FavoritesManager {
+    constructor() {
+        this.favoritesKey = 'bestchickenrecipes_favorites_v2';
+        this.favorites = this.loadFavorites();
+    }
+    
+    loadFavorites() {
+        try {
+            const stored = localStorage.getItem(this.favoritesKey);
+            return stored ? JSON.parse(stored) : [];
+        } catch (error) {
+            console.error('Error loading favorites:', error);
+            return [];
+        }
+    }
+    
+    saveFavorites() {
+        try {
+            localStorage.setItem(this.favoritesKey, JSON.stringify(this.favorites));
+            console.log('✅ Favorites saved:', this.favorites);
+            return true;
+        } catch (error) {
+            console.error('❌ Error saving favorites:', error);
+            return false;
+        }
+    }
+    
+    toggleFavorite(recipeId) {
+        const idStr = recipeId.toString();
+        const index = this.favorites.indexOf(idStr);
+        
+        if (index === -1) {
+            this.favorites.push(idStr);
+            this.saveFavorites();
+            console.log(`✅ Added recipe ${idStr} to favorites`);
+            return true;
+        } else {
+            this.favorites.splice(index, 1);
+            this.saveFavorites();
+            console.log(`✅ Removed recipe ${idStr} from favorites`);
+            return false;
+        }
+    }
+    
+    isFavorite(recipeId) {
+        return this.favorites.includes(recipeId.toString());
+    }
+    
+    getFavorites() {
+        return [...this.favorites];
+    }
+    
+    clearFavorites() {
+        this.favorites = [];
+        this.saveFavorites();
+    }
+}
+
+// Initialize global favorites manager
+const favoritesManager = new FavoritesManager();
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(message, type = 'info') {
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Add notification styles
+const notificationStyle = document.createElement('style');
+notificationStyle.textContent = `
+    .notification {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 10000;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .notification.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .notification.success {
+        background: #4CAF50;
+        color: white;
+    }
+    
+    .notification.error {
+        background: #f44336;
+        color: white;
+    }
+    
+    .notification.info {
+        background: #2196F3;
+        color: white;
+    }
+`;
+document.head.appendChild(notificationStyle);
+
+// ===== SETUP EVENT HANDLERS =====
+function setupViewRecipeButtons() {
+    document.querySelectorAll('.view-recipe-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const recipeId = this.dataset.recipeId;
+            if (recipeId) navigateToRecipe(recipeId);
+        });
+    });
+}
+
+function setupFavoriteButtons() {
+    console.log('Setting up favorite buttons...');
+    
+    document.querySelectorAll('.save-recipe').forEach(button => {
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        newButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const recipeId = this.dataset.recipeId;
+            if (!recipeId) {
+                console.error('❌ No recipe ID found on button');
+                return;
+            }
+            
+            console.log(`Toggling favorite for recipe ${recipeId}`);
+            
+            const isNowFavorite = favoritesManager.toggleFavorite(recipeId);
+            
+            // Update button appearance
+            this.classList.toggle('active', isNowFavorite);
+            const icon = this.querySelector('i');
+            if (icon) {
+                if (isNowFavorite) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#ff4757';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                }
+            }
+            
+            updateFavoriteInTopRatedSection(recipeId, isNowFavorite);
+            
+            showNotification(
+                isNowFavorite ? '✅ Added to favorites!' : 'ℹ️ Removed from favorites',
+                isNowFavorite ? 'success' : 'info'
+            );
+        });
+        
+        // Initialize button state
+        const recipeId = newButton.dataset.recipeId;
+        if (recipeId && favoritesManager.isFavorite(recipeId)) {
+            newButton.classList.add('active');
+            const icon = newButton.querySelector('i');
+            if (icon) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ff4757';
+            }
+        }
+    });
+    
+    console.log('✅ Favorite buttons setup complete');
+}
+// ===== HELPER TO UPDATE TOP RATED SECTION =====
+function updateFavoriteInTopRatedSection(recipeId, isFavorite) {
+    const topRatedSection = document.getElementById('topRatedRecipesWrapper');
+    if (!topRatedSection) return;
+    
+    const recipeCard = topRatedSection.querySelector(`.recipe-card[data-id="${recipeId}"] .save-recipe`);
+    if (recipeCard) {
+        recipeCard.classList.toggle('active', isFavorite);
+        const icon = recipeCard.querySelector('i');
+        if (icon) {
+            if (isFavorite) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ff4757';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+            }
+        }
+    }
+}
+function setupRecipeCardClicks() {
+    document.querySelectorAll('.recipe-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't trigger if clicking on interactive elements
+            if (e.target.closest('.save-recipe') || 
+                e.target.closest('.view-recipe-btn') ||
+                e.target.closest('.star-rating') ||
+                e.target.closest('.rate-btn') ||
+                e.target.closest('.recipe-badges') ||
+                e.target.closest('.recipe-overlay')) {
+                return;
+            }
+            
+            const recipeId = this.dataset.id;
+            if (recipeId) navigateToRecipe(recipeId);
+        });
+    });
+}
+
+function saveRecipesToLocalStorage() {
+    try {
+        localStorage.setItem('bestchickenrecipes_recipes', JSON.stringify(recipes));
+        console.log(`✅ Saved ${recipes.length} recipes to localStorage`);
+        
+        // Verify the save
+        const saved = localStorage.getItem('bestchickenrecipes_recipes');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            console.log(`✅ Verified: ${parsed.length} recipes in localStorage`);
+        }
+    } catch (error) {
+        console.error('❌ Error saving recipes to localStorage:', error);
+    }
+}
 </script>
 </body>
 </html>
