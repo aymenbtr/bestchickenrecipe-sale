@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1461,111 +1461,277 @@
         transform: translateY(0);
     }
 }
-/* ===== SIMPLE FIX: USE TWO-LINE LOGO ===== */
-.professional-header .logo {
+/* ===== BIG LOGO STYLES FOR FAVORITES PAGE ===== */
+/* Forceful styles to override existing CSS */
+.logo {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 24px !important;
     text-decoration: none !important;
-    transition: all var(--transition-base) !important;
-    padding: 8px 12px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    padding: 8px 16px !important;
+    border-radius: 12px !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    border-radius: var(--radius-md) !important;
-    flex-shrink: 0;
-    margin-right: auto;
+    position: relative !important;
 }
 
-/* Logo image - consistent size */
-.professional-header .logo img {
-    height: 50px !important;
-    width: 50px !important;
-    min-width: 50px !important;
-    max-width: 50px !important;
+/* Header Logo - BIG AND SIMPLE */
+.logo img,
+.logo .header-logo,
+.logo img[src*="bcr.png"],
+.header-logo {
+    height: 100px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
     object-fit: contain !important;
     filter: 
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))
-        brightness(1.05)
-        contrast(1.1) !important;
-    transition: all var(--transition-base) !important;
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))
+        contrast(1.1)
+        saturate(1.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: block !important;
-    flex-shrink: 0 !important;
+    position: relative !important;
 }
 
-/* Two-line logo text solution */
-.professional-header .logo-text {
+/* Footer Logo - Also large but simple */
+.footer-section .logo img,
+.footer-logo {
+    height: 80px !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    object-fit: contain !important;
+    filter: 
+        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1))
+        contrast(1.05) !important;
+}
+
+/* Logo text - Clean and simple */
+.logo-text {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    padding-right: 0 !important;
-    min-width: 0;
-    line-height: 1.1 !important;
+    padding-right: 20px !important;
 }
 
-.professional-header .logo-text h1 {
-    font-family: var(--font-display) !important;
-    font-size: 16px !important; /* Smaller to fit */
+.logo-text h1 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 36px !important;
     font-weight: 800 !important;
     color: var(--text-dark) !important;
+    line-height: 1.1 !important;
     margin: 0 !important;
-    letter-spacing: -0.3px !important;
-    white-space: normal !important; /* Allow wrapping */
-    overflow: visible !important;
-    word-break: break-word !important;
-    max-width: 150px; /* Limit width */
+    letter-spacing: -0.5px !important;
 }
 
-.professional-header .logo-text .tagline {
-    font-size: 8px !important;
+.logo-text h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    color: var(--text-dark) !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+}
+
+.logo-text .tagline {
+    font-size: 13px !important;
     color: var(--text-medium) !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
+    letter-spacing: 1.5px !important;
     font-weight: 600 !important;
-    margin-top: 2px !important;
-    white-space: nowrap !important;
-    overflow: visible !important;
+    margin-top: 6px !important;
 }
 
-/* Alternative: Stack logo vertically on very small screens */
+/* Simple hover effects */
+.logo:hover {
+    transform: translateY(-2px) !important;
+}
+
+.logo:hover img,
+.logo:hover .header-logo {
+    transform: scale(1.05) !important;
+    filter: 
+        drop-shadow(0 6px 16px rgba(0, 0, 0, 0.15))
+        contrast(1.15)
+        saturate(1.15) !important;
+}
+
+/* Make logo section clean */
+.logo-section {
+    flex-shrink: 0 !important;
+    margin-right: auto !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* RESPONSIVE - Clean and simple */
+@media (max-width: 1200px) {
+    .logo img,
+    .logo .header-logo {
+        height: 90px !important;
+        width: 90px !important;
+        min-width: 90px !important;
+        max-width: 90px !important;
+    }
+    
+    .logo-text h1 {
+        font-size: 32px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .logo img,
+    .logo .header-logo {
+        height: 85px !important;
+        width: 85px !important;
+        min-width: 85px !important;
+        max-width: 85px !important;
+    }
+    
+    .footer-section .logo img,
+    .footer-logo {
+        height: 70px !important;
+        width: 70px !important;
+        min-width: 70px !important;
+        max-width: 70px !important;
+    }
+    
+    .logo-text h1 {
+        font-size: 30px !important;
+    }
+    
+    .logo {
+        gap: 20px !important;
+        padding: 6px 12px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo img,
+    .logo .header-logo {
+        height: 75px !important;
+        width: 75px !important;
+        min-width: 75px !important;
+        max-width: 75px !important;
+    }
+    
+    .footer-section .logo img,
+    .footer-logo {
+        height: 60px !important;
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+    }
+    
+    .logo {
+        gap: 16px !important;
+        padding: 4px 8px !important;
+    }
+    
+    .logo-text h1 {
+        font-size: 26px !important;
+    }
+    
+    .logo-text h3 {
+        font-size: 22px !important;
+    }
+    
+    .logo-text .tagline {
+        font-size: 12px !important;
+        letter-spacing: 1px !important;
+    }
+}
+
 @media (max-width: 640px) {
-    .professional-header .logo {
-        flex-direction: column !important;
-        gap: 6px !important;
-        text-align: center !important;
-        padding: 6px 8px !important;
+    .logo {
+        gap: 12px !important;
+        padding: 12px !important;
     }
     
-    .professional-header .logo img {
-        height: 40px !important;
-        width: 40px !important;
-        min-width: 40px !important;
-        max-width: 40px !important;
+    .logo-text {
+        padding-right: 0 !important;
     }
     
-    .professional-header .logo-text h1 {
-        font-size: 14px !important;
-        max-width: 120px;
+    .logo img,
+    .logo .header-logo {
+        height: 70px !important;
+        width: 70px !important;
+        min-width: 70px !important;
+        max-width: 70px !important;
     }
     
-    .professional-header .logo-text .tagline {
-        font-size: 7px !important;
-        letter-spacing: 0.5px !important;
+    .logo-text h1 {
+        font-size: 24px !important;
     }
 }
 
-/* For larger screens */
-@media (min-width: 1025px) {
-    .professional-header .logo-text h1 {
-        font-size: 18px !important;
-        max-width: 180px;
+@media (max-width: 480px) {
+    .logo img,
+    .logo .header-logo {
+        height: 60px !important;
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
     }
     
-    .professional-header .logo-text .tagline {
-        font-size: 9px !important;
+    .logo-text h1 {
+        font-size: 22px !important;
+    }
+    
+    .logo {
+        padding: 8px !important;
+        gap: 10px !important;
     }
 }
-    </style>
+
+/* Ensure logo loads properly */
+.logo img,
+.header-logo,
+.footer-logo {
+    content-visibility: auto !important;
+    contain-intrinsic-size: 100px !important;
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: crisp-edges !important;
+}
+
+/* Remove any border/background from previous styles */
+.logo::after,
+.logo::before {
+    display: none !important;
+}
+
+/* Clean override of any previous inline styles */
+.logo[style*="border"],
+.logo[style*="background"],
+.logo[style*="box-shadow"] {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Override the existing logo icon styles */
+.logo i.fa-utensils {
+    display: none !important;
+}
+
+/* Override existing logo styles from the page */
+.logo i {
+    display: none !important;
+}
+
+.logo-text h1 {
+    font-size: 36px !important;
+    font-weight: 800 !important;
+}
+
+.tagline {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+} 
+</style>
 </head>
 <body>
   <!-- Ad Container 1: Top Banner -->
@@ -1725,5 +1891,6 @@ function _0x22af(_0x3c497b,_0x37e342){_0x3c497b=_0x3c497b-0x14b;const _0x2a13e6=
 </script>
 </body>
 </html>
+
 
 
