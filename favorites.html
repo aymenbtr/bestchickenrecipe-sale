@@ -1309,275 +1309,247 @@
                 max-width: 320px;
             }
         }
-        /* ===== BIG LOGO STYLES FOR FAVORITES PAGE ===== */
-/* Forceful styles to override existing CSS */
-.logo {
+     /* ===== BIG LOGO STYLES - FIXED LAYOUT ===== */
+/* Header logo - fixed size without breaking layout */
+.professional-header .logo {
     display: flex !important;
     align-items: center !important;
-    gap: 24px !important;
+    gap: 16px !important;
     text-decoration: none !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    padding: 8px 16px !important;
-    border-radius: 12px !important;
+    padding: 0 !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    position: relative !important;
+    flex-shrink: 0;
+    max-width: 300px;
 }
 
-/* Header Logo - BIG AND SIMPLE */
-.logo img,
-.logo .header-logo,
-.logo img[src*="bcr.png"],
-.header-logo {
-    height: 100px !important;
-    width: 100px !important;
-    min-width: 100px !important;
-    max-width: 100px !important;
+/* Header logo image */
+.professional-header .logo img,
+.professional-header .header-logo,
+.professional-header .logo img[src*="bcr.png"] {
+    height: 60px !important; /* Slightly smaller for header */
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
     object-fit: contain !important;
     filter: 
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))
-        contrast(1.1)
-        saturate(1.1) !important;
+        drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1))
+        contrast(1.1) !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: block !important;
-    position: relative !important;
 }
 
-/* Footer Logo - Also large but simple */
-.footer-section .logo img,
-.footer-logo {
-    height: 80px !important;
-    width: 80px !important;
-    min-width: 80px !important;
-    max-width: 80px !important;
-    object-fit: contain !important;
-    filter: 
-        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1))
-        contrast(1.05) !important;
+/* Header logo hover effects */
+.professional-header .logo:hover {
+    transform: translateY(-2px) !important;
 }
 
-/* Logo text - Clean and simple */
-.logo-text {
+.professional-header .logo:hover img {
+    transform: scale(1.05) !important;
+}
+
+/* Header logo text */
+.professional-header .logo-text {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    padding-right: 20px !important;
+    padding-right: 0 !important;
+    min-width: 0;
 }
 
-.logo-text h1 {
+.professional-header .logo-text h1 {
     font-family: 'Playfair Display', serif !important;
-    font-size: 36px !important;
+    font-size: 22px !important;
     font-weight: 800 !important;
     color: var(--text-dark) !important;
     line-height: 1.1 !important;
     margin: 0 !important;
     letter-spacing: -0.5px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.logo-text h3 {
+.professional-header .logo-text .tagline {
+    font-size: 10px !important;
+    color: var(--text-medium) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    font-weight: 600 !important;
+    margin-top: 2px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix header layout */
+.header-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    padding: 12px 0 !important;
+}
+
+.logo-section {
+    flex-shrink: 0 !important;
+    margin-right: auto !important;
+}
+
+.main-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 20px !important;
+    flex-shrink: 0;
+}
+
+.header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-shrink: 0;
+}
+
+/* Footer logo - can be bigger */
+.footer-section .logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    text-decoration: none !important;
+    margin-bottom: 16px !important;
+}
+
+.footer-section .logo img,
+.footer-section .footer-logo {
+    height: 50px !important;
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    object-fit: contain !important;
+    filter: 
+        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))
+        contrast(1.05) !important;
+}
+
+.footer-section .logo-text h3 {
     font-family: 'Playfair Display', serif !important;
-    font-size: 26px !important;
+    font-size: 20px !important;
     font-weight: 700 !important;
     color: var(--text-dark) !important;
     line-height: 1.1 !important;
     margin: 0 !important;
 }
 
-.logo-text .tagline {
-    font-size: 13px !important;
+.footer-section .logo-text span {
+    font-size: 12px !important;
     color: var(--text-medium) !important;
     text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
+    letter-spacing: 1px !important;
     font-weight: 600 !important;
-    margin-top: 6px !important;
+    margin-top: 4px !important;
 }
 
-/* Simple hover effects */
-.logo:hover {
-    transform: translateY(-2px) !important;
-}
-
-.logo:hover img,
-.logo:hover .header-logo {
-    transform: scale(1.05) !important;
-    filter: 
-        drop-shadow(0 6px 16px rgba(0, 0, 0, 0.15))
-        contrast(1.15)
-        saturate(1.15) !important;
-}
-
-/* Make logo section clean */
-.logo-section {
-    flex-shrink: 0 !important;
-    margin-right: auto !important;
-    display: flex !important;
-    align-items: center !important;
-}
-
-/* RESPONSIVE - Clean and simple */
-@media (max-width: 1200px) {
-    .logo img,
-    .logo .header-logo {
-        height: 90px !important;
-        width: 90px !important;
-        min-width: 90px !important;
-        max-width: 90px !important;
-    }
-    
-    .logo-text h1 {
-        font-size: 32px !important;
-    }
-}
-
+/* RESPONSIVE FIXES */
 @media (max-width: 1024px) {
-    .logo img,
-    .logo .header-logo {
-        height: 85px !important;
-        width: 85px !important;
-        min-width: 85px !important;
-        max-width: 85px !important;
+    .professional-header .logo img {
+        height: 55px !important;
+        width: 55px !important;
+        min-width: 55px !important;
+        max-width: 55px !important;
     }
     
-    .footer-section .logo img,
-    .footer-logo {
-        height: 70px !important;
-        width: 70px !important;
-        min-width: 70px !important;
-        max-width: 70px !important;
+    .professional-header .logo-text h1 {
+        font-size: 20px !important;
     }
     
-    .logo-text h1 {
-        font-size: 30px !important;
+    .header-content {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
     }
     
-    .logo {
-        gap: 20px !important;
-        padding: 6px 12px !important;
+    .logo-section {
+        order: 1;
+        width: auto;
+    }
+    
+    .main-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin: 8px 0 0 0 !important;
+    }
+    
+    .header-actions {
+        order: 2;
+        margin-left: auto;
     }
 }
 
 @media (max-width: 768px) {
-    .logo img,
-    .logo .header-logo {
-        height: 75px !important;
-        width: 75px !important;
-        min-width: 75px !important;
-        max-width: 75px !important;
+    .professional-header .logo img {
+        height: 50px !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
     }
     
-    .footer-section .logo img,
-    .footer-logo {
-        height: 60px !important;
-        width: 60px !important;
-        min-width: 60px !important;
-        max-width: 60px !important;
+    .professional-header .logo-text h1 {
+        font-size: 18px !important;
     }
     
-    .logo {
-        gap: 16px !important;
-        padding: 4px 8px !important;
+    .professional-header .logo-text .tagline {
+        font-size: 9px !important;
     }
     
-    .logo-text h1 {
-        font-size: 26px !important;
-    }
-    
-    .logo-text h3 {
-        font-size: 22px !important;
-    }
-    
-    .logo-text .tagline {
-        font-size: 12px !important;
-        letter-spacing: 1px !important;
+    .header-content {
+        padding: 8px 0 !important;
     }
 }
 
 @media (max-width: 640px) {
-    .logo {
+    .professional-header .logo {
         gap: 12px !important;
-        padding: 12px !important;
     }
     
-    .logo-text {
-        padding-right: 0 !important;
+    .professional-header .logo img {
+        height: 45px !important;
+        width: 45px !important;
+        min-width: 45px !important;
+        max-width: 45px !important;
     }
     
-    .logo img,
-    .logo .header-logo {
-        height: 70px !important;
-        width: 70px !important;
-        min-width: 70px !important;
-        max-width: 70px !important;
+    .professional-header .logo-text h1 {
+        font-size: 16px !important;
     }
     
-    .logo-text h1 {
-        font-size: 24px !important;
+    .professional-header .logo-text .tagline {
+        font-size: 8px !important;
     }
 }
 
 @media (max-width: 480px) {
-    .logo img,
-    .logo .header-logo {
-        height: 60px !important;
-        width: 60px !important;
-        min-width: 60px !important;
-        max-width: 60px !important;
-    }
-    
-    .logo-text h1 {
-        font-size: 22px !important;
-    }
-    
-    .logo {
-        padding: 8px !important;
+    .professional-header .logo {
         gap: 10px !important;
     }
+    
+    .professional-header .logo img {
+        height: 40px !important;
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+    }
+    
+    .professional-header .logo-text h1 {
+        font-size: 14px !important;
+    }
 }
 
-/* Ensure logo loads properly */
-.logo img,
-.header-logo,
-.footer-logo {
-    content-visibility: auto !important;
-    contain-intrinsic-size: 100px !important;
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-}
-
-/* Remove any border/background from previous styles */
-.logo::after,
-.logo::before {
-    display: none !important;
-}
-
-/* Clean override of any previous inline styles */
-.logo[style*="border"],
-.logo[style*="background"],
-.logo[style*="box-shadow"] {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* Override the existing logo icon styles */
+/* Hide old icon */
 .logo i.fa-utensils {
     display: none !important;
-}
-
-/* Override existing logo styles from the page */
-.logo i {
-    display: none !important;
-}
-
-.logo-text h1 {
-    font-size: 36px !important;
-    font-weight: 800 !important;
-}
-
-.tagline {
-    font-size: 13px !important;
-    font-weight: 600 !important;
 }
     </style>
 </head>
@@ -1729,7 +1701,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <div class="logo">
-                    <img src="bcr.png" 
+                    <img src="https://bestchickenrecipes.com/images/bcr.png" 
                          alt="Best Chicken Recipes Logo" 
                          class="footer-logo">
                     <div class="logo-text">
@@ -2146,4 +2118,3 @@ function initializeScrollEvents() {
 </script>
 </body>
 </html>
-
