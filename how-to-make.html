@@ -1461,16 +1461,11 @@
         transform: translateY(0);
     }
 }
-/* ===== TRANSPARENT LOGO STYLES FOR RECIPE DETAILS PAGE ===== */
-/* Header logo - transparent to match nav background */
-.professional-header {
-    background: var(--surface) !important;
-}
-
+/* ===== SIMPLE FIX: USE TWO-LINE LOGO ===== */
 .professional-header .logo {
     display: flex !important;
     align-items: center !important;
-    gap: 16px !important;
+    gap: 12px !important;
     text-decoration: none !important;
     transition: all var(--transition-base) !important;
     padding: 8px 12px !important;
@@ -1479,169 +1474,11 @@
     box-shadow: none !important;
     border-radius: var(--radius-md) !important;
     flex-shrink: 0;
-    max-width: 280px;
     margin-right: auto;
 }
 
-/* Header logo image - with subtle shadow to stand out */
-.professional-header .logo img,
-.professional-header .header-logo,
-.professional-header .logo img[src*="bcr.png"] {
-    height: 55px !important;
-    width: 55px !important;
-    min-width: 55px !important;
-    max-width: 55px !important;
-    object-fit: contain !important;
-    filter: 
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))
-        brightness(1.05)
-        contrast(1.1) !important;
-    transition: all var(--transition-base) !important;
-    display: block !important;
-}
-
-/* Dark mode adjustments for logo */
-[data-theme="dark"] .professional-header .logo img {
-    filter: 
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
-        brightness(1.15)
-        contrast(1.1) !important;
-}
-
-/* Header logo hover effects - subtle background change to match nav items */
-.professional-header .logo:hover {
-    transform: translateY(-2px) !important;
-    background: rgba(231, 76, 60, 0.08) !important;
-}
-
-.professional-header .logo:hover img {
-    transform: scale(1.05) !important;
-}
-
-/* Header logo text - matches nav text colors */
-.professional-header .logo-text {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    padding-right: 0 !important;
-    min-width: 0;
-}
-
-.professional-header .logo-text h1 {
-    font-family: var(--font-display) !important;
-    font-size: 20px !important;
-    font-weight: 800 !important;
-    color: var(--text-dark) !important;
-    line-height: 1.1 !important;
-    margin: 0 !important;
-    letter-spacing: -0.5px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.professional-header .logo-text .tagline {
-    font-size: 10px !important;
-    color: var(--text-medium) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    font-weight: 600 !important;
-    margin-top: 2px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Make nav items have same visual treatment as logo */
-.main-nav .nav-item {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    padding: 10px 16px !important;
-    border-radius: var(--radius-md) !important;
-    text-decoration: none !important;
-    color: var(--text-medium) !important;
-    font-weight: 500 !important;
-    transition: all var(--transition-base) !important;
-    background: transparent !important;
-}
-
-.main-nav .nav-item:hover,
-.main-nav .nav-item.active {
-    color: var(--primary) !important;
-    background: rgba(231, 76, 60, 0.1) !important;
-}
-
-/* Fix header layout to be perfectly aligned */
-.header-content {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    flex-wrap: nowrap !important;
-    padding: 16px 0 !important;
-    gap: 16px !important;
-}
-
-.logo-section {
-    flex-shrink: 0 !important;
-}
-
-.main-nav {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    flex-shrink: 0;
-    margin: 0 auto !important;
-}
-
-.header-actions {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    flex-shrink: 0;
-}
-
-/* Theme toggle - matches the style */
-.theme-toggle {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: var(--radius-md) !important;
-    background: transparent !important;
-    border: none !important;
-    color: var(--text-medium) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all var(--transition-base) !important;
-    cursor: pointer !important;
-    font-size: 1.25rem !important;
-}
-
-.theme-toggle:hover {
-    color: var(--primary) !important;
-    background: rgba(231, 76, 60, 0.1) !important;
-    transform: rotate(15deg) !important;
-}
-
-/* Footer logo - blends with footer */
-.professional-footer .logo {
-    display: flex !important;
-    align-items: center !important;
-    gap: 16px !important;
-    text-decoration: none !important;
-    margin-bottom: 20px !important;
-    padding: 12px !important;
-    border-radius: var(--radius-md) !important;
-    background: transparent !important;
-    transition: all var(--transition-base) !important;
-}
-
-.professional-footer .logo:hover {
-    background: rgba(231, 76, 60, 0.05) !important;
-}
-
-.professional-footer .logo img,
-.professional-footer .footer-logo {
+/* Logo image - consistent size */
+.professional-header .logo img {
     height: 50px !important;
     width: 50px !important;
     min-width: 50px !important;
@@ -1649,144 +1486,66 @@
     object-fit: contain !important;
     filter: 
         drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))
-        contrast(1.05) !important;
+        brightness(1.05)
+        contrast(1.1) !important;
+    transition: all var(--transition-base) !important;
+    display: block !important;
+    flex-shrink: 0 !important;
 }
 
-[data-theme="dark"] .professional-footer .logo img {
-    filter: 
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
-        brightness(1.1) !important;
-}
-
-.professional-footer .logo-text h3 {
-    font-family: var(--font-display) !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: var(--text-dark) !important;
+/* Two-line logo text solution */
+.professional-header .logo-text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding-right: 0 !important;
+    min-width: 0;
     line-height: 1.1 !important;
-    margin: 0 !important;
 }
 
-.professional-footer .logo-text span {
-    font-size: 11px !important;
+.professional-header .logo-text h1 {
+    font-family: var(--font-display) !important;
+    font-size: 16px !important; /* Smaller to fit */
+    font-weight: 800 !important;
+    color: var(--text-dark) !important;
+    margin: 0 !important;
+    letter-spacing: -0.3px !important;
+    white-space: normal !important; /* Allow wrapping */
+    overflow: visible !important;
+    word-break: break-word !important;
+    max-width: 150px; /* Limit width */
+}
+
+.professional-header .logo-text .tagline {
+    font-size: 8px !important;
     color: var(--text-medium) !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 0.8px !important;
     font-weight: 600 !important;
-    margin-top: 4px !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
 }
 
-/* RESPONSIVE FIXES - maintains consistency */
-@media (max-width: 1024px) {
-    .header-content {
-        flex-wrap: wrap !important;
-        gap: 12px !important;
-    }
-    
-    .logo-section {
-        order: 1;
-        width: auto;
-    }
-    
-    .main-nav {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        margin: 12px 0 0 0 !important;
-        gap: 8px !important;
-    }
-    
-    .header-actions {
-        order: 2;
-        margin-left: auto;
-    }
-    
-    .professional-header .logo {
-        max-width: 250px;
-    }
-}
-
-@media (max-width: 768px) {
-    .professional-header .logo img {
-        height: 48px !important;
-        width: 48px !important;
-        min-width: 48px !important;
-        max-width: 48px !important;
-    }
-    
-    .professional-header .logo-text h1 {
-        font-size: 18px !important;
-    }
-    
-    .professional-header .logo-text .tagline {
-        font-size: 9px !important;
-    }
-    
-    .header-content {
-        padding: 12px 0 !important;
-    }
-    
-    .main-nav .nav-item {
-        padding: 8px 12px !important;
-        font-size: 14px !important;
-    }
-}
-
+/* Alternative: Stack logo vertically on very small screens */
 @media (max-width: 640px) {
     .professional-header .logo {
-        gap: 12px !important;
-        padding: 6px 10px !important;
-        max-width: 220px;
-    }
-    
-    .professional-header .logo img {
-        height: 42px !important;
-        width: 42px !important;
-        min-width: 42px !important;
-        max-width: 42px !important;
-    }
-    
-    .professional-header .logo-text h1 {
-        font-size: 16px !important;
-    }
-    
-    .professional-header .logo-text .tagline {
-        font-size: 8px !important;
-        letter-spacing: 0.8px !important;
-    }
-    
-    .main-nav {
+        flex-direction: column !important;
         gap: 6px !important;
-    }
-    
-    .main-nav .nav-item {
-        padding: 6px 10px !important;
-        font-size: 13px !important;
-    }
-    
-    .theme-toggle {
-        width: 40px !important;
-        height: 40px !important;
-        font-size: 1.125rem !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .professional-header .logo {
-        gap: 10px !important;
-        padding: 4px 8px !important;
-        max-width: 200px;
+        text-align: center !important;
+        padding: 6px 8px !important;
     }
     
     .professional-header .logo img {
-        height: 38px !important;
-        width: 38px !important;
-        min-width: 38px !important;
-        max-width: 38px !important;
+        height: 40px !important;
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
     }
     
     .professional-header .logo-text h1 {
         font-size: 14px !important;
+        max-width: 120px;
     }
     
     .professional-header .logo-text .tagline {
@@ -1795,9 +1554,16 @@
     }
 }
 
-/* Hide old icon */
-.logo i.fa-utensils {
-    display: none !important;
+/* For larger screens */
+@media (min-width: 1025px) {
+    .professional-header .logo-text h1 {
+        font-size: 18px !important;
+        max-width: 180px;
+    }
+    
+    .professional-header .logo-text .tagline {
+        font-size: 9px !important;
+    }
 }
     </style>
 </head>
@@ -1959,4 +1725,5 @@ function _0x22af(_0x3c497b,_0x37e342){_0x3c497b=_0x3c497b-0x14b;const _0x2a13e6=
 </script>
 </body>
 </html>
+
 
