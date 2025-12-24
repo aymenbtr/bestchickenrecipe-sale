@@ -1,1 +1,1681 @@
-Coming Soon ;)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Athlete Nutrition Hub | Best Chicken Recipes for Your Fitness Goals</title>
+    <meta name="description" content="Find the perfect chicken recipes tailored to your fitness goals. High-protein meals for muscle building, weight loss, energy, and performance. Smart macro calculator included.">
+    <meta name="keywords" content="chicken recipes, athlete nutrition, high protein meals, muscle building recipes, weight loss meals, macro calculator, fitness nutrition, healthy chicken recipes">
+    <meta name="author" content="Best Chicken Recipes">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags (for social media sharing) -->
+    <meta property="og:title" content="Athlete Nutrition Hub | Best Chicken Recipes">
+    <meta property="og:description" content="Find the perfect chicken recipes tailored to your fitness goals with our smart macro calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bestchickenrecipes.com/nutrition-calculator">
+    <meta property="og:image" content="bcr.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Athlete Nutrition Hub | Best Chicken Recipes">
+    <meta name="twitter:description" content="Find the perfect chicken recipes tailored to your fitness goals with our smart macro calculator.">
+    <meta name="twitter:image" content="bcr.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="bcr.png">
+    <link rel="apple-touch-icon" href="bcr.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bestchickenrecipes.com/nutrition-calculator">
+    
+    <!-- Import fonts and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #E74C3C;
+            --primary-dark: #C0392B;
+            --primary-light: #F1948A;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #95A5A6;
+            --bg-light: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --bg-hover: #F8F9FA;
+            --border: #E8E8E8;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .professional-header {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
+        }
+
+        .professional-header.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            gap: 32px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            transition: transform var(--transition-smooth);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
+            transition: all var(--transition-smooth);
+        }
+
+        .logo:hover .logo-image {
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.25);
+            transform: scale(1.05);
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text .tagline {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transition: width var(--transition-smooth);
+        }
+
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            width: 100%;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), rgba(231, 76, 60, 0.1));
+        }
+
+        /* Nutrition Hub */
+        .nutrition-hub {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 50%, #F8F9FA 100%);
+        }
+
+        .hub-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hub-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hub-intro p {
+            font-size: 18px;
+            color: var(--text-medium);
+            line-height: 1.8;
+        }
+
+        /* Dimensions Grid */
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .dimensions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hub-intro h2 {
+                font-size: 36px;
+            }
+            
+            .section-header h3 {
+                font-size: 28px;
+            }
+            
+            .logo-image {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text h1 {
+                font-size: 20px;
+            }
+        }
+
+        .dimension-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .dimension-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(231, 76, 60, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .dimension-card:hover::before {
+            opacity: 1;
+        }
+
+        .dimension-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .dimension-card.selected {
+            transform: translateY(-8px) scale(1.02);
+            border: 2px solid var(--primary);
+            box-shadow: 0 25px 50px rgba(231, 76, 60, 0.2);
+            background: linear-gradient(135deg, #FFFFFF 0%, rgba(231, 76, 60, 0.05) 100%);
+        }
+
+        .dimension-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 8px 24px rgba(231, 76, 60, 0.3);
+            transition: all var(--transition-smooth);
+        }
+
+        .dimension-card:hover .dimension-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(231, 76, 60, 0.4);
+        }
+
+        .dimension-card:nth-child(2) .dimension-icon {
+            background: linear-gradient(135deg, #3498DB, #2980B9);
+            box-shadow: 0 8px 24px rgba(52, 152, 219, 0.3);
+        }
+
+        .dimension-card:nth-child(2):hover .dimension-icon {
+            box-shadow: 0 12px 32px rgba(52, 152, 219, 0.4);
+        }
+
+        .dimension-card:nth-child(3) .dimension-icon {
+            background: linear-gradient(135deg, #27AE60, #229954);
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.3);
+        }
+
+        .dimension-card:nth-child(3):hover .dimension-icon {
+            box-shadow: 0 12px 32px rgba(39, 174, 96, 0.4);
+        }
+
+        .dimension-card:nth-child(4) .dimension-icon {
+            background: linear-gradient(135deg, #F39C12, #E67E22);
+            box-shadow: 0 8px 24px rgba(243, 156, 18, 0.3);
+        }
+
+        .dimension-card:nth-child(4):hover .dimension-icon {
+            box-shadow: 0 12px 32px rgba(243, 156, 18, 0.4);
+        }
+
+        .dimension-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .dimension-card p {
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .dimension-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .dimension-card:nth-child(2) .stat-value {
+            color: #3498DB;
+        }
+
+        .dimension-card:nth-child(3) .stat-value {
+            color: #27AE60;
+        }
+
+        .dimension-card:nth-child(4) .stat-value {
+            color: #F39C12;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .select-btn {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            opacity: 0;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .select-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 12px 28px rgba(231, 76, 60, 0.4);
+        }
+
+        .dimension-card:hover .select-btn {
+            bottom: 20px;
+            opacity: 1;
+        }
+
+        .selected .select-btn {
+            bottom: 20px;
+            opacity: 1;
+            background: linear-gradient(135deg, var(--primary-dark), #A93226);
+        }
+
+        /* Smart Macro Calculator - Slider Version */
+        .smart-calculator {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .macro-slider {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-smooth);
+        }
+
+        .macro-slider:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg-hover);
+        }
+
+        .macro-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .macro-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.15));
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.1);
+            transition: all var(--transition-smooth);
+        }
+
+        .macro-slider:hover .macro-value {
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+
+        .macro-slider:nth-child(2) .macro-value {
+            color: #3498DB;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.15));
+        }
+
+        .macro-slider:nth-child(3) .macro-value {
+            color: #F39C12;
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(243, 156, 18, 0.15));
+        }
+
+        .slider-track-container {
+            position: relative;
+            margin: 20px 0 10px;
+            padding: 20px 0;
+        }
+
+        .slider-track {
+            position: relative;
+            height: 60px;
+        }
+
+        .slider-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #E74C3C 0%, #3498DB 50%, #27AE60 100%);
+            border-radius: 2px;
+            transform: translateY(-50%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-dot {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 2;
+            transition: all var(--transition-smooth);
+        }
+
+        .slider-dot::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--border);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all var(--transition-smooth);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-dot:hover::before {
+            background: var(--primary);
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .slider-dot.active::before {
+            background: var(--primary);
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2), 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .slider-dot.major::before {
+            width: 16px;
+            height: 16px;
+        }
+
+        .slider-dot.major.active::before {
+            width: 24px;
+            height: 24px;
+        }
+
+        .dot-value {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            color: var(--text-medium);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transition: all var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            pointer-events: none;
+        }
+
+        .slider-dot:hover .dot-value,
+        .slider-dot.active .dot-value {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .slider-dot.active .dot-value {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .slider-dot.major .dot-value {
+            font-size: 14px;
+            padding: 6px 12px;
+            top: -40px;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #FFFFFF, #F8F9FA);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            z-index: 3;
+            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
+            transition: all var(--transition-smooth);
+        }
+
+        .slider-handle:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 6px 24px rgba(231, 76, 60, 0.4);
+        }
+
+        .slider-handle:active {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .slider-description {
+            text-align: center;
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .calculator-results {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .results-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.15));
+            border-radius: var(--radius-lg);
+            margin-bottom: 25px;
+            color: #27AE60;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15);
+            transition: all var(--transition-smooth);
+        }
+
+        .results-info:hover {
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .results-info i {
+            font-size: 20px;
+        }
+
+        .no-matches {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.15));
+            color: #E74C3C;
+        }
+
+        .exact-match-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .exact-match-indicator i {
+            font-size: 18px;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-medium);
+        }
+
+        /* Recipes Section */
+        .recipes-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 80px 0;
+        }
+
+        .recipes-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .recipes-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .recipes-header p {
+            font-size: 18px;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .selected-dimension-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            transition: all var(--transition-smooth);
+        }
+
+        .selected-dimension-badge:hover {
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .reset-selection {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-medium);
+            padding: 10px 25px;
+            border-radius: var(--radius-lg);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            margin-top: 30px;
+        }
+
+        .reset-selection:hover {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), rgba(231, 76, 60, 0.1));
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
+        }
+
+        /* Recipes Grid */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .recipe-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .recipe-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .recipe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-smooth);
+        }
+
+        .recipe-card:hover .recipe-image img {
+            transform: scale(1.15);
+        }
+
+        .recipe-badges {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-smooth);
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge.featured { 
+            background: linear-gradient(135deg, #F39C12, #E67E22); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+        }
+        .badge.new { 
+            background: linear-gradient(135deg, #27AE60, #229954); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+        .badge.healthy { 
+            background: linear-gradient(135deg, #2ECC71, #27AE60); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+        .badge.quick { 
+            background: linear-gradient(135deg, #3498DB, #2980B9); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .recipe-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .recipe-card:hover .recipe-overlay {
+            opacity: 1;
+        }
+
+        .view-recipe-btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #FFFFFF, #F8F9FA);
+            color: var(--text-dark);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-smooth);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .view-recipe-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(231, 76, 60, 0.3);
+        }
+
+        .save-recipe {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-smooth);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .save-recipe:hover {
+            transform: scale(1.15);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .save-recipe.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .recipe-content {
+            padding: 24px;
+        }
+
+        .recipe-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .recipe-description {
+            font-size: 14px;
+            color: var(--text-medium);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .recipe-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nutrition-info {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(248, 249, 250, 1));
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-top: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nutrition-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .nutrition-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .nutrition-label {
+            color: var(--text-medium);
+        }
+
+        .nutrition-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Buttons */
+        .find-recipes-btn {
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 24px rgba(231, 76, 60, 0.3);
+        }
+
+        .find-recipes-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(231, 76, 60, 0.4);
+        }
+
+        .find-recipes-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Visual Comparison */
+        .visual-comparison {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .comparison-badge {
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-smooth);
+        }
+
+        .comparison-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        .comparison-badge.protein {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.15));
+            color: #E74C3C;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.15);
+        }
+
+        .comparison-badge.carbs {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.15));
+            color: #3498DB;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
+        }
+
+        .comparison-badge.calories {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.15));
+            color: #27AE60;
+            box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
+        }
+
+        /* Footer */
+        .professional-footer {
+            background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+            border-top: 1px solid var(--border);
+            padding: 48px 0 24px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color var(--transition-smooth);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Notification Styles */
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100px); opacity: 0; }
+        }
+    </style>
+    </head>
+<body>
+    <div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+    <!-- Header -->
+    <header class="professional-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="index.html" class="logo">
+                        <img src="bcr.png" alt="Best Chicken Recipes Logo" class="logo-image">
+                        <div class="logo-text">
+                            <h1>BestChickenRecipes</h1>
+                            <span class="tagline">Athlete Nutrition Hub</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="nutrition-calculator.html" class="nav-item active">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Athlete Hub</span>
+                    </a>
+                    <a href="favorites.html" class="nav-item">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+<div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+    <!-- Nutrition Hub Section -->
+    <section class="nutrition-hub">
+        <div class="container">
+            <div class="hub-intro">
+                <h2>Find Your Perfect Nutrition Match</h2>
+                <p>Choose your goal or use our smart macro calculator to find recipes with exact nutrition numbers.</p>
+            </div>
+            
+            <!-- Part 1: Choose Your Dimension -->
+            <div class="section-header">
+                <h3>Step 1: Choose Your Goal</h3>
+                <p>Select what you want to achieve - we'll show you the best recipes for that goal</p>
+            </div>
+            
+            <div class="dimensions-grid">
+                <!-- Dimension 1: Muscle Building -->
+                <div class="dimension-card" data-dimension="muscle">
+                    <div class="dimension-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Muscle Building</h3>
+                    <p>High-protein recipes to support muscle growth and recovery after intense workouts.</p>
+                    <div class="dimension-stats">
+                        <div class="stat">
+                            <div class="stat-value">55g+</div>
+                            <div class="stat-label">Protein</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Mod</div>
+                            <div class="stat-label">Carbs</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">400+</div>
+                            <div class="stat-label">Calories</div>
+                        </div>
+                    </div>
+                    <button class="select-btn">Select This Goal</button>
+                </div>
+
+                <!-- Dimension 2: Weight Loss -->
+                <div class="dimension-card" data-dimension="weight-loss">
+                    <div class="dimension-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h3>Weight Loss</h3>
+                    <p>Low-calorie, high-protein recipes that keep you full while cutting calories.</p>
+                    <div class="dimension-stats">
+                        <div class="stat">
+                            <div class="stat-value">40g+</div>
+                            <div class="stat-label">Protein</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Low</div>
+                            <div class="stat-label">Carbs</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">350-</div>
+                            <div class="stat-label">Calories</div>
+                        </div>
+                    </div>
+                    <button class="select-btn">Select This Goal</button>
+                </div>
+
+                <!-- Dimension 3: Energy & Performance -->
+                <div class="dimension-card" data-dimension="energy">
+                    <div class="dimension-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Energy & Performance</h3>
+                    <p>High-carb recipes for sustained energy during workouts and competitions.</p>
+                    <div class="dimension-stats">
+                        <div class="stat">
+                            <div class="stat-value">35g+</div>
+                            <div class="stat-label">Protein</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">High</div>
+                            <div class="stat-label">Carbs</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">400+</div>
+                            <div class="stat-label">Calories</div>
+                        </div>
+                    </div>
+                    <button class="select-btn">Select This Goal</button>
+                </div>
+
+                <!-- Dimension 4: Weight Gain -->
+                <div class="dimension-card" data-dimension="weight-gain">
+                    <div class="dimension-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>Weight Gain</h3>
+                    <p>High-calorie recipes packed with nutrients to support healthy weight gain.</p>
+                    <div class="dimension-stats">
+                        <div class="stat">
+                            <div class="stat-value">30g+</div>
+                            <div class="stat-label">Protein</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">High</div>
+                            <div class="stat-label">Carbs</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">500+</div>
+                            <div class="stat-label">Calories</div>
+                        </div>
+                    </div>
+                    <button class="select-btn">Select This Goal</button>
+                </div>
+            </div>
+
+            <!-- Visual comparison -->
+            <div class="visual-comparison">
+                <div class="comparison-badge protein">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Muscle Building: Highest Protein</span>
+                </div>
+                <div class="comparison-badge carbs">
+                    <i class="fas fa-bolt"></i>
+                    <span>Energy: Highest Carbs</span>
+                </div>
+                <div class="comparison-badge calories">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Weight Gain: Highest Calories</span>
+                </div>
+            </div>
+            <div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+            <!-- Part 2: Smart Macro Calculator -->
+            <div class="section-header" style="margin-top: 80px;">
+                <h3>Step 2: Or Use Smart Macro Calculator</h3>
+                <p>Slide the markers to find recipes with exact nutrition numbers</p>
+            </div>
+            
+            <div class="smart-calculator">
+                <!-- Protein Slider -->
+                <div class="macro-slider">
+                    <div class="slider-header">
+                        <span class="macro-name">
+                            <i class="fas fa-dumbbell"></i>
+                            Protein
+                        </span>
+                        <span class="macro-value" id="proteinDisplay">55g</span>
+                    </div>
+                    
+                    <div class="slider-track-container">
+                        <div class="slider-track" id="proteinTrack">
+                            <div class="slider-line">
+                                <!-- Protein values with proper spacing -->
+                                <div class="slider-dot" data-value="20" style="left: 0%">
+                                    <span class="dot-value">20g</span>
+                                </div>
+                                <div class="slider-dot" data-value="25" style="left: 6.25%">
+                                    <span class="dot-value">25g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="30" style="left: 12.5%">
+                                    <span class="dot-value">30g</span>
+                                </div>
+                                <div class="slider-dot" data-value="35" style="left: 18.75%">
+                                    <span class="dot-value">35g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="40" style="left: 25%">
+                                    <span class="dot-value">40g</span>
+                                </div>
+                                <div class="slider-dot" data-value="45" style="left: 31.25%">
+                                    <span class="dot-value">45g</span>
+                                </div>
+                                <div class="slider-dot" data-value="50" style="left: 37.5%">
+                                    <span class="dot-value">50g</span>
+                                </div>
+                                <div class="slider-dot major active" data-value="55" style="left: 43.75%">
+                                    <span class="dot-value">55g</span>
+                                </div>
+                                <div class="slider-dot" data-value="60" style="left: 50%">
+                                    <span class="dot-value">60g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="65" style="left: 56.25%">
+                                    <span class="dot-value">65g</span>
+                                </div>
+                                <div class="slider-dot" data-value="70" style="left: 62.5%">
+                                    <span class="dot-value">70g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="75" style="left: 68.75%">
+                                    <span class="dot-value">75g</span>
+                                </div>
+                                <div class="slider-dot" data-value="80" style="left: 75%">
+                                    <span class="dot-value">80g</span>
+                                </div>
+                                <div class="slider-dot" data-value="85" style="left: 81.25%">
+                                    <span class="dot-value">85g</span>
+                                </div>
+                                <div class="slider-dot" data-value="90" style="left: 87.5%">
+                                    <span class="dot-value">90g</span>
+                                </div>
+                                <div class="slider-dot" data-value="95" style="left: 93.75%">
+                                    <span class="dot-value">95g</span>
+                                </div>
+                                <div class="slider-dot" data-value="100" style="left: 100%">
+                                    <span class="dot-value">100g</span>
+                                </div>
+                                <!-- Active slider handle -->
+                                <div class="slider-handle" id="proteinHandle" style="left: 43.75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-description" id="proteinDesc">Perfect for muscle building</div>
+                </div>
+                 <div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+                <!-- Carbs Slider -->
+                <div class="macro-slider">
+                    <div class="slider-header">
+                        <span class="macro-name">
+                            <i class="fas fa-bolt"></i>
+                            Carbs
+                        </span>
+                        <span class="macro-value" id="carbsDisplay">45g</span>
+                    </div>
+                    
+                    <div class="slider-track-container">
+                        <div class="slider-track" id="carbsTrack">
+                            <div class="slider-line">
+                                <!-- Carbs values with proper spacing -->
+                                <div class="slider-dot" data-value="15" style="left: 0%">
+                                    <span class="dot-value">15g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="20" style="left: 8.33%">
+                                    <span class="dot-value">20g</span>
+                                </div>
+                                <div class="slider-dot" data-value="25" style="left: 16.67%">
+                                    <span class="dot-value">25g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="30" style="left: 25%">
+                                    <span class="dot-value">30g</span>
+                                </div>
+                                <div class="slider-dot" data-value="35" style="left: 33.33%">
+                                    <span class="dot-value">35g</span>
+                                </div>
+                                <div class="slider-dot major active" data-value="40" style="left: 41.67%">
+                                    <span class="dot-value">40g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="45" style="left: 50%">
+                                    <span class="dot-value">45g</span>
+                                </div>
+                                <div class="slider-dot" data-value="50" style="left: 58.33%">
+                                    <span class="dot-value">50g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="55" style="left: 66.67%">
+                                    <span class="dot-value">55g</span>
+                                </div>
+                                <div class="slider-dot" data-value="60" style="left: 75%">
+                                    <span class="dot-value">60g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="65" style="left: 83.33%">
+                                    <span class="dot-value">65g</span>
+                                </div>
+                                <div class="slider-dot" data-value="70" style="left: 91.67%">
+                                    <span class="dot-value">70g</span>
+                                </div>
+                                <div class="slider-dot major" data-value="75" style="left: 100%">
+                                    <span class="dot-value">75g</span>
+                                </div>
+                                <!-- Active slider handle -->
+                                <div class="slider-handle" id="carbsHandle" style="left: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-description" id="carbsDesc">Good for energy</div>
+                </div>
+                 <div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+                <!-- Calories Slider -->
+                <div class="macro-slider">
+                    <div class="slider-header">
+                        <span class="macro-name">
+                            <i class="fas fa-fire"></i>
+                            Calories
+                        </span>
+                        <span class="macro-value" id="caloriesDisplay">450</span>
+                    </div>
+                    
+                    <div class="slider-track-container">
+                        <div class="slider-track" id="caloriesTrack">
+                            <div class="slider-line">
+                                <!-- Calories values with proper spacing -->
+                                <div class="slider-dot" data-value="150" style="left: 0%">
+                                    <span class="dot-value">150</span>
+                                </div>
+                                <div class="slider-dot" data-value="200" style="left: 8.33%">
+                                    <span class="dot-value">200</span>
+                                </div>
+                                <div class="slider-dot" data-value="250" style="left: 16.67%">
+                                    <span class="dot-value">250</span>
+                                </div>
+                                <div class="slider-dot major" data-value="300" style="left: 25%">
+                                    <span class="dot-value">300</span>
+                                </div>
+                                <div class="slider-dot" data-value="350" style="left: 33.33%">
+                                    <span class="dot-value">350</span>
+                                </div>
+                                <div class="slider-dot major" data-value="400" style="left: 41.67%">
+                                    <span class="dot-value">400</span>
+                                </div>
+                                <div class="slider-dot major active" data-value="450" style="left: 50%">
+                                    <span class="dot-value">450</span>
+                                </div>
+                                <div class="slider-dot major" data-value="500" style="left: 58.33%">
+                                    <span class="dot-value">500</span>
+                                </div>
+                                <div class="slider-dot major" data-value="550" style="left: 66.67%">
+                                    <span class="dot-value">550</span>
+                                </div>
+                                <div class="slider-dot" data-value="600" style="left: 75%">
+                                    <span class="dot-value">600</span>
+                                </div>
+                                <div class="slider-dot major" data-value="650" style="left: 83.33%">
+                                    <span class="dot-value">650</span>
+                                </div>
+                                <div class="slider-dot" data-value="700" style="left: 91.67%">
+                                    <span class="dot-value">700</span>
+                                </div>
+                                <div class="slider-dot" data-value="750" style="left: 100%">
+                                    <span class="dot-value">750</span>
+                                </div>
+                                <!-- Active slider handle -->
+                                <div class="slider-handle" id="caloriesHandle" style="left: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-description" id="caloriesDesc">Moderate calorie meal</div>
+                </div>
+            </div>
+            
+            <div class="calculator-results">
+                <div class="results-info" id="resultsInfo">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="matchesCount">Loading matches...</span>
+                </div>
+                <button class="find-recipes-btn" id="findExactMatches">
+                    <i class="fas fa-check-circle"></i>
+                    Show Exact Matches
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipes Section (Hidden until selection) -->
+    <section class="recipes-section" id="recipesSection">
+        <div class="container">
+            <div class="recipes-header">
+                <h2 id="recipesTitle">Perfect Recipes for You</h2>
+                <p id="recipesDescription">Here are recipes that match your nutrition goals</p>
+                <div class="selected-dimension-badge" id="selectedBadge"></div>
+                
+                <button class="reset-selection" id="resetSelection">
+                    <i class="fas fa-redo"></i>
+                    Choose Different Goal
+                </button>
+            </div>
+            
+            <!-- Recipes Grid -->
+            <div class="recipes-grid" id="recipesGrid">
+                <!-- Recipes will be inserted here -->
+            </div>
+        </div>
+    </section>
+    <div class="full-width-ad" style="grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="4878547226"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+    <!-- Footer -->
+    <footer class="professional-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <img src="bcr.png" alt="Best Chicken Recipes Logo" class="logo-image">
+                        <div class="logo-text">
+                            <h3>BestChickenRecipes</h3>
+                            <span>Athlete Nutrition Hub</span>
+                        </div>
+                    </div>
+                    <p>Find the perfect chicken recipes for your fitness goals and macros.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="favorites.html">Saved Recipes</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Nutrition Guides</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Protein Guide</a></li>
+                        <li><a href="#">Meal Timing</a></li>
+                        <li><a href="#">Recovery Foods</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 BestChickenRecipes. For athletes, by athletes.</p>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+const _0x56a53d=_0x8b14;(function(_0x2139d9,_0x28bf5f){const _0x525cbc=_0x8b14,_0x106dca=_0x2139d9();while(!![]){try{const _0x335ce0=parseInt(_0x525cbc(0x426))/0x1*(parseInt(_0x525cbc(0x1aa))/0x2)+parseInt(_0x525cbc(0x1de))/0x3*(parseInt(_0x525cbc(0x1fe))/0x4)+-parseInt(_0x525cbc(0x27b))/0x5*(-parseInt(_0x525cbc(0x30d))/0x6)+-parseInt(_0x525cbc(0x3df))/0x7+parseInt(_0x525cbc(0x244))/0x8+-parseInt(_0x525cbc(0x3c5))/0x9+parseInt(_0x525cbc(0x2ca))/0xa*(-parseInt(_0x525cbc(0x1ff))/0xb);if(_0x335ce0===_0x28bf5f)break;else _0x106dca['push'](_0x106dca['shift']());}catch(_0xcc7df2){_0x106dca['push'](_0x106dca['shift']());}}}(_0x3b3f,0x2c71c));const recipes=[{'id':'20g-protein-15g-carbs-250cal','title':'Chicken\x20&\x20Cucumber\x20Salad','description':_0x56a53d(0x1b6),'image':_0x56a53d(0x296),'badges':[_0x56a53d(0x1ed),_0x56a53d(0x269),_0x56a53d(0x278),_0x56a53d(0x2bd)],'calories':'250','prepTime':'10','cookTime':'10','protein':'20','carbs':'15','fat':'8','ingredients':[_0x56a53d(0x22e),'2\x20cucumbers,\x20sliced','1\x20cup\x20cherry\x20tomatoes,\x20halved',_0x56a53d(0x1c3),'2\x20tbsp\x20Greek\x20yogurt\x20dressing',_0x56a53d(0x34d),_0x56a53d(0x429),'Salt\x20and\x20pepper\x20to\x20taste'],'instructions':['Grill\x20chicken\x20breast\x20seasoned\x20with\x20salt\x20and\x20pepper\x20until\x20cooked\x20through.',_0x56a53d(0x3e1),_0x56a53d(0x32b),_0x56a53d(0x197),_0x56a53d(0x1ba),'Drizzle\x20dressing\x20over\x20salad\x20and\x20toss\x20gently.','Garnish\x20with\x20fresh\x20dill\x20and\x20serve.'],'benefits':[_0x56a53d(0x266),_0x56a53d(0x15b),_0x56a53d(0x3a1),'Quick\x2020-minute\x20meal']},{'id':_0x56a53d(0x1d5),'title':_0x56a53d(0x228),'description':_0x56a53d(0x281),'image':_0x56a53d(0x276),'badges':[_0x56a53d(0x40f),_0x56a53d(0x284),_0x56a53d(0x32e),'soup'],'calories':_0x56a53d(0x325),'prepTime':'15','cookTime':'30','protein':'25','carbs':'25','fat':'6','ingredients':[_0x56a53d(0x430),_0x56a53d(0x322),_0x56a53d(0x251),_0x56a53d(0x262),_0x56a53d(0x1a6),'4\x20cups\x20chicken\x20broth',_0x56a53d(0x25b),_0x56a53d(0x292),_0x56a53d(0x419),_0x56a53d(0x33c)],'instructions':['Sauté\x20onion\x20and\x20garlic\x20in\x20a\x20large\x20pot\x20until\x20fragrant.',_0x56a53d(0x38b),'Add\x20carrots\x20and\x20celery,\x20cook\x20for\x205\x20minutes.',_0x56a53d(0x437),_0x56a53d(0x189),_0x56a53d(0x2bb),_0x56a53d(0x2c6),_0x56a53d(0x335)],'benefits':[_0x56a53d(0x166),_0x56a53d(0x2d9),_0x56a53d(0x17c),'Low\x20in\x20calories']},{'id':_0x56a53d(0x380),'title':_0x56a53d(0x33d),'description':_0x56a53d(0x151),'image':_0x56a53d(0x21e),'badges':[_0x56a53d(0x327),_0x56a53d(0x284),_0x56a53d(0x2bd),_0x56a53d(0x3e0)],'calories':_0x56a53d(0x300),'prepTime':'10','cookTime':'15','protein':'30','carbs':'20','fat':'8','ingredients':[_0x56a53d(0x153),'1\x20bunch\x20asparagus,\x20trimmed',_0x56a53d(0x1c0),_0x56a53d(0x1a6),_0x56a53d(0x1a5),_0x56a53d(0x26f),_0x56a53d(0x419)],'instructions':[_0x56a53d(0x15c),'Grill\x20chicken\x20for\x206-8\x20minutes\x20per\x20side.',_0x56a53d(0x1a3),_0x56a53d(0x31d),_0x56a53d(0x3aa),_0x56a53d(0x21f)],'benefits':['High\x20in\x20fiber\x20from\x20asparagus','Perfect\x20low-carb\x20meal',_0x56a53d(0x231),'Rich\x20in\x20antioxidants']},{'id':_0x56a53d(0x3ba),'title':_0x56a53d(0x306),'description':_0x56a53d(0x1e9),'image':_0x56a53d(0x1a1),'badges':['healthy','meal-prep',_0x56a53d(0x2a5),_0x56a53d(0x1e3)],'calories':'350','prepTime':'15','cookTime':'25','protein':'35','carbs':'30','fat':'10','ingredients':[_0x56a53d(0x43e),'2\x20bell\x20peppers,\x20halved\x20and\x20seeded','1\x20cup\x20cooked\x20quinoa',_0x56a53d(0x3b0),_0x56a53d(0x2f9),'1/2\x20cup\x20tomato\x20sauce',_0x56a53d(0x29e),_0x56a53d(0x360),_0x56a53d(0x28c)],'instructions':[_0x56a53d(0x1e6),'Mix\x20shredded\x20chicken\x20with\x20quinoa,\x20corn,\x20and\x20black\x20beans.','Season\x20with\x20cumin\x20and\x20mix\x20in\x20tomato\x20sauce.','Stuff\x20bell\x20pepper\x20halves\x20with\x20the\x20mixture.',_0x56a53d(0x2e0),_0x56a53d(0x172),_0x56a53d(0x2af)],'benefits':[_0x56a53d(0x203),_0x56a53d(0x1c1),_0x56a53d(0x21a),_0x56a53d(0x28f)]},{'id':'40g-protein-35g-carbs-400cal','title':'Chicken\x20&\x20Sweet\x20Potato\x20Bowl','description':_0x56a53d(0x38c),'image':_0x56a53d(0x2b4),'badges':['balanced',_0x56a53d(0x150),_0x56a53d(0x2f2),_0x56a53d(0x43d)],'calories':_0x56a53d(0x2b3),'prepTime':'15','cookTime':'25','protein':'40','carbs':'35','fat':'12','ingredients':[_0x56a53d(0x14a),'1\x20large\x20sweet\x20potato,\x20cubed','2\x20cups\x20broccoli\x20florets',_0x56a53d(0x1c0),'1\x20tsp\x20paprika','1/2\x20tsp\x20garlic\x20powder',_0x56a53d(0x1d3),_0x56a53d(0x419)],'instructions':[_0x56a53d(0x3cf),_0x56a53d(0x16b),_0x56a53d(0x308),_0x56a53d(0x333),'Grill\x20chicken\x20seasoned\x20with\x20salt\x20and\x20pepper.',_0x56a53d(0x282),_0x56a53d(0x34e)],'benefits':[_0x56a53d(0x381),_0x56a53d(0x3c6),_0x56a53d(0x1c1),_0x56a53d(0x2b5)]},{'id':_0x56a53d(0x183),'title':_0x56a53d(0x19e),'description':_0x56a53d(0x1b9),'image':'https://cdn.leonardo.ai/users/d695916e-eaa1-463a-8280-aeb9e6a1601b/generations/1f0e0f93-18c6-6b50-ac34-518d7eb51bc9/seedream-4.0_Premium_food_photography_Beautiful_Buddha_bowl_arrangement_with_grilled_chicken_-0.jpg','badges':[_0x56a53d(0x1e3),_0x56a53d(0x20b),_0x56a53d(0x2cd),'healthy'],'calories':'450','prepTime':'20','cookTime':'25','protein':'45','carbs':'45','fat':'14','ingredients':[_0x56a53d(0x14a),_0x56a53d(0x212),_0x56a53d(0x364),'1\x20cup\x20edamame',_0x56a53d(0x405),_0x56a53d(0x3c4),_0x56a53d(0x2a0),_0x56a53d(0x28c)],'instructions':[_0x56a53d(0x3f6),_0x56a53d(0x313),_0x56a53d(0x268),_0x56a53d(0x265),_0x56a53d(0x2ff),_0x56a53d(0x1be),_0x56a53d(0x37d)],'benefits':[_0x56a53d(0x24b),_0x56a53d(0x350),_0x56a53d(0x374),_0x56a53d(0x13b)]},{'id':_0x56a53d(0x400),'title':_0x56a53d(0x434),'description':_0x56a53d(0x14f),'image':'https://cdn.leonardo.ai/users/d695916e-eaa1-463a-8280-aeb9e6a1601b/generations/1f0e0f95-ec9b-6000-b3d7-1bb09127f8e0/seedream-4.0_Ultra-realistic_food_photography_High-protein_power_bowl_with_grilled_chicken_th-0.jpg','badges':[_0x56a53d(0x2f2),'muscle-building',_0x56a53d(0x2f5),'nutrient-dense'],'calories':_0x56a53d(0x30b),'prepTime':'15','cookTime':'30','protein':'55','carbs':'45','fat':'15','ingredients':['3\x20chicken\x20thighs,\x20grilled','1\x20cup\x20cooked\x20lentils',_0x56a53d(0x1bb),_0x56a53d(0x17d),_0x56a53d(0x3d6),'2\x20tbsp\x20lemon\x20tahini\x20dressing',_0x56a53d(0x33a),_0x56a53d(0x173)],'instructions':[_0x56a53d(0x17a),_0x56a53d(0x318),_0x56a53d(0x3f4),'Arrange\x20mixed\x20greens\x20in\x20a\x20large\x20bowl.',_0x56a53d(0x304),'Crumble\x20feta\x20cheese\x20over\x20the\x20top.','Drizzle\x20with\x20lemon\x20tahini\x20dressing.',_0x56a53d(0x2c4)],'benefits':[_0x56a53d(0x138),_0x56a53d(0x202),'Great\x20for\x20muscle\x20recovery',_0x56a53d(0x272)]},{'id':_0x56a53d(0x1cb),'title':_0x56a53d(0x243),'description':'65g\x20protein,\x2060g\x20carbs,\x20550\x20calories.\x20High-protein\x20meal\x20with\x20chickpeas\x20and\x20vegetables.','image':_0x56a53d(0x311),'badges':['muscle-building','high-protein',_0x56a53d(0x18b),_0x56a53d(0x395)],'calories':_0x56a53d(0x240),'prepTime':'20','cookTime':'35','protein':'65','carbs':'60','fat':'16','ingredients':['3\x20chicken\x20breasts,\x20grilled',_0x56a53d(0x30a),_0x56a53d(0x194),_0x56a53d(0x22c),_0x56a53d(0x3dc),_0x56a53d(0x3c1),_0x56a53d(0x186),_0x56a53d(0x33c),'Lemon\x20wedges\x20for\x20serving'],'instructions':[_0x56a53d(0x42c),_0x56a53d(0x351),_0x56a53d(0x268),'Combine\x20all\x20ingredients\x20in\x20a\x20large\x20bowl.',_0x56a53d(0x24c),_0x56a53d(0x2c0),_0x56a53d(0x248)],'benefits':['Extreme\x20protein\x20content',_0x56a53d(0x1c1),'Perfect\x20for\x20athletes',_0x56a53d(0x24b)]},{'id':_0x56a53d(0x1ab),'title':'Ultimate\x20Chicken\x20Protein\x20Platter','description':_0x56a53d(0x35d),'image':_0x56a53d(0x3a9),'badges':[_0x56a53d(0x339),_0x56a53d(0x2f2),_0x56a53d(0x340),_0x56a53d(0x2a6)],'calories':'600','prepTime':'25','cookTime':'40','protein':'75','carbs':'75','fat':'18','ingredients':['4\x20chicken\x20breasts,\x20grilled',_0x56a53d(0x229),'2\x20cups\x20green\x20beans',_0x56a53d(0x188),_0x56a53d(0x15a),_0x56a53d(0x234),_0x56a53d(0x195),_0x56a53d(0x2ec)],'instructions':[_0x56a53d(0x297),_0x56a53d(0x3d0),_0x56a53d(0x31a),_0x56a53d(0x403),'Arrange\x20all\x20components\x20on\x20a\x20large\x20platter.','Drizzle\x20with\x20Greek\x20yogurt\x20sauce.','Sprinkle\x20with\x20sliced\x20almonds.','Garnish\x20with\x20fresh\x20basil\x20and\x20serve.'],'benefits':[_0x56a53d(0x34b),'Complete\x20post-workout\x20meal',_0x56a53d(0x21c),_0x56a53d(0x321)]},{'id':_0x56a53d(0x232),'title':'Chicken\x20&\x20Avocado\x20Lettuce\x20Tacos','description':_0x56a53d(0x2dc),'image':_0x56a53d(0x1f6),'badges':['low-carb',_0x56a53d(0x16a),'quick',_0x56a53d(0x37e)],'calories':_0x56a53d(0x325),'prepTime':'15','cookTime':'10','protein':'30','carbs':'15','fat':'18','ingredients':[_0x56a53d(0x1b8),_0x56a53d(0x1f0),_0x56a53d(0x364),_0x56a53d(0x139),_0x56a53d(0x224),'1\x20lime,\x20juiced',_0x56a53d(0x28c),_0x56a53d(0x14b)],'instructions':[_0x56a53d(0x270),'Wash\x20and\x20dry\x20lettuce\x20leaves.',_0x56a53d(0x352),'Arrange\x20lettuce\x20leaves\x20on\x20a\x20plate.',_0x56a53d(0x28d),_0x56a53d(0x409),'Drizzle\x20with\x20Greek\x20yogurt\x20sauce.',_0x56a53d(0x271)],'benefits':['Perfect\x20for\x20low-carb\x20diets',_0x56a53d(0x350),'Quick\x20preparation','Refreshing\x20and\x20light']},{'id':'40g-protein-20g-carbs-350cal','title':'Chicken\x20&\x20Broccoli\x20Stir\x20Fry','description':_0x56a53d(0x1e2),'image':_0x56a53d(0x1f5),'badges':[_0x56a53d(0x327),'quick',_0x56a53d(0x177),_0x56a53d(0x284)],'calories':_0x56a53d(0x1d7),'prepTime':'10','cookTime':'15','protein':'40','carbs':'20','fat':'15','ingredients':['2\x20chicken\x20breasts,\x20sliced','3\x20cups\x20broccoli\x20florets',_0x56a53d(0x22c),_0x56a53d(0x152),'1\x20tbsp\x20sesame\x20oil',_0x56a53d(0x1a6),_0x56a53d(0x299),_0x56a53d(0x33f)],'instructions':[_0x56a53d(0x2d3),_0x56a53d(0x424),'Add\x20garlic\x20and\x20ginger,\x20cook\x20for\x201\x20minute.',_0x56a53d(0x3fd),_0x56a53d(0x3cb),'Add\x20coconut\x20aminos\x20and\x20stir\x20to\x20combine.','Garnish\x20with\x20sesame\x20seeds\x20and\x20serve\x20hot.'],'benefits':[_0x56a53d(0x144),_0x56a53d(0x2cf),_0x56a53d(0x29c),'Perfect\x20for\x20keto']},{'id':_0x56a53d(0x2da),'title':'Chicken\x20&\x20Wild\x20Rice\x20Pilaf','description':_0x56a53d(0x1ad),'image':_0x56a53d(0x2fa),'badges':[_0x56a53d(0x1e3),_0x56a53d(0x17b),'nutrient-rich',_0x56a53d(0x187)],'calories':_0x56a53d(0x2b3),'prepTime':'15','cookTime':'40','protein':'35','carbs':'30','fat':'12','ingredients':[_0x56a53d(0x14a),'1\x20cup\x20wild\x20rice,\x20cooked',_0x56a53d(0x3a5),_0x56a53d(0x3a0),'2\x20tbsp\x20cranberries',_0x56a53d(0x1c0),'1\x20tsp\x20thyme',_0x56a53d(0x33c)],'instructions':[_0x56a53d(0x367),_0x56a53d(0x1af),'Grill\x20chicken\x20until\x20cooked\x20through.',_0x56a53d(0x26a),_0x56a53d(0x410),_0x56a53d(0x3b2),_0x56a53d(0x1fb)],'benefits':[_0x56a53d(0x1e7),_0x56a53d(0x1c1),'Sustained\x20energy',_0x56a53d(0x2e9)]},{'id':_0x56a53d(0x183),'title':_0x56a53d(0x355),'description':_0x56a53d(0x30f),'image':_0x56a53d(0x383),'badges':[_0x56a53d(0x163),_0x56a53d(0x264),'balanced',_0x56a53d(0x32d)],'calories':'450','prepTime':'20','cookTime':'25','protein':'45','carbs':'45','fat':'14','ingredients':[_0x56a53d(0x14a),_0x56a53d(0x16f),_0x56a53d(0x305),_0x56a53d(0x158),'1/4\x20cup\x20Kalamata\x20olives',_0x56a53d(0x31e),'2\x20tbsp\x20lemon\x20herb\x20dressing',_0x56a53d(0x1db)],'instructions':[_0x56a53d(0x3d5),_0x56a53d(0x268),_0x56a53d(0x1b1),'Slice\x20chicken\x20and\x20arrange\x20over\x20farro\x20mixture.','Crumble\x20feta\x20cheese\x20over\x20the\x20top.',_0x56a53d(0x3d9),_0x56a53d(0x17f)],'benefits':['Ancient\x20grain\x20benefits',_0x56a53d(0x1e7),_0x56a53d(0x3eb),'Balanced\x20nutrition']},{'id':_0x56a53d(0x25a),'title':_0x56a53d(0x42b),'description':_0x56a53d(0x43b),'image':_0x56a53d(0x36c),'badges':[_0x56a53d(0x302),_0x56a53d(0x17b),_0x56a53d(0x1d4),_0x56a53d(0x187)],'calories':_0x56a53d(0x30b),'prepTime':'15','cookTime':'20','protein':'40','carbs':'55','fat':'15','ingredients':[_0x56a53d(0x14a),_0x56a53d(0x250),'2\x20cups\x20marinara\x20sauce',_0x56a53d(0x25b),_0x56a53d(0x22b),_0x56a53d(0x1a6),_0x56a53d(0x3ab),'Fresh\x20basil\x20for\x20garnish'],'instructions':[_0x56a53d(0x1fc),_0x56a53d(0x268),_0x56a53d(0x3e3),_0x56a53d(0x298),'Slice\x20chicken\x20into\x20strips.',_0x56a53d(0x3ca),'Top\x20with\x20chicken\x20and\x20Parmesan\x20cheese.',_0x56a53d(0x320)],'benefits':[_0x56a53d(0x13c),_0x56a53d(0x285),_0x56a53d(0x220),_0x56a53d(0x289)]},{'id':_0x56a53d(0x3ac),'title':'Chicken\x20&\x20Sweet\x20Potato\x20Hash','description':_0x56a53d(0x225),'image':_0x56a53d(0x36c),'badges':['high-energy','pre-workout',_0x56a53d(0x205),_0x56a53d(0x150)],'calories':_0x56a53d(0x240),'prepTime':'15','cookTime':'25','protein':'35','carbs':'65','fat':'16','ingredients':[_0x56a53d(0x288),_0x56a53d(0x41d),_0x56a53d(0x262),_0x56a53d(0x342),_0x56a53d(0x2dd),'1\x20tbsp\x20olive\x20oil',_0x56a53d(0x186),_0x56a53d(0x349)],'instructions':[_0x56a53d(0x3c9),_0x56a53d(0x1ea),_0x56a53d(0x402),_0x56a53d(0x324),'Cover\x20and\x20cook\x20until\x20eggs\x20are\x20set.',_0x56a53d(0x3af),_0x56a53d(0x2c8)],'benefits':[_0x56a53d(0x2fd),_0x56a53d(0x3dd),_0x56a53d(0x381),_0x56a53d(0x31c)]},{'id':_0x56a53d(0x2d5),'title':_0x56a53d(0x43f),'description':_0x56a53d(0x28e),'image':'https://cdn.leonardo.ai/users/f2ff9908-0951-41dd-81d6-d55eaafa558f/generations/1f0e0fb2-75ff-6aa0-8042-9ceca6410939/seedream-4.0_Premium_food_photography_Maximum_energy_bowl_with_grilled_chicken_quinoa_black_b-0.jpg','badges':[_0x56a53d(0x347),'endurance',_0x56a53d(0x19c),_0x56a53d(0x2a6)],'calories':_0x56a53d(0x2b9),'prepTime':'20','cookTime':'30','protein':'45','carbs':'75','fat':'18','ingredients':[_0x56a53d(0x3fc),'2\x20cups\x20cooked\x20quinoa',_0x56a53d(0x1e4),_0x56a53d(0x394),'1\x20avocado,\x20sliced',_0x56a53d(0x139),'2\x20tbsp\x20Greek\x20yogurt',_0x56a53d(0x28c)],'instructions':[_0x56a53d(0x3d0),_0x56a53d(0x268),_0x56a53d(0x3ec),_0x56a53d(0x265),_0x56a53d(0x256),_0x56a53d(0x3de),_0x56a53d(0x3f8),_0x56a53d(0x1e8)],'benefits':[_0x56a53d(0x2f1),_0x56a53d(0x2f7),_0x56a53d(0x203),_0x56a53d(0x200)]},{'id':'25g-protein-20g-carbs-280cal','title':_0x56a53d(0x385),'description':'25g\x20protein,\x2020g\x20carbs,\x20280\x20calories.\x20Low-calorie\x20zucchini\x20noodles\x20with\x20chicken.','image':_0x56a53d(0x428),'badges':[_0x56a53d(0x1ed),_0x56a53d(0x2a5),_0x56a53d(0x16d),'weight-loss'],'calories':'280','prepTime':'15','cookTime':'15','protein':'25','carbs':'20','fat':'10','ingredients':['1\x20chicken\x20breast,\x20sliced',_0x56a53d(0x2b6),_0x56a53d(0x305),_0x56a53d(0x1a6),_0x56a53d(0x1c0),_0x56a53d(0x23a),_0x56a53d(0x2ec),_0x56a53d(0x3c0)],'instructions':[_0x56a53d(0x379),_0x56a53d(0x38a),'Add\x20garlic\x20and\x20cook\x20for\x201\x20minute.','Add\x20zucchini\x20noodles\x20and\x20tomatoes.',_0x56a53d(0x1bf),'Season\x20with\x20Italian\x20herbs.',_0x56a53d(0x320),'Serve\x20with\x20Parmesan\x20if\x20desired.'],'benefits':[_0x56a53d(0x23d),_0x56a53d(0x3f3),'Great\x20for\x20weight\x20loss',_0x56a53d(0x21b)]},{'id':_0x56a53d(0x22a),'title':_0x56a53d(0x2db),'description':_0x56a53d(0x361),'image':_0x56a53d(0x2c1),'badges':[_0x56a53d(0x1ed),'low-carb',_0x56a53d(0x3cd),_0x56a53d(0x284)],'calories':_0x56a53d(0x325),'prepTime':'15','cookTime':'20','protein':'30','carbs':'25','fat':'12','ingredients':[_0x56a53d(0x317),_0x56a53d(0x2e1),_0x56a53d(0x301),_0x56a53d(0x33b),_0x56a53d(0x299),_0x56a53d(0x23f),_0x56a53d(0x2a0),_0x56a53d(0x36f)],'instructions':[_0x56a53d(0x241),'Sauté\x20cauliflower\x20rice\x20with\x20mixed\x20vegetables.',_0x56a53d(0x1f3),_0x56a53d(0x268),_0x56a53d(0x343),_0x56a53d(0x23b),_0x56a53d(0x35c),_0x56a53d(0x387)],'benefits':['Very\x20low\x20calorie\x20density',_0x56a53d(0x3f3),_0x56a53d(0x275),_0x56a53d(0x29a)]},{'id':'40g-protein-40g-carbs-400cal','title':'Chicken\x20&\x20Vegetable\x20Skewers','description':'40g\x20protein,\x2040g\x20carbs,\x20400\x20calories.\x20Grilled\x20skewers\x20with\x20chicken\x20and\x20seasonal\x20vegetables.','image':_0x56a53d(0x2e8),'badges':[_0x56a53d(0x3e0),_0x56a53d(0x1e3),_0x56a53d(0x36b),_0x56a53d(0x284)],'calories':_0x56a53d(0x2b3),'prepTime':'20','cookTime':'15','protein':'40','carbs':'40','fat':'14','ingredients':[_0x56a53d(0x1d0),_0x56a53d(0x371),_0x56a53d(0x3dc),_0x56a53d(0x236),_0x56a53d(0x2be),'1\x20lemon,\x20juiced',_0x56a53d(0x162),_0x56a53d(0x33c)],'instructions':[_0x56a53d(0x145),_0x56a53d(0x18c),_0x56a53d(0x1dc),_0x56a53d(0x239),'Serve\x20with\x20fresh\x20parsley\x20garnish.',_0x56a53d(0x39b)],'benefits':[_0x56a53d(0x3c8),_0x56a53d(0x316),_0x56a53d(0x29b),'Low\x20in\x20saturated\x20fat']},{'id':'45g-protein-45g-carbs-450cal','title':'Chicken\x20&\x20Butternut\x20Squash\x20Curry','description':_0x56a53d(0x1b5),'image':_0x56a53d(0x1ca),'badges':[_0x56a53d(0x1f4),_0x56a53d(0x40f),'balanced',_0x56a53d(0x284)],'calories':_0x56a53d(0x16c),'prepTime':'20','cookTime':'30','protein':'45','carbs':'45','fat':'15','ingredients':[_0x56a53d(0x36e),_0x56a53d(0x39d),_0x56a53d(0x262),'1\x20can\x20coconut\x20milk',_0x56a53d(0x15e),_0x56a53d(0x25b),_0x56a53d(0x28c),_0x56a53d(0x140)],'instructions':[_0x56a53d(0x1e1),_0x56a53d(0x38b),'Add\x20curry\x20paste\x20and\x20cook\x20for\x201\x20minute.','Add\x20butternut\x20squash\x20and\x20coconut\x20milk.','Simmer\x20for\x2025\x20minutes\x20until\x20squash\x20is\x20tender.',_0x56a53d(0x376),'Garnish\x20with\x20fresh\x20cilantro.',_0x56a53d(0x3c2)],'benefits':[_0x56a53d(0x381),_0x56a53d(0x39e),_0x56a53d(0x13b),_0x56a53d(0x421)]},{'id':_0x56a53d(0x3f7),'title':'Chicken\x20&\x20Potato\x20Bake','description':_0x56a53d(0x331),'image':'https://cdn.leonardo.ai/users/8b0c5180-c95f-4cb6-a358-4ed02454d52d/generations/1f0e0fc5-1596-6980-a87a-fb21a986e4ee/seedream-4.0_Ultra-realistic_comfort_food_photography_Chicken_and_potato_bake_fresh_from_oven-0.jpg','badges':[_0x56a53d(0x187),'hearty','balanced',_0x56a53d(0x242)],'calories':_0x56a53d(0x30b),'prepTime':'20','cookTime':'35','protein':'50','carbs':'55','fat':'16','ingredients':['3\x20chicken\x20breasts,\x20sliced',_0x56a53d(0x312),_0x56a53d(0x13a),_0x56a53d(0x15a),_0x56a53d(0x2c5),_0x56a53d(0x26f),_0x56a53d(0x292),_0x56a53d(0x33c)],'instructions':['Preheat\x20oven\x20to\x20375°F\x20(190°C).',_0x56a53d(0x286),_0x56a53d(0x211),_0x56a53d(0x214),_0x56a53d(0x2e0),_0x56a53d(0x3f0),'Garnish\x20with\x20fresh\x20parsley.',_0x56a53d(0x14d)],'benefits':[_0x56a53d(0x1f1),_0x56a53d(0x20a),_0x56a53d(0x341),'Perfect\x20for\x20family\x20dinners']},{'id':'55g-protein-65g-carbs-550cal','title':'Chicken\x20&\x20Rice\x20Casserole','description':_0x56a53d(0x182),'image':_0x56a53d(0x354),'badges':[_0x56a53d(0x3fb),'comfort-food','high-energy',_0x56a53d(0x191)],'calories':_0x56a53d(0x240),'prepTime':'15','cookTime':'40','protein':'55','carbs':'65','fat':'18','ingredients':[_0x56a53d(0x27c),_0x56a53d(0x287),_0x56a53d(0x301),'1\x20can\x20cream\x20of\x20mushroom\x20soup','1\x20cup\x20chicken\x20broth','1/2\x20cup\x20cheese,\x20shredded',_0x56a53d(0x253),_0x56a53d(0x349)],'instructions':[_0x56a53d(0x3e8),_0x56a53d(0x2a2),_0x56a53d(0x2f3),_0x56a53d(0x2bc),'Top\x20with\x20shredded\x20cheese.','Bake\x20at\x20350°F\x20(175°C)\x20for\x2035\x20minutes.',_0x56a53d(0x3af),'Serve\x20hot.'],'benefits':[_0x56a53d(0x2de),_0x56a53d(0x42e),_0x56a53d(0x406),_0x56a53d(0x1c7)]},{'id':_0x56a53d(0x207),'title':'Chicken\x20&\x20Grain\x20Power\x20Bowl','description':_0x56a53d(0x18e),'image':'https://cdn.leonardo.ai/users/8b0c5180-c95f-4cb6-a358-4ed02454d52d/generations/1f0e0fca-fbfd-6310-94d1-d8e1665dd3ff/seedream-4.0_Ultra-realistic_performance_food_photography_Maximum_calorie_power_bowl_with_gri-0.jpg','badges':[_0x56a53d(0x347),_0x56a53d(0x2a6),_0x56a53d(0x157),_0x56a53d(0x395)],'calories':_0x56a53d(0x2b9),'prepTime':'20','cookTime':'30','protein':'60','carbs':'75','fat':'20','ingredients':[_0x56a53d(0x40a),'2\x20cups\x20mixed\x20grains\x20(quinoa,\x20barley,\x20farro)',_0x56a53d(0x17d),_0x56a53d(0x364),_0x56a53d(0x26e),_0x56a53d(0x2d1),_0x56a53d(0x392),_0x56a53d(0x27d)],'instructions':[_0x56a53d(0x36d),_0x56a53d(0x268),_0x56a53d(0x26b),_0x56a53d(0x345),_0x56a53d(0x319),'Drizzle\x20with\x20tahini\x20dressing.',_0x56a53d(0x218),_0x56a53d(0x1bc)],'benefits':[_0x56a53d(0x2d0),_0x56a53d(0x156),'Complete\x20nutrient\x20profile',_0x56a53d(0x2e2)]},{'id':_0x56a53d(0x277),'title':_0x56a53d(0x398),'description':_0x56a53d(0x3d4),'image':_0x56a53d(0x3db),'badges':[_0x56a53d(0x339),'high-protein',_0x56a53d(0x196),_0x56a53d(0x3fb)],'calories':_0x56a53d(0x209),'prepTime':'10','cookTime':'25','protein':'75','carbs':'60','fat':'8','ingredients':[_0x56a53d(0x221),'2\x20cups\x20white\x20rice,\x20cooked','2\x20cups\x20broccoli,\x20steamed','1\x20tbsp\x20olive\x20oil',_0x56a53d(0x419),_0x56a53d(0x3a3),_0x56a53d(0x2ce),_0x56a53d(0x14b)],'instructions':[_0x56a53d(0x34f),_0x56a53d(0x397),_0x56a53d(0x170),_0x56a53d(0x412),_0x56a53d(0x35f),_0x56a53d(0x2d6),_0x56a53d(0x3c7)],'benefits':[_0x56a53d(0x38f),_0x56a53d(0x3ed),'Perfect\x20post-workout',_0x56a53d(0x314)]},{'id':'weight-loss-40g-protein-25g-carbs-320cal','title':_0x56a53d(0x439),'description':_0x56a53d(0x39c),'image':'https://cdn.leonardo.ai/users/8b0c5180-c95f-4cb6-a358-4ed02454d52d/generations/1f0e0fd0-dd05-6470-8a35-9a1590cf5cb3/seedream-4.0_Premium_weight-loss_food_photography_High-protein_chicken_salad_with_mixed_green-0.jpg','badges':['weight-loss','high-protein','low-calorie',_0x56a53d(0x431)],'calories':'320','prepTime':'15','cookTime':'15','protein':'40','carbs':'25','fat':'10','ingredients':[_0x56a53d(0x14a),'4\x20cups\x20mixed\x20greens','1\x20cup\x20vegetables\x20(cucumber,\x20tomato,\x20bell\x20pepper)',_0x56a53d(0x427),_0x56a53d(0x34d),_0x56a53d(0x185),_0x56a53d(0x27d),'Salt\x20and\x20pepper\x20to\x20taste'],'instructions':[_0x56a53d(0x268),_0x56a53d(0x411),_0x56a53d(0x25c),_0x56a53d(0x417),_0x56a53d(0x309),_0x56a53d(0x2c9),_0x56a53d(0x13d),_0x56a53d(0x1bc)],'benefits':['High\x20protein\x20keeps\x20you\x20full',_0x56a53d(0x32f),_0x56a53d(0x3bb),'Perfect\x20for\x20cutting\x20phases']},{'id':_0x56a53d(0x401),'title':'Endurance\x20Athlete\x20Chicken\x20Bowl','description':_0x56a53d(0x2c7),'image':_0x56a53d(0x42d),'badges':[_0x56a53d(0x2ee),_0x56a53d(0x302),_0x56a53d(0x2a6),_0x56a53d(0x279)],'calories':_0x56a53d(0x240),'prepTime':'20','cookTime':'30','protein':'45','carbs':'70','fat':'15','ingredients':[_0x56a53d(0x3fc),_0x56a53d(0x373),'1\x20cup\x20beets,\x20roasted','1\x20cup\x20quinoa,\x20cooked',_0x56a53d(0x29f),_0x56a53d(0x382),_0x56a53d(0x173),_0x56a53d(0x206)],'instructions':[_0x56a53d(0x179),_0x56a53d(0x268),'Cook\x20quinoa\x20according\x20to\x20package\x20instructions.',_0x56a53d(0x375),'Drizzle\x20with\x20honey\x20mustard\x20dressing.','Sprinkle\x20with\x20chia\x20seeds.',_0x56a53d(0x384),_0x56a53d(0x3f2)],'benefits':[_0x56a53d(0x356),_0x56a53d(0x2b2),_0x56a53d(0x174),_0x56a53d(0x272)]},{'id':_0x56a53d(0x357),'title':_0x56a53d(0x1b0),'description':_0x56a53d(0x329),'image':_0x56a53d(0x2b7),'badges':[_0x56a53d(0x41c),'post-workout',_0x56a53d(0x1e3),_0x56a53d(0x30c)],'calories':_0x56a53d(0x16c),'prepTime':'15','cookTime':'20','protein':'50','carbs':'50','fat':'12','ingredients':[_0x56a53d(0x3fc),_0x56a53d(0x433),'1\x20cup\x20pineapple\x20chunks','2\x20tbsp\x20teriyaki\x20sauce',_0x56a53d(0x3ff),'1\x20tsp\x20ginger,\x20grated',_0x56a53d(0x338),_0x56a53d(0x2e6)],'instructions':[_0x56a53d(0x268),_0x56a53d(0x170),_0x56a53d(0x366),_0x56a53d(0x290),_0x56a53d(0x1cc),_0x56a53d(0x422),_0x56a53d(0x369)],'benefits':['Optimal\x201:1\x20protein:carb\x20ratio',_0x56a53d(0x3ce),_0x56a53d(0x28b),_0x56a53d(0x41f)]},{'id':_0x56a53d(0x193),'title':_0x56a53d(0x38e),'description':_0x56a53d(0x435),'image':_0x56a53d(0x1b7),'badges':[_0x56a53d(0x43d),_0x56a53d(0x273),_0x56a53d(0x1e3),_0x56a53d(0x2ad)],'calories':'500','prepTime':'30','cookTime':'40','protein':'55','carbs':'45','fat':'15','ingredients':['6\x20chicken\x20breasts,\x20baked','3\x20cups\x20brown\x20rice,\x20cooked','6\x20cups\x20mixed\x20vegetables,\x20roasted',_0x56a53d(0x215),_0x56a53d(0x159),_0x56a53d(0x27a),_0x56a53d(0x1eb),_0x56a53d(0x27d)],'instructions':['Preheat\x20oven\x20to\x20400°F\x20(200°C).','Season\x20and\x20bake\x20chicken\x20for\x2025\x20minutes.','Cook\x20brown\x20rice\x20according\x20to\x20package.',_0x56a53d(0x318),_0x56a53d(0x1dd),_0x56a53d(0x326),_0x56a53d(0x3a6),'Store\x20in\x20refrigerator\x20for\x20up\x20to\x205\x20days.'],'benefits':[_0x56a53d(0x2d8),_0x56a53d(0x1cf),_0x56a53d(0x363),'Healthy\x20eating\x20made\x20easy']},{'id':_0x56a53d(0x1e5),'title':_0x56a53d(0x414),'description':_0x56a53d(0x39f),'image':'https://cdn.leonardo.ai/users/8775ce7e-b386-4cc8-9c16-e96e69b80b98/generations/1f0e0ff8-9d53-68e0-b77e-9ca72804a5e6/seedream-4.0_Ultra-realistic_bodybuilding_breakfast_photography_Scrambled_eggs_with_diced_chi-0.jpg','badges':[_0x56a53d(0x3b9),_0x56a53d(0x2f2),'breakfast',_0x56a53d(0x41c)],'calories':'450','prepTime':'10','cookTime':'15','protein':'60','carbs':'40','fat':'15','ingredients':[_0x56a53d(0x1df),_0x56a53d(0x32c),_0x56a53d(0x303),_0x56a53d(0x1c2),_0x56a53d(0x342),'1/4\x20cup\x20low-fat\x20cottage\x20cheese','1\x20tsp\x20turmeric',_0x56a53d(0x230),_0x56a53d(0x1c0),_0x56a53d(0x2b0)],'instructions':[_0x56a53d(0x3bf),_0x56a53d(0x310),'Heat\x20olive\x20oil\x20in\x20non-stick\x20pan\x20over\x20medium\x20heat.',_0x56a53d(0x3e5),'Add\x20chicken\x20and\x20spinach,\x20cook\x20until\x20spinach\x20wilts.',_0x56a53d(0x18a),_0x56a53d(0x160),_0x56a53d(0x362)],'benefits':[_0x56a53d(0x20f),_0x56a53d(0x1f9),_0x56a53d(0x1a9),'**Nutrient\x20Timing**:\x202:1\x20protein:carb\x20ratio\x20ideal\x20for\x20morning\x20training\x20fuel',_0x56a53d(0x18f)]},{'id':_0x56a53d(0x3fe),'title':'Endurance\x20Plus\x20Chicken\x20&\x20Oat\x20Bowl','description':_0x56a53d(0x390),'image':'https://cdn.leonardo.ai/users/8775ce7e-b386-4cc8-9c16-e96e69b80b98/generations/1f0e0ffb-079f-63f0-ac16-b33967d1b63f/seedream-4.0_Premium_endurance_meal_photography_Steel_cut_oats_with_grilled_chicken_blueberri-0.jpg','badges':[_0x56a53d(0x2ee),_0x56a53d(0x257),_0x56a53d(0x3b8),_0x56a53d(0x2a3)],'calories':'580','prepTime':'5','cookTime':'20','protein':'50','carbs':'80','fat':'12','ingredients':[_0x56a53d(0x42a),_0x56a53d(0x43a),_0x56a53d(0x1c8),_0x56a53d(0x155),_0x56a53d(0x393),_0x56a53d(0x1b3),_0x56a53d(0x2d2),_0x56a53d(0x1a2),'1\x20cup\x20almond\x20milk'],'instructions':[_0x56a53d(0x169),_0x56a53d(0x3e2),_0x56a53d(0x184),_0x56a53d(0x344),_0x56a53d(0x358),_0x56a53d(0x2cb),'Serve\x20warm\x20for\x20pre-training\x20or\x20cool\x20for\x20post-workout.'],'benefits':[_0x56a53d(0x167),_0x56a53d(0x40c),_0x56a53d(0x14c),_0x56a53d(0x2fb),'**Electrolyte\x20Balance**:\x20Potassium\x20from\x20banana\x20(422mg)\x20supports\x20nerve\x20function\x20and\x20hydration']},{'id':_0x56a53d(0x27f),'title':'Lean\x20Mass\x20Chicken\x20&\x20Green\x20Veggie\x20Plate','description':_0x56a53d(0x353),'image':_0x56a53d(0x1fd),'badges':[_0x56a53d(0x1e0),_0x56a53d(0x3d1),_0x56a53d(0x327),_0x56a53d(0x372)],'calories':_0x56a53d(0x2b3),'prepTime':'15','cookTime':'20','protein':'55','carbs':'30','fat':'12','ingredients':[_0x56a53d(0x3fc),'2\x20cups\x20broccoli\x20florets',_0x56a53d(0x40e),_0x56a53d(0x3ae),_0x56a53d(0x1c0),_0x56a53d(0x1a6),_0x56a53d(0x213),'1\x20tsp\x20smoked\x20paprika',_0x56a53d(0x3d3),'Sea\x20salt\x20and\x20black\x20pepper'],'instructions':['Season\x20chicken\x20with\x20smoked\x20paprika,\x20salt,\x20and\x20pepper.','Grill\x20chicken\x20for\x206-7\x20minutes\x20per\x20side\x20until\x20internal\x20temperature\x20reaches\x20165°F.','Toss\x20vegetables\x20with\x20olive\x20oil,\x20garlic,\x20and\x20lemon\x20juice.',_0x56a53d(0x2d4),_0x56a53d(0x3b1),_0x56a53d(0x3fa),'Sprinkle\x20with\x20chopped\x20almonds\x20before\x20serving.',_0x56a53d(0x1c9)],'benefits':[_0x56a53d(0x328),'**Satiety\x20Index**:\x204x\x20more\x20filling\x20than\x20equivalent\x20carb\x20calories\x20due\x20to\x20fiber+protein\x20combination',_0x56a53d(0x307),_0x56a53d(0x217),_0x56a53d(0x41a)]},{'id':'recovery-pro-65g-protein-70g-carbs-600cal','title':_0x56a53d(0x25d),'description':_0x56a53d(0x2e4),'image':_0x56a53d(0x20e),'badges':[_0x56a53d(0x396),'recovery','glycogen','muscle-repair'],'calories':_0x56a53d(0x2b9),'prepTime':'10','cookTime':'25','protein':'65','carbs':'70','fat':'14','ingredients':[_0x56a53d(0x3b4),_0x56a53d(0x295),_0x56a53d(0x180),_0x56a53d(0x24f),'1\x20tbsp\x20honey',_0x56a53d(0x299),_0x56a53d(0x332),_0x56a53d(0x3da),_0x56a53d(0x2c2)],'instructions':[_0x56a53d(0x164),_0x56a53d(0x2e5),'Mix\x20in\x20honey,\x20ginger,\x20cinnamon,\x20and\x20sea\x20salt.',_0x56a53d(0x267),'Combine\x20shredded\x20chicken\x20with\x20sweet\x20potato\x20mash.',_0x56a53d(0x1ef),_0x56a53d(0x37c),_0x56a53d(0x365)],'benefits':[_0x56a53d(0x334),_0x56a53d(0x41b),_0x56a53d(0x1a7),'**Cortisol\x20Management**:\x20Cinnamon\x20improves\x20insulin\x20sensitivity\x20by\x2020-30%\x20reducing\x20stress\x20hormone\x20impact',_0x56a53d(0x1d6)]},{'id':_0x56a53d(0x3f1),'title':_0x56a53d(0x423),'description':_0x56a53d(0x274),'image':_0x56a53d(0x3ef),'badges':[_0x56a53d(0x43c),_0x56a53d(0x24e),_0x56a53d(0x161),_0x56a53d(0x199)],'calories':_0x56a53d(0x16c),'prepTime':'15','cookTime':'35','protein':'45','carbs':'50','fat':'10','ingredients':[_0x56a53d(0x288),_0x56a53d(0x408),_0x56a53d(0x3d7),_0x56a53d(0x2a4),_0x56a53d(0x1a6),_0x56a53d(0x219),_0x56a53d(0x3bd),'1\x20tsp\x20cumin','1/2\x20tsp\x20cayenne\x20pepper','2\x20cups\x20chicken\x20broth','1\x20avocado,\x20sliced',_0x56a53d(0x28c)],'instructions':[_0x56a53d(0x27e),_0x56a53d(0x141),_0x56a53d(0x15d),_0x56a53d(0x35e),_0x56a53d(0x15f),_0x56a53d(0x37f),_0x56a53d(0x359),_0x56a53d(0x39a)],'benefits':[_0x56a53d(0x201),'**Nitric\x20Oxide\x20Production**:\x20Beans\x20provide\x205g+\x20arginine\x20improving\x20blood\x20flow\x20and\x20nutrient\x20delivery','**Blood\x20Sugar\x20Stability**:\x2020g\x20soluble\x20fiber\x20from\x20beans\x20reduces\x20glycemic\x20response\x20by\x2040%',_0x56a53d(0x1d2),_0x56a53d(0x34a)]}];let currentProtein=0x37,currentCarbs=0x2d,currentCalories=0x1c2,selectedDimension=null;const descriptions={'protein':{0x14:_0x56a53d(0x33e),0x19:_0x56a53d(0x26d),0x1e:'Moderate\x20protein\x20-\x20light\x20meals',0x23:_0x56a53d(0x2a1),0x28:_0x56a53d(0x1b4),0x2d:_0x56a53d(0x192),0x32:'Maximum\x20protein\x20-\x20muscle\x20building',0x37:_0x56a53d(0x415),0x3c:'Extreme\x20protein\x20-\x20bodybuilding',0x41:_0x56a53d(0x31f),0x46:'Elite\x20level\x20protein',0x4b:_0x56a53d(0x391),0x50:_0x56a53d(0x2ac),0x55:_0x56a53d(0x336),0x5a:_0x56a53d(0x223),0x5f:'Peak\x20season\x20protein',0x64:_0x56a53d(0x432)},'carbs':{0xf:_0x56a53d(0x19d),0x14:_0x56a53d(0x171),0x19:_0x56a53d(0x407),0x1e:_0x56a53d(0x1bd),0x23:_0x56a53d(0x1c6),0x28:_0x56a53d(0x149),0x2d:_0x56a53d(0x176),0x32:_0x56a53d(0x36a),0x37:_0x56a53d(0x18d),0x3c:'Carb\x20loading\x20level\x201',0x41:'Carb\x20loading\x20level\x202',0x46:'Carb\x20loading\x20level\x203',0x4b:_0x56a53d(0x3e9)},'calories':{0x96:_0x56a53d(0x28a),0xc8:_0x56a53d(0x280),0xfa:_0x56a53d(0x3b5),0x12c:_0x56a53d(0x25f),0x15e:_0x56a53d(0x294),0x190:'Good\x20meal\x20calories',0x1c2:_0x56a53d(0x263),0x1f4:'High\x20calorie\x20meal',0x226:_0x56a53d(0x233),0x258:_0x56a53d(0x399),0x28a:_0x56a53d(0x1fa),0x2bc:_0x56a53d(0x2a8),0x2ee:'Maximum\x20weight\x20gain\x20meal'}},dimensionCards=document['querySelectorAll'](_0x56a53d(0x2ba)),findExactMatchesBtn=document['getElementById'](_0x56a53d(0x386)),recipesSection=document[_0x56a53d(0x227)](_0x56a53d(0x3ea)),recipesGrid=document['getElementById'](_0x56a53d(0x2fc)),resetBtn=document[_0x56a53d(0x227)]('resetSelection'),recipesTitle=document[_0x56a53d(0x227)](_0x56a53d(0x245)),recipesDescription=document[_0x56a53d(0x227)](_0x56a53d(0x3a7)),selectedBadge=document[_0x56a53d(0x227)](_0x56a53d(0x3d2)),resultsInfo=document[_0x56a53d(0x227)](_0x56a53d(0x247)),matchesCount=document[_0x56a53d(0x227)](_0x56a53d(0x2ef)),header=document['querySelector'](_0x56a53d(0x2ea));window[_0x56a53d(0x388)](_0x56a53d(0x25e),function(){const _0x4911f0=_0x56a53d;window[_0x4911f0(0x20d)]>0x32?header[_0x4911f0(0x3a4)][_0x4911f0(0x216)](_0x4911f0(0x413)):header['classList'][_0x4911f0(0x238)](_0x4911f0(0x413));}),document[_0x56a53d(0x388)](_0x56a53d(0x2aa),function(){const _0x308420=_0x56a53d;console[_0x308420(0x226)](_0x308420(0x3e4)),updateDisplay(),updateMatchesCount(),dimensionCards[_0x308420(0x20c)](_0x275dbe=>{const _0x58bdc6=_0x308420;_0x275dbe[_0x58bdc6(0x388)](_0x58bdc6(0x1cd),function(_0x36edcb){const _0xd5f526=_0x58bdc6;if(_0x36edcb[_0xd5f526(0x315)][_0xd5f526(0x3a4)][_0xd5f526(0x260)](_0xd5f526(0x1ec)))return;dimensionCards[_0xd5f526(0x20c)](_0x59955f=>_0x59955f[_0xd5f526(0x3a4)][_0xd5f526(0x238)](_0xd5f526(0x237))),this[_0xd5f526(0x3a4)]['add'](_0xd5f526(0x237)),selectedDimension=this[_0xd5f526(0x19b)][_0xd5f526(0x1c5)],setTimeout(()=>{showRecipesForDimension(selectedDimension);},0x1f4);});const _0x3b96f0=_0x275dbe['querySelector'](_0x58bdc6(0x42f));_0x3b96f0[_0x58bdc6(0x388)](_0x58bdc6(0x1cd),function(_0x381492){const _0x17bb2e=_0x58bdc6;_0x381492['stopPropagation'](),_0x275dbe[_0x17bb2e(0x1cd)]();});}),document['querySelectorAll'](_0x308420(0x35b))['forEach'](_0x29bcca=>{const _0x2398ee=_0x308420;_0x29bcca[_0x2398ee(0x388)](_0x2398ee(0x1cd),function(_0x4df90c){const _0x100bc8=_0x2398ee;_0x4df90c[_0x100bc8(0x1a8)]();const _0x118852=parseInt(this['dataset']['value']),_0x5edb86=this[_0x100bc8(0x181)]('.macro-slider');_0x5edb86['querySelectorAll']('.slider-dot')['forEach'](_0x5be2ec=>_0x5be2ec[_0x100bc8(0x3a4)][_0x100bc8(0x238)](_0x100bc8(0x436))),this[_0x100bc8(0x3a4)][_0x100bc8(0x216)](_0x100bc8(0x436));const _0x45dc45=_0x5edb86[_0x100bc8(0x259)](_0x100bc8(0x291)),_0x5d1f7d=this[_0x100bc8(0x22f)][_0x100bc8(0x389)];_0x45dc45[_0x100bc8(0x22f)][_0x100bc8(0x389)]=_0x5d1f7d;if(_0x5edb86['querySelector'](_0x100bc8(0x2a9))[_0x100bc8(0x31b)]['includes']('Protein'))currentProtein=_0x118852;else _0x5edb86[_0x100bc8(0x259)](_0x100bc8(0x2a9))[_0x100bc8(0x31b)][_0x100bc8(0x2f6)]('Carbs')?currentCarbs=_0x118852:currentCalories=_0x118852;updateDisplay(),updateMatchesCount();});}),findExactMatchesBtn['addEventListener'](_0x308420(0x1cd),function(){const _0x6ee9c5=_0x308420;console[_0x6ee9c5(0x226)](_0x6ee9c5(0x2b1),currentProtein,currentCarbs,currentCalories),findExactMatches();}),resetBtn['addEventListener'](_0x308420(0x1cd),function(){const _0x4676de=_0x308420;recipesSection[_0x4676de(0x22f)]['display']=_0x4676de(0x2f8),dimensionCards[_0x4676de(0x20c)](_0xb7a13f=>_0xb7a13f['classList']['remove'](_0x4676de(0x237))),selectedDimension=null,currentProtein=0x37,currentCarbs=0x2d,currentCalories=0x1c2,resetSliders(),updateDisplay(),updateMatchesCount(),window[_0x4676de(0x246)]({'top':0x0,'behavior':_0x4676de(0x37a)}),showNotification(_0x4676de(0x2e7));});});function resetSliders(){const _0xbedcb7=_0x56a53d;document[_0xbedcb7(0x323)](_0xbedcb7(0x35b))[_0xbedcb7(0x20c)](_0x2a178c=>{const _0xc543dd=_0xbedcb7;_0x2a178c[_0xc543dd(0x3a4)][_0xc543dd(0x238)](_0xc543dd(0x436));const _0x2afa82=parseInt(_0x2a178c['dataset']['value']),_0x4a3cce=_0x2a178c[_0xc543dd(0x181)](_0xc543dd(0x178));if(_0x4a3cce[_0xc543dd(0x259)]('.macro-name')[_0xc543dd(0x31b)][_0xc543dd(0x2f6)](_0xc543dd(0x148))&&_0x2afa82===0x37||_0x4a3cce['querySelector'](_0xc543dd(0x2a9))[_0xc543dd(0x31b)]['includes'](_0xc543dd(0x418))&&_0x2afa82===0x2d||_0x4a3cce[_0xc543dd(0x259)](_0xc543dd(0x2a9))[_0xc543dd(0x31b)][_0xc543dd(0x2f6)](_0xc543dd(0x23e))&&_0x2afa82===0x1c2){_0x2a178c[_0xc543dd(0x3a4)]['add'](_0xc543dd(0x436));const _0x20b7ef=_0x4a3cce['querySelector'](_0xc543dd(0x291)),_0x36da8a=_0x2a178c[_0xc543dd(0x22f)][_0xc543dd(0x389)];_0x20b7ef[_0xc543dd(0x22f)][_0xc543dd(0x389)]=_0x36da8a;}});}function updateDisplay(){const _0x33de53=_0x56a53d;document['getElementById']('proteinDisplay')[_0x33de53(0x31b)]=currentProtein+'g',document[_0x33de53(0x227)](_0x33de53(0x2f4))[_0x33de53(0x31b)]=currentCarbs+'g',document[_0x33de53(0x227)](_0x33de53(0x23c))[_0x33de53(0x31b)]=currentCalories;const _0x213d46=descriptions[_0x33de53(0x34c)][currentProtein]||'Good\x20protein\x20amount',_0x2f0931=descriptions['carbs'][currentCarbs]||'Good\x20carb\x20amount',_0xac28b8=descriptions[_0x33de53(0x17e)][currentCalories]||_0x33de53(0x3d8);document[_0x33de53(0x227)](_0x33de53(0x368))[_0x33de53(0x31b)]=_0x213d46,document[_0x33de53(0x227)]('carbsDesc')[_0x33de53(0x31b)]=_0x2f0931,document['getElementById'](_0x33de53(0x1a0))['textContent']=_0xac28b8;}function _0x3b3f(){const _0x528ab2=['Extreme\x20muscle\x20growth','time-saving','\x20found','Garnish\x20with\x20fresh\x20cilantro\x20before\x20serving.','Salt\x20to\x20taste','Find\x20Exact\x20Matches\x20clicked:','Great\x20for\x20endurance\x20events','400','https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0e0f8f-8765-6060-bbf2-74ce3ea2ef93/seedream-4.0_Ultra-realistic_food_photography_Balanced_nutrition_bowl_with_grilled_chicken_br-0.jpg','Great\x20for\x20active\x20individuals','2\x20zucchinis,\x20spiralized','https://cdn.leonardo.ai/users/8775ce7e-b386-4cc8-9c16-e96e69b80b98/generations/1f0e0fd7-13f5-68d0-a176-4eeaf6a688b2/seedream-4.0_Premium_recovery_meal_photography_Grilled_chicken_with_white_rice_and_pineapple_-0.jpg','High-protein\x20recipes\x20for\x20muscle\x20growth\x20and\x20recovery','600','.dimension-card','Add\x20spinach\x20and\x20cook\x20for\x202\x20more\x20minutes.','Sprinkle\x20with\x20garlic\x20powder.','quick','2\x20tbsp\x20Greek\x20yogurt\x20marinade','g\x20Protein,\x20','Garnish\x20with\x20fresh\x20parsley.','https://cdn.leonardo.ai/users/f2ff9908-0951-41dd-81d6-d55eaafa558f/generations/1f0e0fb9-702c-6680-b0b6-f6d60487f7dc/seedream-4.0_Premium_low-calorie_food_photography_Cauliflower_rice_bowl_with_grilled_chicken_-0.jpg','Pinch\x20of\x20sea\x20salt','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-overlay\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22view-recipe-btn\x22\x20onclick=\x22window.location.href=\x27how-to-make.html?recipe=','Sprinkle\x20with\x20pumpkin\x20seeds\x20and\x20mint.','1\x20cup\x20cheese,\x20shredded','Season\x20with\x20salt\x20and\x20pepper.','45g\x20protein,\x2070g\x20carbs,\x20550\x20calories.\x20Perfect\x20for\x20endurance\x20training\x20and\x20competitions.','Serve\x20immediately.','Whisk\x20together\x20vinaigrette,\x20lemon\x20juice,\x20and\x20mustard.','20xLGeBW','Drizzle\x20with\x20almond\x20butter\x20and\x20sprinkle\x20cinnamon.','prepTime','nutrient-packed','Onion\x20powder','High\x20in\x20Vitamin\x20C','Maximum\x20energy\x20density','2\x20tbsp\x20tahini\x20dressing','1\x20tsp\x20cinnamon','Heat\x20sesame\x20oil\x20in\x20a\x20wok\x20or\x20large\x20skillet.','Roast\x20vegetables\x20at\x20425°F\x20for\x2015-18\x20minutes\x20until\x20crisp-tender.','45g-protein-75g-carbs-600cal','Drizzle\x20with\x20olive\x20oil.','length','Saves\x20time\x20during\x20the\x20week','Packed\x20with\x20vegetables','35g-protein-30g-carbs-400cal','Chicken\x20&\x20Cauliflower\x20Rice\x20Bowl','30g\x20protein,\x2015g\x20carbs,\x20300\x20calories.\x20Low-carb\x20lettuce\x20wrap\x20tacos.','2\x20eggs','High\x20calorie\x20for\x20energy\x20needs','notification','Top\x20with\x20shredded\x20cheese.','1\x20head\x20cauliflower,\x20riced','Great\x20for\x20muscle\x20gain','Perfect\x20Match\x20Found!','65g\x20protein,\x2070g\x20carbs,\x20600\x20calories.\x20Scientifically-timed\x20post-workout\x20nutrient\x20delivery\x20system.','Drain\x20and\x20mash\x20with\x20Greek\x20yogurt\x20until\x20smooth.','Sesame\x20seeds\x20for\x20topping','Calculator\x20reset','https://cdn.leonardo.ai/users/f2ff9908-0951-41dd-81d6-d55eaafa558f/generations/1f0e0fbb-a78a-6fd0-9c6a-7188c57b22e0/seedream-4.0_Ultra-realistic_grilling_photography_Chicken_and_vegetable_skewers_on_grill_show-0.jpg','Heart-healthy\x20fats','.professional-header','Showing\x20best\x20match\x20for\x20your\x20nutrition\x20goals','Fresh\x20basil\x20for\x20garnish','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-search\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','endurance','matchesCount','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20bottom:\x2020px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x2020px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20#FFFFFF,\x20#F8F9FA);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--text-dark);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2016px\x2024px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20var(--radius-lg);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x20var(--shadow-xl);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x209999;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--border);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-left:\x204px\x20solid\x20','Maximum\x20carbohydrate\x20intake','high-protein','Pour\x20soup\x20mixture\x20over\x20chicken\x20and\x20rice.','carbsDisplay','plant-protein','includes','Perfect\x20for\x20endurance\x20athletes','none','1/4\x20cup\x20black\x20beans','https://cdn.leonardo.ai/users/e1b06db8-0f0c-47c3-97e2-c6def376b328/generations/1f0e0fa8-768e-6610-85ff-6ef91a86644c/seedream-4.0_Premium_food_photography_Nutrient-dense_wild_rice_pilaf_with_grilled_chicken_sau-0.jpg','**Fiber\x20Matrix**:\x2015g\x20fiber\x20from\x20oats/chia\x20ensures\x204-6\x20hour\x20sustained\x20glucose\x20release','recipesGrid','Long-lasting\x20energy','recipeId','Arrange\x20rice,\x20chicken,\x20edamame,\x20carrot,\x20and\x20avocado\x20in\x20a\x20bowl.','280','1\x20cup\x20mixed\x20vegetables','high-energy','3\x20egg\x20whites','Top\x20with\x20lentils,\x20roasted\x20vegetables,\x20and\x20sliced\x20chicken.','1\x20cup\x20cherry\x20tomatoes,\x20halved','Chicken\x20&\x20Quinoa\x20Stuffed\x20Peppers','**Nitrogen\x20Balance**:\x2055g\x20protein\x20maintains\x20positive\x20nitrogen\x20balance\x20on\x201500-1800\x20calorie\x20diets','Roast\x20for\x2020\x20minutes\x20until\x20tender.','Top\x20with\x20chicken\x20strips.','1.5\x20cups\x20chickpeas,\x20roasted','500','muscle-repair','390090QsmyPo','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','45g\x20protein,\x2045g\x20carbs,\x20450\x20calories.\x20Mediterranean-inspired\x20bowl\x20with\x20ancient\x20grains.','Whisk\x20whole\x20eggs,\x20egg\x20whites,\x20and\x20cottage\x20cheese\x20together.','https://cdn.leonardo.ai/users/d695916e-eaa1-463a-8280-aeb9e6a1601b/generations/1f0e0f9a-0945-66c0-96f7-3028323d6d6b/seedream-4.0_Premium_food_photography_Athletic_meal_platter_with_multiple_grilled_chicken_bre-0.jpg','3\x20potatoes,\x20sliced','Steam\x20edamame\x20for\x205\x20minutes.','Time-tested\x20bodybuilding\x20meal','target','Great\x20for\x20summer\x20cooking','2\x20chicken\x20thighs,\x20grilled','Roast\x20mixed\x20vegetables\x20with\x20olive\x20oil.','Top\x20with\x20avocado\x20slices\x20and\x20nuts.','Steam\x20green\x20beans\x20until\x20tender-crisp.','textContent','Great\x20for\x20athletes','Grill\x20asparagus\x20for\x208-10\x20minutes\x20until\x20tender.','2\x20tbsp\x20feta\x20cheese','Professional\x20athlete\x20protein','Garnish\x20with\x20fresh\x20basil.','Perfect\x20for\x20weight\x20gain','2\x20carrots,\x20sliced','querySelectorAll','Make\x20wells\x20in\x20the\x20hash\x20and\x20crack\x20eggs\x20into\x20them.','300','Divide\x20rice,\x20vegetables,\x20and\x20chicken\x20into\x20containers.','low-carb','**Thermic\x20Effect**:\x2030%\x20of\x20protein\x20calories\x20(165\x20calories)\x20burned\x20during\x20digestion\x20versus\x208%\x20for\x20carbs/fats','50g\x20protein,\x2050g\x20carbs,\x20450\x20calories.\x20Optimal\x20ratio\x20for\x20muscle\x20recovery.','appendChild','Combine\x20cucumbers,\x20tomatoes,\x20and\x20red\x20onion\x20in\x20a\x20bowl.','4\x20large\x20eggs','heart-healthy','low-fat','Low\x20calorie\x20for\x20weight\x20loss','score','50g\x20protein,\x2055g\x20carbs,\x20500\x20calories.\x20Hearty\x20baked\x20dish\x20with\x20chicken\x20and\x20potatoes.','1/2\x20tsp\x20cinnamon','Steam\x20broccoli\x20for\x205-7\x20minutes.','**Anabolic\x20Window**:\x2070g\x20high-GI\x20carbs\x20spikes\x20insulin\x203.5x\x20for\x2090\x20minutes,\x20driving\x20nutrients\x20into\x20muscle\x20cells','Garnish\x20with\x20fresh\x20parsley\x20and\x20serve\x20hot.','Professional\x20bodybuilding','div','Green\x20onions\x20for\x20garnish','bodybuilding','1\x20tbsp\x20pumpkin\x20seeds','2\x20tbsp\x20soy\x20sauce','Fresh\x20parsley\x20for\x20garnish','Grilled\x20Chicken\x20&\x20Asparagus','Light\x20protein\x20-\x20snacks\x20or\x20sides','Sesame\x20seeds\x20for\x20garnish','maximum-protein','High\x20in\x20potassium','1\x20bell\x20pepper,\x20diced','Slice\x20chicken\x20and\x20arrange\x20over\x20cauliflower\x20rice.','Add\x20shredded\x20chicken\x20and\x20stir\x20well.','Combine\x20grains,\x20roasted\x20vegetables,\x20and\x20sliced\x20chicken.','check-circle','maximum-energy','<span\x20class=\x22badge\x22>','Fresh\x20chives\x20for\x20garnish','**Hormone\x20Optimization**:\x20Healthy\x20fats\x20from\x20avocado\x20support\x20testosterone\x20production\x20and\x20joint\x20health','Maximum\x20protein\x20intake','protein','1\x20tbsp\x20lemon\x20juice','Drizzle\x20with\x20Greek\x20yogurt\x20sauce\x20and\x20serve.','Season\x20chicken\x20with\x20garlic\x20powder,\x20onion\x20powder,\x20salt,\x20and\x20pepper.','High\x20in\x20healthy\x20fats','Sauté\x20cauliflower\x20rice\x20with\x20bell\x20pepper\x20and\x20zucchini.','Mix\x20Greek\x20yogurt\x20with\x20lime\x20juice.','55g\x20protein,\x2030g\x20carbs,\x20400\x20calories.\x20Maximum\x20muscle\x20preservation\x20during\x20cutting\x20phases.','https://cdn.leonardo.ai/users/8b0c5180-c95f-4cb6-a358-4ed02454d52d/generations/1f0e0fc7-9a80-6400-afe8-70241b55f1d9/seedream-4.0_Premium_casserole_photography_Classic_chicken_and_rice_casserole_with_shredded_c-0.jpg','Chicken\x20&\x20Farro\x20Mediterranean\x20Bowl','Perfect\x20for\x20carb\x20loading','recovery-50g-protein-50g-carbs-450cal','Top\x20with\x20blueberries,\x20banana\x20slices,\x20and\x20chia\x20seeds.','Serve\x20topped\x20with\x20avocado\x20slices\x20and\x20fresh\x20cilantro.','🎯\x20Exact\x20Match','.slider-dot','Add\x20chili\x20flakes\x20if\x20desired.','75g\x20protein,\x2075g\x20carbs,\x20600\x20calories.\x20Maximum\x20protein\x20for\x20serious\x20muscle\x20building.','Add\x20black\x20beans,\x20kidney\x20beans,\x20and\x20chicken\x20broth.','Serve\x20chicken\x20with\x20rice\x20and\x20broccoli.','1/2\x20cup\x20shredded\x20cheese','30g\x20protein,\x2025g\x20carbs,\x20300\x20calories.\x20Cauliflower\x20rice\x20base\x20with\x20grilled\x20chicken.','Serve\x20immediately\x20for\x20maximum\x20nutrient\x20retention.','Portion\x20control','1\x20avocado,\x20sliced','Can\x20be\x20prepared\x20in\x20advance\x20and\x20reheated.','Combine\x20teriyaki\x20sauce,\x20sesame\x20oil,\x20and\x20ginger.','Cook\x20wild\x20rice\x20according\x20to\x20package\x20instructions.','proteinDesc','Garnish\x20with\x20green\x20onions\x20and\x20sesame\x20seeds.','Maximum\x20carbs\x20-\x20intense\x20workouts','summer','https://cdn.leonardo.ai/users/e1b06db8-0f0c-47c3-97e2-c6def376b328/generations/1f0e0fae-d3c8-6e60-9b17-7a3594b712ba/seedream-4.0_Ultra-realistic_breakfast_food_photography_Sweet_potato_hash_with_diced_chicken_-0.jpg','Cook\x20mixed\x20grains\x20according\x20to\x20package\x20instructions.','3\x20chicken\x20breasts,\x20cubed','Chili\x20flakes\x20(optional)','Best\x20recipe\x20match\x20for\x20your\x20macro\x20goals:\x20','1\x20bell\x20pepper,\x20cubed','muscle-preservation','1.5\x20cups\x20sweet\x20potatoes,\x20roasted','Rich\x20in\x20fiber','Combine\x20all\x20components\x20in\x20a\x20bowl.','Stir\x20in\x20spinach\x20until\x20wilted.','🏋️\x20Muscle\x20Building','fas','Spiralize\x20zucchini\x20to\x20create\x20noodles.','smooth','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:\x20center;\x20padding:\x2040px;\x20grid-column:\x201\x20/\x20-1;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-search\x22\x20style=\x22font-size:\x2048px;\x20color:\x20var(--text-light);\x20margin-bottom:\x2020px;\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:\x20var(--text-medium);\x20margin-bottom:\x2010px;\x22>No\x20recipes\x20found</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20var(--text-light);\x22>Try\x20adjusting\x20your\x20macro\x20goals\x20or\x20select\x20a\x20different\x20goal.</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Serve\x20within\x2045\x20minutes\x20post-training\x20for\x20optimal\x20nutrient\x20uptake.','Sprinkle\x20with\x20sesame\x20seeds\x20and\x20cilantro.','fresh','Adjust\x20spice\x20level\x20with\x20additional\x20cayenne\x20if\x20desired.','30g-protein-20g-carbs-280cal','Rich\x20in\x20Vitamin\x20A','1\x20tbsp\x20chia\x20seeds','https://cdn.leonardo.ai/users/e1b06db8-0f0c-47c3-97e2-c6def376b328/generations/1f0e0faa-947d-6bb0-8c01-c3c8f81bb69f/seedream-4.0_Ultra-realistic_Mediterranean_food_photography_Farro_bowl_with_grilled_chicken_c-0.jpg','Garnish\x20with\x20fresh\x20mint.','Chicken\x20&\x20Zucchini\x20Noodles','findExactMatches','Serve\x20hot.','addEventListener','left','Sauté\x20chicken\x20in\x20olive\x20oil\x20until\x20cooked.','Add\x20chicken\x20and\x20cook\x20until\x20browned.','40g\x20protein,\x2035g\x20carbs,\x20400\x20calories.\x20Balanced\x20bowl\x20with\x20roasted\x20sweet\x20potatoes.','muscle','Weekly\x20Meal\x20Prep\x20Special','Maximum\x20protein\x20for\x20muscle\x20synthesis','50g\x20protein,\x2080g\x20carbs,\x20580\x20calories.\x20Glycogen-replenishing\x20meal\x20with\x20sustained\x20energy\x20release.','Maximum\x20muscle\x20building','1\x20tbsp\x20seeds','2\x20tbsp\x20chia\x20seeds','1\x20cup\x20corn','athlete-meal','post-workout','Grill\x20chicken\x20until\x20fully\x20cooked.','Bodybuilder\x27s\x20Chicken\x20&\x20Rice','Maximum\x20calorie\x20meal','Portion\x20into\x20containers\x20for\x20meal\x20prep.','Optional:\x20serve\x20with\x20quinoa\x20or\x20rice.','40g\x20protein,\x2025g\x20carbs,\x20320\x20calories.\x20High-protein\x20salad\x20for\x20effective\x20weight\x20loss.','2\x20cups\x20butternut\x20squash,\x20cubed','Anti-inflammatory\x20spices','60g\x20protein,\x2040g\x20carbs,\x20450\x20calories.\x20Ultimate\x20muscle-building\x20breakfast\x20with\x20high\x20biological\x20value\x20protein.','1/4\x20cup\x20pecans','Light\x20but\x20satisfying','innerHTML','Garlic\x20powder','classList','1/2\x20cup\x20mushrooms,\x20sliced','Add\x20sauce\x20to\x20each\x20container.','recipesDescription','getItem','https://cdn.leonardo.ai/users/d695916e-eaa1-463a-8280-aeb9e6a1601b/generations/1f0e0f9f-962b-66c0-a095-e725427b7abf/seedream-4.0_Ultra-realistic_bodybuilding_food_photography_Maximum_protein_platter_with_four_-0.jpg','Serve\x20chicken\x20with\x20asparagus\x20and\x20lemon\x20slices.','1\x20tsp\x20Italian\x20seasoning','35g-protein-65g-carbs-550cal','toggle','1\x20cup\x20Brussels\x20sprouts,\x20halved','Garnish\x20with\x20fresh\x20chives.','1/2\x20cup\x20corn\x20kernels','Slice\x20grilled\x20chicken\x20into\x20strips.','Sprinkle\x20with\x20thyme\x20and\x20parsley.','\x20cal</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-dumbbell\x22></i>\x20','3\x20chicken\x20breasts,\x20grilled\x20and\x20shredded','Light\x20meal\x20calories','No\x20matches\x20found,\x20showing\x20best\x20match','Recipe\x20saved\x20to\x20favorites!','energy','muscle-building','35g-protein-30g-carbs-350cal','Nutrient-dense\x20vegetables','savedRecipes','1\x20tbsp\x20chili\x20powder','map','Dice\x20grilled\x20chicken\x20breasts\x20into\x20small\x20cubes.','Parmesan\x20cheese\x20(optional)','2\x20tbsp\x20hummus','Serve\x20over\x20brown\x20rice.','\x20Calories','2\x20tbsp\x20sesame\x20ginger\x20dressing','1748304rzHRFF','Perfect\x20recovery\x20meal','Add\x20hot\x20sauce\x20if\x20desired.','Perfectly\x20balanced\x20calories','Sauté\x20sweet\x20potatoes\x20in\x20olive\x20oil\x20until\x20tender.','Combine\x20pasta\x20with\x20sauce.','Stir-fry\x20for\x205-7\x20minutes\x20until\x20vegetables\x20are\x20tender-crisp.','success','vegetable-rich','Fast-digesting\x20carbs\x20for\x20recovery','Preheat\x20oven\x20to\x20400°F\x20(200°C).','Cook\x20quinoa\x20according\x20to\x20package\x20instructions.','lean-mass','selectedBadge','1/4\x20cup\x20chopped\x20almonds','75g\x20protein,\x2060g\x20carbs,\x20520\x20calories.\x20Classic\x20bodybuilding\x20meal\x20for\x20muscle\x20growth.','Cook\x20farro\x20according\x20to\x20package\x20instructions.','1/4\x20cup\x20feta\x20cheese','1\x20can\x20kidney\x20beans,\x20rinsed','Good\x20calorie\x20amount','Drizzle\x20with\x20lemon\x20herb\x20dressing.','1/4\x20cup\x20walnuts,\x20chopped','https://cdn.leonardo.ai/users/8b0c5180-c95f-4cb6-a358-4ed02454d52d/generations/1f0e0fce-57ab-6510-83aa-f33852f7010b/seedream-4.0_Classic_bodybuilding_food_photography_Plain_grilled_chicken_breasts_white_rice_a-0.jpg','1\x20zucchini,\x20sliced','Perfect\x20carb\x20loading','Top\x20with\x20chicken\x20and\x20avocado.','336469ywnqCy','grilled','Slice\x20chicken\x20into\x20thin\x20strips.','Mix\x20protein\x20powder\x20with\x20almond\x20milk\x20until\x20smooth.','Heat\x20marinara\x20sauce\x20with\x20garlic\x20and\x20Italian\x20seasoning.','DOM\x20Loaded\x20-\x20Initializing\x20app','Add\x20diced\x20peppers\x20and\x20sauté\x20for\x202\x20minutes.','exclamation-circle','results-info','Combine\x20shredded\x20chicken,\x20rice,\x20and\x20vegetables.','Maximum\x20carb\x20intake','recipesSection','Mediterranean\x20diet\x20approved','Combine\x20quinoa\x20with\x20black\x20beans\x20and\x20corn.','Simple\x20and\x20effective','\x20exact\x20match','https://cdn.leonardo.ai/users/7c1b7c37-cc74-4cda-acd8-ef7d7220bd43/generations/1f0e1006-9e6a-6c20-84be-c37876989725/seedream-4.0_Ultra-realistic_thermogenic_meal_photography_Spicy_chicken_and_bean_chili_with_a-0.jpg','Bake\x20for\x2030-35\x20minutes\x20until\x20golden.','metabolic-ignite-45g-protein-50g-carbs-450cal','Season\x20with\x20sea\x20salt.','High\x20in\x20vegetables','Grill\x20chicken\x20thighs\x20until\x20fully\x20cooked.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-image\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','Cook\x20brown\x20rice\x20according\x20to\x20package\x20instructions.','50g-protein-55g-carbs-500cal','Drizzle\x20with\x20salsa\x20and\x20Greek\x20yogurt.','setItem','Arrange\x20chicken\x20over\x20roasted\x20vegetable\x20medley.','classic','3\x20chicken\x20breasts,\x20grilled','Add\x20broccoli\x20and\x20bell\x20pepper.','endurance-plus-50g-protein-80g-carbs-580cal','1\x20tbsp\x20sesame\x20oil','55g-protein-45g-carbs-500cal','endurance-45g-protein-70g-carbs-550cal','Add\x20chicken\x20and\x20smoked\x20paprika,\x20cook\x20until\x20chicken\x20is\x20done.','Mash\x20sweet\x20potato\x20with\x20turmeric.','filter','1\x20carrot,\x20julienned','Comforting\x20and\x20satisfying','Moderate\x20low\x20carbs','1\x20can\x20black\x20beans,\x20rinsed','Top\x20with\x20avocado\x20slices\x20and\x20salsa.','4\x20chicken\x20thighs,\x20grilled','<i\x20class=\x22far\x20fa-heart\x22></i>','**Beta-Glucan\x20Rich**:\x20Oats\x20improve\x20cardiovascular\x20efficiency\x20by\x208-12%\x20through\x20cholesterol\x20management','\x22\x20loading=\x22lazy\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-badges\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','2\x20cups\x20asparagus\x20spears','comfort','Slice\x20chicken\x20and\x20arrange\x20over\x20rice\x20mixture.','Slice\x20chicken\x20into\x20strips.','Steam\x20broccoli\x20until\x20tender-crisp.','scrolled','Power-Pump\x20Chicken\x20&\x20Egg\x20Scramble','Athlete\x20protein\x20-\x20intense\x20training','createElement','Add\x20chopped\x20vegetables.','Carbs','Salt\x20and\x20pepper\x20to\x20taste','**Androgen\x20Support**:\x20Cruciferous\x20vegetables\x20contain\x20DIM\x20(diindolylmethane)\x20supporting\x20testosterone\x20ratios','**Glucose\x20Disposal**:\x20Pineapple\x20contains\x20bromelain\x20improving\x20protein\x20digestion\x20efficiency\x20by\x2018%','recovery','2\x20large\x20sweet\x20potatoes,\x20cubed','</span>','Perfect\x20post-training\x20meal','.notification','Comforting\x20and\x20healthy','Drizzle\x20with\x20sauce\x20mixture.','Metabolic\x20Ignite\x20Chicken\x20&\x20Chili\x20Bowl','Add\x20chicken\x20and\x20stir-fry\x20until\x20cooked.','Found\x20','103403BCSqLs','2\x20tbsp\x20light\x20vinaigrette','https://cdn.leonardo.ai/users/f2ff9908-0951-41dd-81d6-d55eaafa558f/generations/1f0e0fb7-571f-60e0-adad-eb97fadbecbf/seedream-4.0_Ultra-realistic_healthy_food_photography_Zucchini_noodles_with_chicken_slices_ch-0.jpg','Fresh\x20dill\x20for\x20garnish','2\x20chicken\x20breasts,\x20grilled\x20and\x20shredded','Chicken\x20&\x20Whole\x20Wheat\x20Pasta','Season\x20chickpeas\x20with\x20smoked\x20paprika\x20and\x20roast\x20until\x20crispy.','https://cdn.leonardo.ai/users/8775ce7e-b386-4cc8-9c16-e96e69b80b98/generations/1f0e0fd4-d82f-60a0-adaa-66a7c63f57e6/seedream-4.0_Ultra-realistic_endurance_food_photography_Performance_bowl_with_grilled_chicken-0.jpg','Great\x20for\x20recovery','.select-btn','1\x20chicken\x20breast,\x20diced','salad','Maximum\x20possible\x20protein','1\x20cup\x20white\x20rice,\x20cooked','Chicken\x20&\x20Lentil\x20Power\x20Bowl','55g\x20protein,\x2045g\x20carbs,\x20500\x20calories.\x20Perfect\x20for\x20weekly\x20meal\x20preparation.','active','Pour\x20in\x20chicken\x20broth\x20and\x20add\x20thyme.','\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','Weight\x20Loss\x20Chicken\x20Salad','1\x20cup\x20steel-cut\x20oats,\x20cooked','40g\x20protein,\x2055g\x20carbs,\x20500\x20calories.\x20Whole\x20wheat\x20pasta\x20with\x20chicken\x20and\x20vegetables.','metabolic','meal-prep','2\x20chicken\x20breasts,\x20cooked\x20and\x20shredded','Chicken\x20&\x20Quinoa\x20Energy\x20Bowl','Extremely\x20high\x20in\x20protein','1/4\x20cup\x20salsa','1\x20onion,\x20sliced','Perfectly\x20balanced','Perfect\x20pre-workout\x20meal','Drizzle\x20dressing\x20over\x20salad.','var(--success)','\x22\x20data-recipe-id=\x22','Brown\x20rice\x20for\x20serving','Add\x20diced\x20chicken\x20and\x20cook\x20until\x20browned.','parse','carbs','Low\x20glycemic\x20index','Marinate\x20chicken\x20in\x20Greek\x20yogurt,\x20lemon\x20juice,\x20and\x20oregano.','animation','toUpperCase','Protein','High\x20carbs\x20-\x20endurance\x20training','2\x20chicken\x20breasts,\x20grilled','Hot\x20sauce\x20(optional)','**Antioxidant\x20Load**:\x205000+\x20ORAC\x20units\x20from\x20blueberries\x20reduces\x20oxidative\x20stress\x20by\x2040%','Let\x20rest\x20for\x205\x20minutes\x20before\x20serving.','badge','55g\x20protein,\x2045g\x20carbs,\x20500\x20calories.\x20High-protein\x20bowl\x20with\x20lentils\x20and\x20vegetables.','nutrient-dense','30g\x20protein,\x2020g\x20carbs,\x20280\x20calories.\x20Simple\x20grilled\x20chicken\x20with\x20fresh\x20asparagus.','2\x20tbsp\x20coconut\x20aminos','1\x20large\x20chicken\x20breast','Perfect\x20match\x20for\x20','1\x20banana,\x20sliced','Perfect\x20for\x20heavy\x20training','complete-nutrition','1/2\x20cucumber,\x20diced','6\x20containers\x20for\x20storage','1\x20cup\x20Greek\x20yogurt\x20sauce','High\x20in\x20hydration\x20from\x20cucumbers','Season\x20chicken\x20with\x20rosemary,\x20salt,\x20and\x20pepper.','Stir\x20in\x20chili\x20powder,\x20cumin,\x20and\x20cayenne\x20pepper.','2\x20tbsp\x20curry\x20paste','Simmer\x20for\x2025-30\x20minutes\x20until\x20thickened.','Cook\x20gently,\x20stirring\x20occasionally\x20until\x20eggs\x20are\x20set.','fat-burning','1\x20tsp\x20oregano','mediterranean','Boil\x20sweet\x20potatoes\x20until\x20fork-tender\x20(15-20\x20minutes).','Weight\x20Gain\x20Recipes','Hydrating\x20and\x20comforting','**80g\x20Complex\x20Carbs**:\x20Provides\x20320g\x20muscle\x20glycogen\x20storage\x20capacity\x20for\x2090+\x20minute\x20training\x20sessions','\x27\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-book-open\x22></i>\x20View\x20Recipe\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22save-recipe\x20','Cook\x20steel-cut\x20oats\x20according\x20to\x20package\x20directions.','keto-friendly','Toss\x20sweet\x20potato\x20with\x20olive\x20oil,\x20paprika,\x20and\x20garlic\x20powder.','450','light','results-info\x20no-matches','1\x20cup\x20cooked\x20farro','Cook\x20rice\x20according\x20to\x20package\x20instructions.','Low\x20carb\x20-\x20weight\x20loss','Bake\x20for\x2020-25\x20minutes\x20until\x20peppers\x20are\x20tender.','Fresh\x20mint\x20for\x20garnish','Rich\x20in\x20nitrates\x20from\x20beets','weight-gain','Very\x20high\x20carbs\x20-\x20athletes','asian-inspired','.macro-slider','Roast\x20sweet\x20potatoes\x20and\x20beets\x20until\x20tender.','Cook\x20lentils\x20until\x20tender.','whole-grain','Great\x20for\x20immune\x20system','1\x20cup\x20roasted\x20vegetables','calories','Garnish\x20with\x20fresh\x20oregano.','1\x20cup\x20Greek\x20yogurt\x20(plain,\x20non-fat)','closest','55g\x20protein,\x2065g\x20carbs,\x20550\x20calories.\x20Classic\x20casserole\x20with\x20chicken\x20and\x20rice.','45g-protein-45g-carbs-450cal','Combine\x20cooked\x20oats\x20with\x20protein-milk\x20mixture.','1\x20tsp\x20Dijon\x20mustard','1\x20tsp\x20smoked\x20paprika','comfort-food','1\x20sweet\x20potato,\x20mashed','Simmer\x20for\x2025\x20minutes\x20until\x20vegetables\x20are\x20tender.','Pour\x20egg\x20mixture\x20into\x20pan,\x20add\x20turmeric\x20and\x20pepper.','fiber-rich','Thread\x20chicken\x20and\x20vegetables\x20onto\x20skewers.','Extreme\x20carbs\x20-\x20competition\x20prep','60g\x20protein,\x2075g\x20carbs,\x20600\x20calories.\x20Maximum\x20calorie\x20bowl\x20for\x20intense\x20training.','**Metabolic\x20Boost**:\x20High\x20protein\x20increases\x20thermogenesis\x20by\x2020-30%\x20for\x203-4\x20hours','className','nutritious','Very\x20high\x20protein\x20-\x20active\x20lifestyle','meal-prep-55g-protein-45g-carbs-500cal','2\x20cups\x20cauliflower\x20rice','1\x20tsp\x20turmeric','muscle-growth','Add\x20chicken\x20to\x20the\x20vegetables.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-','energizing','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22','dataset','complete-carbs','Very\x20low\x20carb\x20-\x20keto\x20diet','Chicken\x20&\x20Brown\x20Rice\x20Buddha\x20Bowl','Energy\x20&\x20Performance\x20Recipes','caloriesDesc','https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0e0f87-0288-63e0-b3af-5a71b844997b/seedream-4.0_Premium_food_photography_Colorful_bell_peppers_stuffed_with_chicken_and_quinoa_m-0.jpg','1\x20scoop\x20vanilla\x20protein\x20powder','Toss\x20asparagus\x20with\x20olive\x20oil\x20and\x20garlic.','Found\x20match:\x20','1\x20lemon,\x20sliced','2\x20cloves\x20garlic,\x20minced','**Inflammation\x20Control**:\x20Gingerol\x20reduces\x20DOMS\x20(delayed\x20onset\x20muscle\x20soreness)\x20by\x2025%','stopPropagation','**Anti-Inflammatory**:\x20Turmeric\x20(curcumin)\x20reduces\x20post-workout\x20inflammation\x20by\x2025-30%','4WGzHdt','75g-protein-75g-carbs-600cal','image','35g\x20protein,\x2030g\x20carbs,\x20400\x20calories.\x20Nutrient-dense\x20wild\x20rice\x20with\x20chicken.','block','Sauté\x20mushrooms\x20in\x20olive\x20oil\x20until\x20golden.','Post-Workout\x20Recovery\x20Meal','Combine\x20farro\x20with\x20tomatoes,\x20cucumber,\x20and\x20olives.','⚖️\x20Weight\x20Loss','1\x20tbsp\x20almond\x20butter','High\x20protein\x20-\x20weight\x20management','45g\x20protein,\x2045g\x20carbs,\x20450\x20calories.\x20Mild\x20curry\x20with\x20butternut\x20squash\x20and\x20chicken.','20g\x20protein,\x2015g\x20carbs,\x20250\x20calories.\x20Light\x20and\x20refreshing\x20salad\x20perfect\x20for\x20summer.','https://cdn.leonardo.ai/users/8775ce7e-b386-4cc8-9c16-e96e69b80b98/generations/1f0e0fd8-f154-6950-8ecd-b3549b9ec545/seedream-4.0_Ultra-realistic_meal_prep_photography_Six_identical_meal_prep_containers_each_co-0.jpg','2\x20chicken\x20breasts,\x20grilled\x20and\x20sliced','45g\x20protein,\x2045g\x20carbs,\x20450\x20calories.\x20Complete\x20meal\x20with\x20all\x20food\x20groups.','Mix\x20Greek\x20yogurt\x20with\x20lemon\x20juice\x20for\x20dressing.','2\x20cups\x20mixed\x20greens','Garnish\x20with\x20fresh\x20herbs.','Balanced\x20carbs\x20-\x20maintenance','Drizzle\x20with\x20sesame\x20ginger\x20dressing.','Sauté\x20for\x203-4\x20minutes\x20until\x20tender.','1\x20tbsp\x20olive\x20oil','High\x20in\x20fiber','1\x20cup\x20spinach,\x20chopped','1/4\x20red\x20onion,\x20thinly\x20sliced','sort','dimension','Good\x20carbs\x20-\x20active\x20lifestyle','Complete\x20nutrition','1/2\x20cup\x20blueberries\x20(fresh\x20or\x20frozen)','Drizzle\x20with\x20additional\x20lemon\x20juice\x20if\x20desired.','https://cdn.leonardo.ai/users/f2ff9908-0951-41dd-81d6-d55eaafa558f/generations/1f0e0fbf-094c-64a0-b5f9-f81e9a39b096/seedream-4.0_Premium_curry_photography_Mild_chicken_curry_with_butternut_squash_chunks_in_coc-0.jpg','65g-protein-60g-carbs-550cal','Serve\x20chicken\x20and\x20pineapple\x20over\x20rice.','click','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Consistent\x20nutrition','2\x20chicken\x20breasts,\x20cubed','title','**Mitochondrial\x20Support**:\x20Cumin\x20increases\x20metabolic\x20enzyme\x20activity\x20by\x2015-20%','2\x20tbsp\x20Greek\x20yogurt\x20sauce','athlete-friendly','25g-protein-25g-carbs-300cal','**Nitric\x20Oxide\x20Support**:\x20Sweet\x20potatoes\x20provide\x20400%\x20RDA\x20vitamin\x20A\x20for\x20endothelial\x20function\x20and\x20blood\x20flow','350','push','cal','\x20fa-heart\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-content\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20class=\x22recipe-title\x22>','Fresh\x20oregano\x20for\x20garnish','Grill\x20skewers\x20for\x2010-12\x20minutes,\x20turning\x20occasionally.','Slice\x20chicken\x20into\x20portions.','475599puFxKP','2\x20chicken\x20breasts,\x20grilled\x20and\x20diced','cutting','Sauté\x20onion\x20until\x20translucent.','40g\x20protein,\x2020g\x20carbs,\x20350\x20calories.\x20Quick\x20low-carb\x20stir\x20fry.','balanced','1\x20cup\x20black\x20beans','power-pump-60g-protein-40g-carbs-450cal','Preheat\x20oven\x20to\x20375°F\x20(190°C).','Rich\x20in\x20antioxidants','Garnish\x20with\x20fresh\x20cilantro.','35g\x20protein,\x2030g\x20carbs,\x20350\x20calories.\x20Bell\x20peppers\x20stuffed\x20with\x20chicken\x20and\x20quinoa.','Add\x20onion\x20and\x20bell\x20pepper,\x20cook\x20until\x20softened.','Seasonings\x20as\x20desired','select-btn','low-calorie','g,\x20Calories=','Top\x20with\x20diced\x20pineapple\x20and\x20chopped\x20walnuts.','4\x20large\x20lettuce\x20leaves','Great\x20for\x20active\x20days','Weight\x20Loss\x20Recipes','Add\x20soy\x20sauce\x20and\x20ginger.','curry','https://cdn.leonardo.ai/users/e1b06db8-0f0c-47c3-97e2-c6def376b328/generations/1f0e0fa6-271d-6b00-9605-c38f8d7a17be/seedream-4.0_Ultra-realistic_Asian_food_photography_Chicken_and_broccoli_stir-fry_in_a_wok_sh-0.jpg','https://cdn.leonardo.ai/users/d695916e-eaa1-463a-8280-aeb9e6a1601b/generations/1f0e0fa1-9200-64e0-b8e8-cea1584ae83a/seedream-4.0_Premium_food_photography_Low-carb_lettuce_wrap_tacos_with_grilled_chicken_slices-0.jpg','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22recipe-meta\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-clock\x22></i>\x20','g\x20protein</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22nutrition-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22nutrition-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-label\x22>Protein:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-value\x22>','**High\x20Leucine\x20Content**:\x205g+\x20leucine\x20from\x20eggs/chicken\x20triggers\x20maximum\x20mTOR\x20pathway\x20activation\x20for\x20muscle\x20growth','Extreme\x20calorie\x20intake','Serve\x20warm.','Cook\x20pasta\x20according\x20to\x20package\x20instructions.','https://cdn.leonardo.ai/users/7c1b7c37-cc74-4cda-acd8-ef7d7220bd43/generations/1f0e1001-ca80-6b70-a734-31f561848584/seedream-4.0_Professional_fitness_meal_photography_Lean_chicken_and_vegetable_platter_featuri-0.jpg','8NReTWj','2258916BrfLip','Energy-dense\x20meal','**Thermogenesis\x20Boost**:\x20Capsaicin\x20from\x20jalapeños\x20increases\x20metabolic\x20rate\x20by\x2050\x20calories/hour\x20for\x203\x20hours','Rich\x20in\x20iron\x20from\x20lentils','Complete\x20protein\x20source','cssText','complex-carbs','Sea\x20salt\x20to\x20taste','60g-protein-75g-carbs-600cal','.save-recipe','520','Complete\x20meal\x20in\x20one\x20dish','complete-meal','forEach','scrollY','https://cdn.leonardo.ai/users/7c1b7c37-cc74-4cda-acd8-ef7d7220bd43/generations/1f0e1003-907f-6dc0-a479-414cc426d89c/seedream-4.0_Premium_recovery_meal_photography_Mashed_sweet_potatoes_with_shredded_chicken_pi-0.jpg','**60g\x20Complete\x20Protein**:\x20Contains\x20all\x209\x20essential\x20amino\x20acids\x20with\x20PDCAAS\x20score\x20of\x201.0\x20for\x20optimal\x20muscle\x20protein\x20synthesis','\x20min\x20prep</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><i\x20class=\x22fas\x20fa-fire\x22></i>\x20','Season\x20with\x20rosemary\x20and\x20thyme.','1\x20cup\x20cooked\x20brown\x20rice','1\x20lemon,\x20juiced','Pour\x20Greek\x20yogurt\x20sauce\x20over\x20everything.','6\x20tbsp\x20sauce\x20of\x20choice','add','**Microbiota\x20Support**:\x2012g\x20insoluble\x20fiber\x20feeds\x20beneficial\x20gut\x20bacteria\x20improving\x20nutrient\x20absorption\x20by\x2015%','Sprinkle\x20with\x20seeds.','1-2\x20jalapeños,\x20minced','Great\x20for\x20meal\x20prep','Gluten-free\x20option','Rich\x20in\x20complex\x20carbs','\x20close\x20match','https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0e0f3e-c9bb-6eb0-8b96-732ea24a75d9/seedream-4.0_Ultra-realistic_food_photography_Grilled_chicken_breast_with_roasted_asparagus_s-0.jpg','Drizzle\x20with\x20olive\x20oil\x20before\x20serving.','Great\x20for\x20endurance','4\x20chicken\x20breasts,\x20grilled','body','Competition\x20prep\x20protein','1/4\x20cup\x20Greek\x20yogurt','35g\x20protein,\x2065g\x20carbs,\x20550\x20calories.\x20Sweet\x20potato\x20hash\x20with\x20chicken\x20for\x20sustained\x20energy.','log','getElementById','Chicken\x20&\x20Vegetable\x20Soup','2\x20cups\x20quinoa,\x20cooked','30g-protein-25g-carbs-300cal','1/4\x20cup\x20Parmesan\x20cheese','1\x20bell\x20pepper,\x20sliced','description','1\x20chicken\x20breast,\x20grilled','style','1/4\x20tsp\x20black\x20pepper','Quick\x20preparation','30g-protein-15g-carbs-300cal','Very\x20high\x20calorie\x20meal','2\x20tbsp\x20almonds,\x20sliced','g,\x20Carbs=','1\x20red\x20onion,\x20quartered','selected','remove','Brush\x20with\x20remaining\x20marinade\x20while\x20grilling.','1\x20tsp\x20Italian\x20herbs','Garnish\x20with\x20green\x20onion\x20and\x20sesame\x20seeds.','caloriesDisplay','Very\x20low\x20in\x20calories','Calories','1\x20green\x20onion,\x20sliced','550','Rice\x20cauliflower\x20in\x20a\x20food\x20processor.','family-friendly','Chicken\x20&\x20Chickpea\x20Protein\x20Feast','1969536jMxEin','recipesTitle','scrollTo','resultsInfo','Serve\x20with\x20lemon\x20wedges\x20on\x20the\x20side.','🎯\x20Best\x20Match','High-calorie\x20recipes\x20for\x20healthy\x20weight\x20gain','Complete\x20amino\x20acid\x20profile','Top\x20with\x20dollop\x20of\x20hummus.','stringify','thermogenic','1\x20cup\x20pineapple,\x20diced','4\x20oz\x20whole\x20wheat\x20pasta','2\x20celery\x20stalks,\x20chopped','splice','1\x20tsp\x20garlic\x20powder','display','abs','Arrange\x20quinoa\x20mixture\x20in\x20bowls.','glycogen-loading','Muscle\x20Building\x20Recipes','querySelector','40g-protein-55g-carbs-500cal','1\x20cup\x20spinach','Arrange\x20mixed\x20greens\x20in\x20a\x20large\x20bowl.','Recovery\x20Pro\x20Chicken\x20&\x20Sweet\x20Potato\x20Mash','scroll','Moderate\x20meal\x20calories','contains','\x20found!</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','1\x20onion,\x20diced','Dinner\x20meal\x20calories','ancient-grains','Slice\x20chicken\x20and\x20avocado.','Perfect\x20for\x20weight\x20management','Grill\x20chicken\x20until\x20fully\x20cooked,\x20then\x20shred.','Grill\x20chicken\x20until\x20cooked\x20through.','weight-loss','Combine\x20rice,\x20mushrooms,\x20pecans,\x20and\x20cranberries.','Roast\x20vegetables\x20with\x20olive\x20oil.','g\x20Carbs,\x20','Light\x20meal\x20protein','1/4\x20cup\x20nuts','1\x20tsp\x20rosemary','Grill\x20chicken\x20until\x20cooked\x20through\x20and\x20slice.','Garnish\x20with\x20cilantro\x20and\x20serve.','Sustained\x20energy\x20release','convenient','45g\x20protein,\x2050g\x20carbs,\x20450\x20calories.\x20Thermogenic\x20meal\x20boosting\x20metabolism\x20by\x2015-20%\x20for\x203\x20hours.','Perfect\x20for\x20cutting','https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0e0f3d-0661-60b0-a40f-8f4cf9f178c4/seedream-4.0_Premium_food_photography_Hearty_chicken_and_vegetable_soup_in_a_rustic_ceramic_b-0.jpg','bodybuilding-75g-protein-60g-carbs-520cal','refreshing','athlete','Olive\x20oil\x20for\x20cooking','5woITsI','3\x20chicken\x20breasts,\x20cooked\x20and\x20shredded','Fresh\x20herbs\x20for\x20garnish','Sauté\x20onion,\x20garlic,\x20and\x20jalapeños\x20until\x20softened.','lean-mass-55g-protein-30g-carbs-400cal','Low\x20calorie\x20-\x20light\x20snack','25g\x20protein,\x2025g\x20carbs,\x20300\x20calories.\x20Comforting\x20soup\x20loaded\x20with\x20vegetables.','Arrange\x20sweet\x20potato,\x20broccoli,\x20and\x20sliced\x20chicken\x20in\x20a\x20bowl.','badges','healthy','High\x20in\x20complex\x20carbs','Layer\x20potatoes,\x20onion,\x20and\x20chicken\x20in\x20baking\x20dish.','2\x20cups\x20cooked\x20brown\x20rice','2\x20chicken\x20breasts,\x20diced','Energy-dense','Very\x20low\x20calorie\x20-\x20snack','Anti-inflammatory\x20ginger','Fresh\x20cilantro\x20for\x20garnish','Place\x20chicken\x20slices\x20in\x20each\x20leaf.','45g\x20protein,\x2075g\x20carbs,\x20600\x20calories.\x20Maximum\x20carbs\x20for\x20intense\x20training\x20days.','Balanced\x20macronutrients','Slice\x20chicken\x20and\x20combine\x20with\x20pineapple.','.slider-handle','1\x20tsp\x20thyme','\x20found</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Balanced\x20meal\x20calories','2\x20large\x20sweet\x20potatoes,\x20peeled\x20and\x20cubed','https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0e0f3a-7972-62a0-8408-424edc2deee7/seedream-4.0_Ultra-realistic_food_photography_Gourmet_chicken_and_cucumber_salad_with_grilled-0.jpg','Grill\x20all\x20chicken\x20breasts\x20until\x20fully\x20cooked.','Add\x20spinach\x20to\x20sauce\x20and\x20cook\x20until\x20wilted.','1\x20tsp\x20ginger,\x20grated','Nutrient-dense','High\x20in\x20protein','Quick\x20and\x20easy','indexOf','1\x20tsp\x20cumin','2\x20tbsp\x20honey\x20mustard\x20dressing','1\x20tbsp\x20sesame\x20seeds','Good\x20protein\x20-\x20balanced\x20meals','Mix\x20cream\x20of\x20mushroom\x20soup\x20with\x20chicken\x20broth.','pre-workout','1\x20onion,\x20chopped','vegetable-packed','performance','\x22\x20alt=\x22','Weight\x20gain\x20meal','.macro-name','DOMContentLoaded','\x20(Exact!)'];_0x3b3f=function(){return _0x528ab2;};return _0x3b3f();}function findExactMatchingRecipes(_0x5d9092,_0x493a52,_0x462b1c){const _0x4e76d8=_0x56a53d;console[_0x4e76d8(0x226)]('Searching\x20recipes\x20for:\x20Protein='+_0x5d9092+_0x4e76d8(0x235)+_0x493a52+_0x4e76d8(0x1ee)+_0x462b1c);const _0x3ac2b8=recipes[_0x4e76d8(0x404)](_0x1acce2=>{const _0x2f00c9=_0x4e76d8,_0x458a9d=parseInt(_0x1acce2[_0x2f00c9(0x34c)]),_0x435eb4=parseInt(_0x1acce2['carbs']),_0x235ad0=parseInt(_0x1acce2[_0x2f00c9(0x17e)]),_0x3e3a26=Math[_0x2f00c9(0x255)](_0x458a9d-_0x5d9092)<=0x5,_0x213533=Math[_0x2f00c9(0x255)](_0x435eb4-_0x493a52)<=0x5,_0x4e5c84=Math[_0x2f00c9(0x255)](_0x235ad0-_0x462b1c)<=0x19;if(_0x3e3a26&&_0x213533&&_0x4e5c84)return console[_0x2f00c9(0x226)](_0x2f00c9(0x1a4)+_0x1acce2[_0x2f00c9(0x1d1)]+'\x20-\x20'+_0x458a9d+'g/'+_0x435eb4+'g/'+_0x235ad0+_0x2f00c9(0x1d9)),!![];return![];});return console[_0x4e76d8(0x226)]('Found\x20'+_0x3ac2b8[_0x4e76d8(0x2d7)]+'\x20matches'),_0x3ac2b8;}function _0x8b14(_0x18e635,_0x23d81e){_0x18e635=_0x18e635-0x138;const _0x3b3fd1=_0x3b3f();let _0x8b14b=_0x3b3fd1[_0x18e635];return _0x8b14b;}function updateMatchesCount(){const _0x217a0c=_0x56a53d,_0x2f8ae9=findExactMatchingRecipes(currentProtein,currentCarbs,currentCalories),_0x494363=_0x2f8ae9['length'];if(_0x494363===0x0)resultsInfo[_0x217a0c(0x190)]=_0x217a0c(0x16e),resultsInfo['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-exclamation-circle\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>No\x20close\x20matches\x20found</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',matchesCount[_0x217a0c(0x31b)]='No\x20close\x20matches\x20found';else{resultsInfo['className']=_0x217a0c(0x3e7);const _0x3983e2=recipes[_0x217a0c(0x404)](_0x37df6d=>parseInt(_0x37df6d[_0x217a0c(0x34c)])===currentProtein&&parseInt(_0x37df6d[_0x217a0c(0x143)])===currentCarbs&&parseInt(_0x37df6d['calories'])===currentCalories);_0x3983e2[_0x217a0c(0x2d7)]>0x0?(resultsInfo[_0x217a0c(0x3a2)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>'+_0x3983e2[_0x217a0c(0x2d7)]+_0x217a0c(0x3ee)+(_0x3983e2[_0x217a0c(0x2d7)]===0x1?'':'es')+_0x217a0c(0x261),matchesCount[_0x217a0c(0x31b)]=_0x3983e2[_0x217a0c(0x2d7)]+_0x217a0c(0x3ee)+(_0x3983e2['length']===0x1?'':'es')+'\x20found!'):(resultsInfo[_0x217a0c(0x3a2)]=_0x217a0c(0x2ed)+_0x494363+_0x217a0c(0x21d)+(_0x494363===0x1?'':'es')+_0x217a0c(0x293),matchesCount[_0x217a0c(0x31b)]=_0x494363+'\x20close\x20match'+(_0x494363===0x1?'':'es')+_0x217a0c(0x2ae));}}function findExactMatches(){const _0x46f173=_0x56a53d;dimensionCards[_0x46f173(0x20c)](_0x2bb003=>_0x2bb003[_0x46f173(0x3a4)][_0x46f173(0x238)](_0x46f173(0x237)));const _0x1f0170=findExactMatchingRecipes(currentProtein,currentCarbs,currentCalories);if(_0x1f0170['length']===0x0){console[_0x46f173(0x226)](_0x46f173(0x3b6));const _0x3d6d47=recipes[_0x46f173(0x3be)](_0x3e358a=>{const _0x5c6d80=_0x46f173,_0x526998=parseInt(_0x3e358a[_0x5c6d80(0x34c)]),_0x28b213=parseInt(_0x3e358a['carbs']),_0x3c317c=parseInt(_0x3e358a[_0x5c6d80(0x17e)]),_0x277cfe=Math['abs'](_0x526998-currentProtein)*0x3+Math['abs'](_0x28b213-currentCarbs)*0x2+Math[_0x5c6d80(0x255)](_0x3c317c-currentCalories);return{..._0x3e358a,'score':_0x277cfe};});_0x3d6d47[_0x46f173(0x1c4)]((_0x87fefc,_0x51386e)=>_0x87fefc[_0x46f173(0x330)]-_0x51386e[_0x46f173(0x330)]);const _0x452b1c=_0x3d6d47[0x0],_0x5a9549={'title':'Best\x20Match\x20Found','description':_0x46f173(0x370)+currentProtein+'g\x20Protein,\x20'+currentCarbs+_0x46f173(0x26c)+currentCalories+'\x20Calories','badge':_0x46f173(0x249)};displayRecipes([_0x452b1c],_0x5a9549),showNotification(_0x46f173(0x2eb));}else{const _0x10186e=recipes[_0x46f173(0x404)](_0x285a7f=>parseInt(_0x285a7f['protein'])===currentProtein&&parseInt(_0x285a7f[_0x46f173(0x143)])===currentCarbs&&parseInt(_0x285a7f['calories'])===currentCalories),_0x139267=_0x10186e['length']>0x0,_0x572a59={'title':_0x139267?_0x46f173(0x2e3):'Close\x20Matches\x20Found','description':_0x139267?_0x46f173(0x154)+currentProtein+_0x46f173(0x2bf)+currentCarbs+'g\x20Carbs,\x20'+currentCalories+_0x46f173(0x3c3):'Close\x20matches\x20for\x20'+currentProtein+_0x46f173(0x2bf)+currentCarbs+_0x46f173(0x26c)+currentCalories+_0x46f173(0x3c3),'badge':_0x139267?_0x46f173(0x35a):'🔍\x20Close\x20Match'};displayRecipes(_0x1f0170,_0x572a59),showNotification(_0x46f173(0x425)+_0x1f0170[_0x46f173(0x2d7)]+'\x20match'+(_0x1f0170['length']===0x1?'':'es')+(_0x139267?_0x46f173(0x2ab):''));}}function showRecipesForDimension(_0x226045){const _0x24aa7c=_0x56a53d,_0x4488fc={'muscle':{'title':_0x24aa7c(0x258),'description':_0x24aa7c(0x2b8),'badge':_0x24aa7c(0x377)},'weight-loss':{'title':_0x24aa7c(0x1f2),'description':'Low-calorie,\x20high-protein\x20recipes\x20for\x20fat\x20loss','badge':_0x24aa7c(0x1b2)},'energy':{'title':_0x24aa7c(0x19f),'description':'High-carb\x20recipes\x20for\x20sustained\x20energy','badge':'⚡\x20Energy\x20&\x20Performance'},'weight-gain':{'title':_0x24aa7c(0x165),'description':_0x24aa7c(0x24a),'badge':'📈\x20Weight\x20Gain'}};let _0x552aeb=[];if(_0x226045===_0x24aa7c(0x38d))_0x552aeb=recipes[_0x24aa7c(0x404)](_0x1624cb=>parseInt(_0x1624cb['protein'])>=0x32),_0x552aeb['sort']((_0x1e0f80,_0xf1d3cf)=>parseInt(_0xf1d3cf[_0x24aa7c(0x34c)])-parseInt(_0x1e0f80['protein']));else{if(_0x226045===_0x24aa7c(0x269))_0x552aeb=recipes['filter'](_0x4da428=>parseInt(_0x4da428[_0x24aa7c(0x17e)])<=0x190),_0x552aeb[_0x24aa7c(0x1c4)]((_0x5664fc,_0x5d7869)=>parseInt(_0x5664fc[_0x24aa7c(0x17e)])-parseInt(_0x5d7869['calories']));else{if(_0x226045==='energy')_0x552aeb=recipes[_0x24aa7c(0x404)](_0xec6538=>parseInt(_0xec6538[_0x24aa7c(0x143)])>=0x32),_0x552aeb['sort']((_0x36875b,_0x1b3df5)=>parseInt(_0x1b3df5[_0x24aa7c(0x143)])-parseInt(_0x36875b[_0x24aa7c(0x143)]));else _0x226045===_0x24aa7c(0x175)&&(_0x552aeb=recipes[_0x24aa7c(0x404)](_0x42d09d=>parseInt(_0x42d09d[_0x24aa7c(0x17e)])>=0x1f4),_0x552aeb[_0x24aa7c(0x1c4)]((_0x6d0f61,_0x2085bc)=>parseInt(_0x2085bc['calories'])-parseInt(_0x6d0f61[_0x24aa7c(0x17e)])));}}displayRecipes(_0x552aeb,_0x4488fc[_0x226045]);}function displayRecipes(_0x280488,_0x218f66){const _0x5ae90f=_0x56a53d;console['log']('Displaying\x20'+_0x280488[_0x5ae90f(0x2d7)]+'\x20recipes'),recipesTitle[_0x5ae90f(0x31b)]=_0x218f66[_0x5ae90f(0x1d1)],recipesDescription['textContent']=_0x218f66[_0x5ae90f(0x22d)],selectedBadge[_0x5ae90f(0x31b)]=_0x218f66[_0x5ae90f(0x14e)],recipesGrid[_0x5ae90f(0x3a2)]='',_0x280488[_0x5ae90f(0x2d7)]===0x0?recipesGrid['innerHTML']=_0x5ae90f(0x37b):_0x280488[_0x5ae90f(0x20c)](_0x1f37da=>{const _0x345b3a=_0x5ae90f,_0x5322da=document[_0x345b3a(0x416)](_0x345b3a(0x337));_0x5322da['className']='recipe-card',_0x5322da[_0x345b3a(0x19b)]['id']=_0x1f37da['id'];const _0x22b662=JSON[_0x345b3a(0x142)](localStorage['getItem'](_0x345b3a(0x3bc))||'[]'),_0x42f2df=_0x22b662[_0x345b3a(0x2f6)](_0x1f37da['id']);let _0x58a96d='';_0x1f37da['badges']&&_0x1f37da[_0x345b3a(0x283)]['length']>0x0?_0x58a96d=_0x1f37da['badges'][_0x345b3a(0x3be)](_0x18e25c=>_0x345b3a(0x348)+_0x18e25c[_0x345b3a(0x147)]()+_0x345b3a(0x41e))['join'](''):_0x58a96d='<span\x20class=\x22badge\x22>RECIPE</span>',_0x5322da[_0x345b3a(0x3a2)]=_0x345b3a(0x3f5)+_0x1f37da[_0x345b3a(0x1ac)]+_0x345b3a(0x2a7)+_0x1f37da[_0x345b3a(0x1d1)]+_0x345b3a(0x40d)+_0x58a96d+_0x345b3a(0x2c3)+_0x1f37da['id']+_0x345b3a(0x168)+(_0x42f2df?_0x345b3a(0x436):'')+_0x345b3a(0x13f)+_0x1f37da['id']+_0x345b3a(0x19a)+(_0x42f2df?_0x345b3a(0x378):'far')+_0x345b3a(0x1da)+_0x1f37da[_0x345b3a(0x1d1)]+'</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22recipe-description\x22>'+_0x1f37da[_0x345b3a(0x22d)]+_0x345b3a(0x1f7)+_0x1f37da[_0x345b3a(0x2cc)]+_0x345b3a(0x210)+_0x1f37da['calories']+_0x345b3a(0x3b3)+_0x1f37da['protein']+_0x345b3a(0x1f8)+_0x1f37da[_0x345b3a(0x34c)]+'g</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22nutrition-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-label\x22>Carbs:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-value\x22>'+_0x1f37da[_0x345b3a(0x143)]+'g</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22nutrition-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-label\x22>Calories:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22nutrition-value\x22>'+_0x1f37da[_0x345b3a(0x17e)]+_0x345b3a(0x1ce),recipesGrid['appendChild'](_0x5322da);}),recipesSection[_0x5ae90f(0x22f)][_0x5ae90f(0x254)]=_0x5ae90f(0x1ae),recipesSection['scrollIntoView']({'behavior':_0x5ae90f(0x37a)}),document['querySelectorAll'](_0x5ae90f(0x208))[_0x5ae90f(0x20c)](_0x8ce70b=>{const _0x4f2b19=_0x5ae90f;_0x8ce70b['addEventListener'](_0x4f2b19(0x1cd),function(_0xd5ba04){const _0x348f24=_0x4f2b19;_0xd5ba04[_0x348f24(0x1a8)]();const _0x3ab596=this[_0x348f24(0x19b)][_0x348f24(0x2fe)];this[_0x348f24(0x3a4)][_0x348f24(0x3ad)]('active');this[_0x348f24(0x3a4)][_0x348f24(0x260)](_0x348f24(0x436))?(this[_0x348f24(0x3a2)]='<i\x20class=\x22fas\x20fa-heart\x22></i>',showNotification(_0x348f24(0x3b7))):(this[_0x348f24(0x3a2)]=_0x348f24(0x40b),showNotification('Recipe\x20removed\x20from\x20favorites'));const _0x56acbb=JSON[_0x348f24(0x142)](localStorage[_0x348f24(0x3a8)](_0x348f24(0x3bc))||'[]');if(this['classList'][_0x348f24(0x260)](_0x348f24(0x436)))!_0x56acbb['includes'](_0x3ab596)&&_0x56acbb[_0x348f24(0x1d8)](_0x3ab596);else{const _0x38899c=_0x56acbb[_0x348f24(0x29d)](_0x3ab596);_0x38899c>-0x1&&_0x56acbb[_0x348f24(0x252)](_0x38899c,0x1);}localStorage[_0x348f24(0x3f9)](_0x348f24(0x3bc),JSON[_0x348f24(0x24d)](_0x56acbb));});});}function showNotification(_0x1ad627,_0x38105e=_0x56a53d(0x3cc)){const _0xe2307d=_0x56a53d,_0x7c59cf=document[_0xe2307d(0x259)](_0xe2307d(0x420));if(_0x7c59cf)_0x7c59cf[_0xe2307d(0x238)]();const _0x12d23f=document['createElement'](_0xe2307d(0x337));_0x12d23f[_0xe2307d(0x190)]=_0xe2307d(0x2df),_0x12d23f[_0xe2307d(0x3a2)]=_0xe2307d(0x198)+(_0x38105e===_0xe2307d(0x3cc)?_0xe2307d(0x346):_0xe2307d(0x3e6))+_0xe2307d(0x438)+_0x1ad627+_0xe2307d(0x30e),_0x12d23f[_0xe2307d(0x22f)][_0xe2307d(0x204)]=_0xe2307d(0x2f0)+(_0x38105e===_0xe2307d(0x3cc)?_0xe2307d(0x13e):'var(--primary)')+';\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20slideIn\x200.3s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',document[_0xe2307d(0x222)][_0xe2307d(0x32a)](_0x12d23f),setTimeout(()=>{const _0x4576dc=_0xe2307d;_0x12d23f[_0x4576dc(0x22f)][_0x4576dc(0x146)]='slideOut\x200.3s\x20ease',setTimeout(()=>_0x12d23f[_0x4576dc(0x238)](),0x12c);},0xbb8);}
+   </script>
+</body>
+</html>
