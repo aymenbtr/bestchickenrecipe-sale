@@ -1778,9 +1778,9 @@
 </style>
 </head>
 <body>
-        <section class="ad-container top-banner-ad">
+     <section class="ad-container top-banner-ad">
         <div class="container">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block"
@@ -1793,7 +1793,7 @@
 </script>
         </div>
     </section>
-<!-- Professional Header -->
+   <!-- Professional Header -->
 <header class="professional-header">
     <div class="container">
         <div class="header-content">
@@ -1870,10 +1870,46 @@
             </div>
         </div>
     </section>
-     <!-- Ad Container 3: Bottom Banner -->
+ <!-- Ad Container 2: Middle Rectangle -->
+    <section class="ad-container rectangle-ad">
+        <div class="container">
+         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+     crossorigin="anonymous"></script>
+<!-- another add -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2743935903829065"
+     data-ad-slot="3695944602"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Join Our Cooking Community</h2>
+                    <p>Get weekly recipes, cooking tips, and exclusive content delivered to your inbox.</p>
+                </div>
+                <div class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter your email" aria-label="Email for newsletter subscription">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Container 3: Bottom Banner -->
     <section class="ad-container bottom-banner-ad">
         <div class="container">
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2743935903829065"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block"
@@ -1917,6 +1953,18 @@
         </div>
     </div>
 </footer>   
+
+    <!-- Floating Ad -->
+    <div class="floating-ad-container" id="floatingAd">
+        <div class="floating-ad-content">
+            <div class="ad-placeholder small">
+                <i class="fas fa-ad"></i>
+                <h4>Google Ad Space</h4>
+                <p>Floating Ad</p>
+            </div>
+            <span class="close-ad" onclick="closeFloatingAd()" role="button" tabindex="0" aria-label="Close ad">×</span>
+        </div>
+    </div>
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop" role="button" tabindex="0" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
@@ -1965,24 +2013,47 @@ function loadFavoriteRecipes() {
         return;
     }
     
-    // Get favorite IDs
+    // Get favorite IDs from BOTH sources
     const favoritesKey = 'bestchickenrecipes_favorites_v2';
     const savedFavorites = localStorage.getItem(favoritesKey);
     const favoriteIds = savedFavorites ? JSON.parse(savedFavorites) : [];
     
-    console.log(`📋 Found ${favoriteIds.length} favorite IDs:`, favoriteIds);
+    console.log(`📋 Found ${favoriteIds.length} favorite IDs from v2:`, favoriteIds);
     
-    // Get all recipes from localStorage
-    const savedRecipes = localStorage.getItem('bestchickenrecipes_recipes');
+    // Get all recipes from BOTH sources
+    const athleteRecipes = localStorage.getItem('bestchickenrecipes_recipes');
+    const indexRecipes = localStorage.getItem('bestchickenrecipes_recipes_index');
     
-    if (!savedRecipes) {
+    let allRecipes = [];
+    
+    // Combine recipes from both sources
+    if (athleteRecipes) {
+        const athleteRecipesArray = JSON.parse(athleteRecipes);
+        console.log(`📋 Loaded ${athleteRecipesArray.length} athlete recipes`);
+        allRecipes = allRecipes.concat(athleteRecipesArray);
+    }
+    
+    if (indexRecipes) {
+        const indexRecipesArray = JSON.parse(indexRecipes);
+        console.log(`📋 Loaded ${indexRecipesArray.length} index recipes`);
+        allRecipes = allRecipes.concat(indexRecipesArray);
+    }
+    
+    // Remove duplicates based on ID
+    const uniqueRecipes = allRecipes.reduce((acc, recipe) => {
+        if (!acc.find(r => r.id === recipe.id)) {
+            acc.push(recipe);
+        }
+        return acc;
+    }, []);
+    
+    console.log(`📋 Total unique recipes: ${uniqueRecipes.length}`);
+    
+    if (uniqueRecipes.length === 0) {
         console.error('❌ No recipes found in localStorage!');
         showEmptyState('No recipes data found. Please visit the home page first.');
         return;
     }
-    
-    const allRecipes = JSON.parse(savedRecipes);
-    console.log(`📋 Loaded ${allRecipes.length} total recipes from localStorage`);
     
     if (favoriteIds.length === 0) {
         console.log('ℹ️ No favorites selected yet');
@@ -1991,7 +2062,7 @@ function loadFavoriteRecipes() {
     }
     
     // Filter recipes by favorite IDs
-    const favoriteRecipes = allRecipes.filter(recipe => 
+    const favoriteRecipes = uniqueRecipes.filter(recipe => 
         favoriteIds.includes(recipe.id.toString())
     );
     
@@ -2004,7 +2075,6 @@ function loadFavoriteRecipes() {
     
     displayFavoriteRecipes(favoriteRecipes);
 }
-
     function getAllRecipesFromIndexPage() {
         // Try to get recipes from localStorage first (if they were saved)
         const savedRecipes = localStorage.getItem('bestchickenrecipes_recipes');
@@ -2186,10 +2256,124 @@ function removeFromFavorites(recipeId, element) {
 }
 
 // Navigate to recipe
-function navigateToRecipe(recipeId) {
-    window.location.href = `how-to-make.html#recipe-${recipeId}`;
+// Replace your navigateToRecipe function with this:
+function navigateToRecipe(recipeId, recipeData) {
+    // Check if this is an athlete recipe (has protein, carbs, etc.)
+    const isAthleteRecipe = recipeData.protein || recipeData.carbs || recipeData.fat;
+    
+    if (isAthleteRecipe) {
+        // For athlete recipes, use the query parameter format
+        window.location.href = `how-to-make.html?recipe=${recipeId}`;
+    } else {
+        // For regular recipes, use the hash format
+        window.location.href = `how-to-make.html#recipe-${recipeId}`;
+    }
 }
 
+// Update your createRecipeCard function to pass recipe data:
+function createRecipeCard(recipe, index) {
+    const card = document.createElement('div');
+    card.className = 'recipe-card';
+    card.dataset.id = recipe.id;
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'all 0.4s ease';
+    
+    // Get ratings
+    const recipeRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_recipeRatings') || '{}');
+    const recipeRating = recipeRatings[recipe.id]?.average || 0;
+    const userRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_userRatings') || '{}');
+    const userRating = userRatings[recipe.id];
+    
+    // Generate badges
+    const badges = recipe.categories ? recipe.categories.map(category => {
+        const categoryInfo = categories.find(c => c.id === category);
+        if (categoryInfo) {
+            return `<span class="badge ${category}" style="background-color: ${categoryInfo.color};">${categoryInfo.name}</span>`;
+        }
+        return '';
+    }).filter(Boolean).join('') : '';
+    
+    // Fix time display - check both regular and athlete recipe formats
+    let timeDisplay = recipe.time;
+    if (!timeDisplay && (recipe.prepTime || recipe.cookTime)) {
+        // This is an athlete recipe - combine prep and cook time
+        const prepTime = parseInt(recipe.prepTime) || 0;
+        const cookTime = parseInt(recipe.cookTime) || 0;
+        const totalTime = prepTime + cookTime;
+        timeDisplay = `${totalTime} min`;
+    } else if (!timeDisplay) {
+        timeDisplay = 'N/A';
+    }
+    
+    // Fix calories display for athlete recipes
+    let caloriesDisplay = recipe.calories;
+    if (!caloriesDisplay && recipe.calories === undefined) {
+        caloriesDisplay = recipe.calories || 'N/A';
+    }
+    
+    card.innerHTML = `
+        <div class="recipe-image">
+            <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+            <div class="recipe-overlay">
+                <button class="view-recipe-btn" onclick="navigateToRecipe('${recipe.id}', ${JSON.stringify(recipe).replace(/'/g, "\\'")})">
+                    <i class="fas fa-book-open"></i> View Recipe
+                </button>
+            </div>
+            ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
+            <button class="save-recipe active" onclick="removeFromFavorites('${recipe.id}', this)">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+        <div class="recipe-content">
+            <h3 class="recipe-title">${recipe.title}</h3>
+            <p class="recipe-description">${recipe.description}</p>
+            <div class="recipe-meta">
+                <span><i class="fas fa-clock"></i> ${timeDisplay}</span>
+                <span><i class="fas fa-fire"></i> ${caloriesDisplay}</span>
+                ${recipe.protein ? `<span><i class="fas fa-dumbbell"></i> ${recipe.protein}g protein</span>` : ''}
+                <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
+            </div>
+            ${userRating ? `
+                <div class="user-has-rated" style="margin-top: 10px; color: #4CAF50; font-size: 0.9rem;">
+                    <i class="fas fa-check-circle"></i> You rated this ${userRating}/5
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    return card;
+}
+
+// Update the event listener for existing view recipe buttons
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.view-recipe-btn')) {
+        const card = e.target.closest('.recipe-card');
+        const recipeId = card.dataset.id;
+        
+        // Get recipe data from the card
+        const title = card.querySelector('.recipe-title').textContent;
+        const description = card.querySelector('.recipe-description').textContent;
+        const timeElement = card.querySelector('[class*="fa-clock"]')?.parentElement;
+        const timeText = timeElement?.textContent.replace('⏱️', '').trim() || '';
+        const caloriesElement = card.querySelector('[class*="fa-fire"]')?.parentElement;
+        const caloriesText = caloriesElement?.textContent.replace('🔥', '').trim() || '';
+        const proteinElement = card.querySelector('[class*="fa-dumbbell"]')?.parentElement;
+        const proteinText = proteinElement?.textContent.replace('💪', '').replace('g protein', '').trim() || '';
+        
+        // Create recipe data object
+        const recipeData = {
+            id: recipeId,
+            title: title,
+            description: description,
+            time: timeText,
+            calories: caloriesText,
+            protein: proteinText || undefined
+        };
+        
+        navigateToRecipe(recipeId, recipeData);
+    }
+});
 // Notification system
 function showNotification(message, type = 'info') {
     const existingNotification = document.querySelector('.import-notification');
@@ -2297,4 +2481,3 @@ function initializeScrollEvents() {
 </script>
 </body>
 </html>
-
