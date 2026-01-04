@@ -1972,469 +1972,470 @@
 
 <script>
     const favoritesGrid = document.getElementById('favoritesGrid');
-const themeToggle = document.getElementById('themeToggle');
-const backToTop = document.getElementById('backToTop');
+    const themeToggle = document.getElementById('themeToggle');
+    const backToTop = document.getElementById('backToTop');
 
-// Categories definition (same as index.html)
-const categories = [
-    { id: 'baked', name: 'Baked', icon: 'fas fa-oven', color: '#E65100' },
-    { id: 'fried', name: 'Fried', icon: 'fas fa-temperature-high', color: '#FF9800' },
-    { id: 'grilled', name: 'Grilled', icon: 'fas fa-fire', color: '#F57C00' },
-    { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart', color: '#4CAF50' },
-    { id: 'cheesy', name: 'Cheesy', icon: 'fas fa-cheese', color: '#FFC107' },
-    { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot', color: '#D32F2F' },
-    { id: 'traditional', name: 'Traditional', icon: 'fas fa-home', color: '#795548' },
-    { id: 'quick', name: 'Quick', icon: 'fas fa-bolt', color: '#2196F3' },
-    { id: 'halal', name: 'Halal', icon: 'fas fa-star-and-crescent', color: '#009688' },
-    { id: 'savory', name: 'Savory', icon: 'fas fa-utensils', color: '#7B1FA2' },
-    { id: 'comfort', name: 'Comfort Food', icon: 'fas fa-couch', color: '#5D4037' },
-    { id: 'gourmet', name: 'Gourmet', icon: 'fas fa-crown', color: '#FFD700' },
-    { id: 'italian', name: 'Italian', icon: 'fas fa-pizza-slice', color: '#E53935' },
-    { id: 'mexican', name: 'Mexican', icon: 'fas fa-pepper', color: '#43A047' },
-    { id: 'asian', name: 'Asian', icon: 'fas fa-utensil-spoon', color: '#1E88E5' },
-    { id: 'middle-eastern', name: 'Middle Eastern', icon: 'fas fa-mosque', color: '#8E24AA' }
-];
+    // Categories definition (same as index.html)
+    const categories = [
+        { id: 'baked', name: 'Baked', icon: 'fas fa-oven', color: '#E65100' },
+        { id: 'fried', name: 'Fried', icon: 'fas fa-temperature-high', color: '#FF9800' },
+        { id: 'grilled', name: 'Grilled', icon: 'fas fa-fire', color: '#F57C00' },
+        { id: 'healthy', name: 'Healthy', icon: 'fas fa-heart', color: '#4CAF50' },
+        { id: 'cheesy', name: 'Cheesy', icon: 'fas fa-cheese', color: '#FFC107' },
+        { id: 'spicy', name: 'Spicy', icon: 'fas fa-pepper-hot', color: '#D32F2F' },
+        { id: 'traditional', name: 'Traditional', icon: 'fas fa-home', color: '#795548' },
+        { id: 'quick', name: 'Quick', icon: 'fas fa-bolt', color: '#2196F3' },
+        { id: 'halal', name: 'Halal', icon: 'fas fa-star-and-crescent', color: '#009688' },
+        { id: 'savory', name: 'Savory', icon: 'fas fa-utensils', color: '#7B1FA2' },
+        { id: 'comfort', name: 'Comfort Food', icon: 'fas fa-couch', color: '#5D4037' },
+        { id: 'gourmet', name: 'Gourmet', icon: 'fas fa-crown', color: '#FFD700' },
+        { id: 'italian', name: 'Italian', icon: 'fas fa-pizza-slice', color: '#E53935' },
+        { id: 'mexican', name: 'Mexican', icon: 'fas fa-pepper', color: '#43A047' },
+        { id: 'asian', name: 'Asian', icon: 'fas fa-utensil-spoon', color: '#1E88E5' },
+        { id: 'middle-eastern', name: 'Middle Eastern', icon: 'fas fa-mosque', color: '#8E24AA' },
+        { id: 'secret', name: 'Secret Recipes', icon: 'fas fa-lock', color: '#9C27B0' }
+    ];
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔄 Initializing Favorites page...');
-    
-    loadFavoriteRecipes();
-    initializeThemeToggle();
-    initializeScrollEvents();
-    
-    console.log('✅ Favorites page initialized!');
-});
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🔄 Initializing Favorites page...');
+        
+        loadFavoriteRecipes();
+        initializeThemeToggle();
+        initializeScrollEvents();
+        addSecretStylesToFavorites(); // Add secret styles
+        
+        console.log('✅ Favorites page initialized!');
+    });
 
-// Load favorite recipes
-function loadFavoriteRecipes() {
-    if (!favoritesGrid) {
-        console.error('❌ Favorites grid not found!');
-        return;
-    }
-    
-    // Get favorite IDs from BOTH sources
-    const favoritesKey = 'bestchickenrecipes_favorites_v2';
-    const savedFavorites = localStorage.getItem(favoritesKey);
-    const favoriteIds = savedFavorites ? JSON.parse(savedFavorites) : [];
-    
-    console.log(`📋 Found ${favoriteIds.length} favorite IDs from v2:`, favoriteIds);
-    
-    // Get all recipes from BOTH sources
-    const athleteRecipes = localStorage.getItem('bestchickenrecipes_recipes');
-    const indexRecipes = localStorage.getItem('bestchickenrecipes_recipes_index');
-    
-    let allRecipes = [];
-    
-    // Combine recipes from both sources
-    if (athleteRecipes) {
-        const athleteRecipesArray = JSON.parse(athleteRecipes);
-        console.log(`📋 Loaded ${athleteRecipesArray.length} athlete recipes`);
-        allRecipes = allRecipes.concat(athleteRecipesArray);
-    }
-    
-    if (indexRecipes) {
-        const indexRecipesArray = JSON.parse(indexRecipes);
-        console.log(`📋 Loaded ${indexRecipesArray.length} index recipes`);
-        allRecipes = allRecipes.concat(indexRecipesArray);
-    }
-    
-    // Remove duplicates based on ID
-    const uniqueRecipes = allRecipes.reduce((acc, recipe) => {
-        if (!acc.find(r => r.id === recipe.id)) {
-            acc.push(recipe);
-        }
-        return acc;
-    }, []);
-    
-    console.log(`📋 Total unique recipes: ${uniqueRecipes.length}`);
-    
-    if (uniqueRecipes.length === 0) {
-        console.error('❌ No recipes found in localStorage!');
-        showEmptyState('No recipes data found. Please visit the home page first.');
-        return;
-    }
-    
-    if (favoriteIds.length === 0) {
-        console.log('ℹ️ No favorites selected yet');
-        showEmptyState();
-        return;
-    }
-    
-    // Filter recipes by favorite IDs
-    const favoriteRecipes = uniqueRecipes.filter(recipe => 
-        favoriteIds.includes(recipe.id.toString())
-    );
-    
-    console.log(`✅ Found ${favoriteRecipes.length} favorite recipes to display`);
-    
-    if (favoriteRecipes.length === 0) {
-        showEmptyState('Your favorite recipes are no longer available.');
-        return;
-    }
-    
-    displayFavoriteRecipes(favoriteRecipes);
-}
-    function getAllRecipesFromIndexPage() {
-        // Try to get recipes from localStorage first (if they were saved)
-        const savedRecipes = localStorage.getItem('bestchickenrecipes_recipes');
-        if (savedRecipes) {
-            return JSON.parse(savedRecipes);
+    // ===== LOAD FAVORITE RECIPES =====
+    function loadFavoriteRecipes() {
+        if (!favoritesGrid) {
+            console.error('❌ Favorites grid not found!');
+            return;
         }
         
-        // Otherwise, create recipes from the structure in index.html
-        // This is a fallback - you should save recipes to localStorage in index.html
-        const recipes = [];
+        // Get favorite IDs from BOTH sources
+        const favoritesKey = 'bestchickenrecipes_favorites_v2';
+        const savedFavorites = localStorage.getItem(favoritesKey);
+        const favoriteIds = savedFavorites ? JSON.parse(savedFavorites) : [];
         
-        // Try to get from sessionStorage or create sample data
-        const recipeData = [
-            {
-                id: '301',
-                title: 'Chicken Makhani Lasagna',
-                description: 'Layers of lasagna noodles with butter chicken sauce, ricotta, and mozzarella.',
-                image: 'https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc18c-6724-69f0-8dbb-e933c5aa24b2/seedream-4.0_Food_photography_golden-brown_lasagna_with_visible_layers_of_lasagna_noodles_cre-0.jpg',
-                time: '75 min',
-                calories: '520 cal',
-                categories: ['baked', 'cheesy', 'halal']
-            },
-            // Add more recipe data here based on your index.html
-        ];
+        console.log(`📋 Found ${favoriteIds.length} favorite IDs from v2:`, favoriteIds);
         
-        return recipeData;
-    }
-
-    function extractRecipesFromMainPage(favoriteIds) {
-        // This function tries to get recipes by simulating the main page's recipe extraction
-        // You should ideally save the recipes to localStorage in your main page
+        // Get all recipes from BOTH sources
+        const athleteRecipes = localStorage.getItem('bestchickenrecipes_recipes');
+        const indexRecipes = localStorage.getItem('bestchickenrecipes_recipes_index');
         
-        console.log('Extracting recipes from main page data...');
+        let allRecipes = [];
         
-        // Try to get recipe data from a session variable or create it manually
-        const recipes = [];
+        // Combine recipes from both sources
+        if (athleteRecipes) {
+            const athleteRecipesArray = JSON.parse(athleteRecipes);
+            console.log(`📋 Loaded ${athleteRecipesArray.length} athlete recipes`);
+            allRecipes = allRecipes.concat(athleteRecipesArray);
+        }
         
-        // Create recipes based on your main page structure
-        // You need to copy the recipe data from your index.html here
-        // This is a temporary solution - better to save recipes in localStorage
+        if (indexRecipes) {
+            const indexRecipesArray = JSON.parse(indexRecipes);
+            console.log(`📋 Loaded ${indexRecipesArray.length} index recipes`);
+            allRecipes = allRecipes.concat(indexRecipesArray);
+        }
         
-        const manualRecipes = [
-            {
-                id: '301',
-                title: 'Chicken Makhani Lasagna',
-                description: 'Layers of lasagna noodles with butter chicken sauce, ricotta, and mozzarella, baked to golden perfection.',
-                image: 'https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc18c-6724-69f0-8dbb-e933c5aa24b2/seedream-4.0_Food_photography_golden-brown_lasagna_with_visible_layers_of_lasagna_noodles_cre-0.jpg',
-                time: '75 min',
-                calories: '520 cal',
-                categories: ['baked', 'cheesy', 'halal']
-            },
-            {
-                id: '302',
-                title: 'Arabic 7-Spice Fried Chicken',
-                description: 'Crispy chicken marinated in baharat spices, sumac, and lemon, double-fried for extra crunch.',
-                image: 'https://cdn.leonardo.ai/users/e25cf326-393c-4205-b9e7-d3b78bd56dab/generations/1f0dc18e-b1e6-6950-acd6-a1cf599d8bbd/seedream-4.0_Professional_food_photography_crispy_golden-brown_fried_chicken_pieces_heavily_s-0.jpg',
-                time: '50 min',
-                calories: '480 cal',
-                categories: ['fried', 'spicy', 'halal']
-            },
-            // Add more recipes here based on your index.html
-        ];
+        // Remove duplicates based on ID
+        const uniqueRecipes = allRecipes.reduce((acc, recipe) => {
+            if (!acc.find(r => r.id === recipe.id)) {
+                acc.push(recipe);
+            }
+            return acc;
+        }, []);
         
-        // Filter by favorite IDs
-        const favoriteRecipes = manualRecipes.filter(recipe => 
+        console.log(`📋 Total unique recipes: ${uniqueRecipes.length}`);
+        
+        if (uniqueRecipes.length === 0) {
+            console.error('❌ No recipes found in localStorage!');
+            showEmptyState('No recipes data found. Please visit the home page first.');
+            return;
+        }
+        
+        if (favoriteIds.length === 0) {
+            console.log('ℹ️ No favorites selected yet');
+            showEmptyState();
+            return;
+        }
+        
+        // Filter recipes by favorite IDs
+        const favoriteRecipes = uniqueRecipes.filter(recipe => 
             favoriteIds.includes(recipe.id.toString())
         );
+        
+        console.log(`✅ Found ${favoriteRecipes.length} favorite recipes to display`);
+        
+        if (favoriteRecipes.length === 0) {
+            showEmptyState('Your favorite recipes are no longer available.');
+            return;
+        }
         
         displayFavoriteRecipes(favoriteRecipes);
     }
 
-   function displayFavoriteRecipes(favoriteRecipes) {
-    favoritesGrid.innerHTML = '';
-    
-    favoriteRecipes.forEach((recipe, index) => {
-        const recipeCard = createRecipeCard(recipe, index);
-        favoritesGrid.appendChild(recipeCard);
+    // ===== DISPLAY FAVORITE RECIPES =====
+    function displayFavoriteRecipes(favoriteRecipes) {
+        favoritesGrid.innerHTML = '';
         
-        setTimeout(() => {
-            recipeCard.style.opacity = '1';
-            recipeCard.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-}
-    // Create recipe card for favorites
+        favoriteRecipes.forEach((recipe, index) => {
+            const recipeCard = createRecipeCard(recipe, index);
+            favoritesGrid.appendChild(recipeCard);
+            
+            // Add secret recipe class if needed
+            const isSecretRecipe = recipe.categories && 
+                                 (recipe.categories.includes('secret') || 
+                                  recipe.categories.some(cat => cat && cat.toLowerCase().includes('secret')));
+            
+            if (isSecretRecipe) {
+                recipeCard.classList.add('secret-recipe-card');
+            }
+            
+            setTimeout(() => {
+                recipeCard.style.opacity = '1';
+                recipeCard.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    }
+
+    // ===== CREATE RECIPE CARD =====
     function createRecipeCard(recipe, index) {
-    const card = document.createElement('div');
-    card.className = 'recipe-card';
-    card.dataset.id = recipe.id;
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'all 0.4s ease';
-    
-    // Get ratings
-    const recipeRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_recipeRatings') || '{}');
-    const recipeRating = recipeRatings[recipe.id]?.average || 0;
-    const userRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_userRatings') || '{}');
-    const userRating = userRatings[recipe.id];
-    
-    // Generate badges
-    const badges = recipe.categories ? recipe.categories.map(category => {
-        const categoryInfo = categories.find(c => c.id === category);
-        if (categoryInfo) {
-            return `<span class="badge ${category}" style="background-color: ${categoryInfo.color};">${categoryInfo.name}</span>`;
-        }
-        return '';
-    }).filter(Boolean).join('') : '';
-    
-    card.innerHTML = `
-        <div class="recipe-image">
-            <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-            <div class="recipe-overlay">
-                <button class="view-recipe-btn" onclick="navigateToRecipe('${recipe.id}')">
-                    <i class="fas fa-book-open"></i> View Recipe
-                </button>
-            </div>
-            ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
-            <button class="save-recipe active" onclick="removeFromFavorites('${recipe.id}', this)">
-                <i class="fas fa-heart"></i>
-            </button>
-        </div>
-        <div class="recipe-content">
-            <h3 class="recipe-title">${recipe.title}</h3>
-            <p class="recipe-description">${recipe.description}</p>
-            <div class="recipe-meta">
-                <span><i class="fas fa-clock"></i> ${recipe.time}</span>
-                <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
-                <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
-            </div>
-            ${userRating ? `
-                <div class="user-has-rated" style="margin-top: 10px; color: #4CAF50; font-size: 0.9rem;">
-                    <i class="fas fa-check-circle"></i> You rated this ${userRating}/5
-                </div>
-            ` : ''}
-        </div>
-    `;
-    
-    return card;
-}
-
-// Show empty state
-function showEmptyState(customMessage = null) {
-    favoritesGrid.innerHTML = `
-        <div class="empty-state">
-            <i class="fas fa-heart"></i>
-            <h3>${customMessage || 'No Favorite Recipes Yet'}</h3>
-            <p>${customMessage || "You haven't saved any recipes to your favorites. Browse recipes and click the heart icon to save them here."}</p>
-            <a href="index.html" class="btn btn-primary">
-                <i class="fas fa-arrow-left"></i>
-                Browse Recipes
-            </a>
-        </div>
-    `;
-}
-
-// Remove from favorites
-function removeFromFavorites(recipeId, element) {
-    const favoritesKey = 'bestchickenrecipes_favorites_v2';
-    const savedFavorites = localStorage.getItem(favoritesKey);
-    let favorites = savedFavorites ? JSON.parse(savedFavorites) : [];
-    
-    favorites = favorites.filter(id => id.toString() !== recipeId.toString());
-    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
-    
-    const card = element.closest('.recipe-card');
-    if (card) {
+        const card = document.createElement('div');
+        card.className = 'recipe-card';
+        card.dataset.id = recipe.id;
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.4s ease';
         
-        setTimeout(() => {
-            card.remove();
-            showNotification('Recipe removed from favorites', 'info');
+        // Check if this is a secret recipe
+        const isSecretRecipe = recipe.categories && 
+                             (recipe.categories.includes('secret') || 
+                              recipe.categories.some(cat => cat && cat.toLowerCase().includes('secret')));
+        
+        // Get ratings
+        const recipeRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_recipeRatings') || '{}');
+        const recipeRating = recipeRatings[recipe.id]?.average || 0;
+        const userRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_userRatings') || '{}');
+        const userRating = userRatings[recipe.id];
+        
+        // Generate badges with special handling for secret recipes
+        const badges = recipe.categories ? recipe.categories.map(category => {
+            if (!category) return '';
             
-            if (favorites.length === 0) {
-                setTimeout(() => showEmptyState(), 300);
+            const categoryInfo = categories.find(c => c.id === category);
+            if (categoryInfo) {
+                // Special styling for secret badge
+                if (category === 'secret' || category.includes('secret')) {
+                    return `<span class="badge secret" style="background: linear-gradient(135deg, #9C27B0, #673AB7); color: white; font-weight: bold;">
+                        <i class="fas fa-lock"></i> SECRET
+                    </span>`;
+                }
+                return `<span class="badge ${category}" style="background-color: ${categoryInfo.color};">${categoryInfo.name}</span>`;
             }
-        }, 400);
-    }
-}
-
-// Navigate to recipe
-// Replace your navigateToRecipe function with this:
-function navigateToRecipe(recipeId, recipeData) {
-    // Check if this is an athlete recipe (has protein, carbs, etc.)
-    const isAthleteRecipe = recipeData.protein || recipeData.carbs || recipeData.fat;
-    
-    if (isAthleteRecipe) {
-        // For athlete recipes, use the query parameter format
-        window.location.href = `how-to-make.html?recipe=${recipeId}`;
-    } else {
-        // For regular recipes, use the hash format
-        window.location.href = `how-to-make.html#recipe-${recipeId}`;
-    }
-}
-
-// Update your createRecipeCard function to pass recipe data:
-function createRecipeCard(recipe, index) {
-    const card = document.createElement('div');
-    card.className = 'recipe-card';
-    card.dataset.id = recipe.id;
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'all 0.4s ease';
-    
-    // Get ratings
-    const recipeRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_recipeRatings') || '{}');
-    const recipeRating = recipeRatings[recipe.id]?.average || 0;
-    const userRatings = JSON.parse(localStorage.getItem('bestchickenrecipes_userRatings') || '{}');
-    const userRating = userRatings[recipe.id];
-    
-    // Generate badges
-    const badges = recipe.categories ? recipe.categories.map(category => {
-        const categoryInfo = categories.find(c => c.id === category);
-        if (categoryInfo) {
-            return `<span class="badge ${category}" style="background-color: ${categoryInfo.color};">${categoryInfo.name}</span>`;
+            return '';
+        }).filter(Boolean).join('') : '';
+        
+        // Fix time display - check both regular and athlete recipe formats
+        let timeDisplay = recipe.time;
+        if (!timeDisplay && (recipe.prepTime || recipe.cookTime)) {
+            // This is an athlete recipe - combine prep and cook time
+            const prepTime = parseInt(recipe.prepTime) || 0;
+            const cookTime = parseInt(recipe.cookTime) || 0;
+            const totalTime = prepTime + cookTime;
+            timeDisplay = `${totalTime} min`;
+        } else if (!timeDisplay) {
+            timeDisplay = 'N/A';
         }
-        return '';
-    }).filter(Boolean).join('') : '';
-    
-    // Fix time display - check both regular and athlete recipe formats
-    let timeDisplay = recipe.time;
-    if (!timeDisplay && (recipe.prepTime || recipe.cookTime)) {
-        // This is an athlete recipe - combine prep and cook time
-        const prepTime = parseInt(recipe.prepTime) || 0;
-        const cookTime = parseInt(recipe.cookTime) || 0;
-        const totalTime = prepTime + cookTime;
-        timeDisplay = `${totalTime} min`;
-    } else if (!timeDisplay) {
-        timeDisplay = 'N/A';
-    }
-    
-    // Fix calories display for athlete recipes
-    let caloriesDisplay = recipe.calories;
-    if (!caloriesDisplay && recipe.calories === undefined) {
-        caloriesDisplay = recipe.calories || 'N/A';
-    }
-    
-    card.innerHTML = `
-        <div class="recipe-image">
-            <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
-            <div class="recipe-overlay">
-                <button class="view-recipe-btn" onclick="navigateToRecipe('${recipe.id}', ${JSON.stringify(recipe).replace(/'/g, "\\'")})">
-                    <i class="fas fa-book-open"></i> View Recipe
+        
+        // Fix calories display for athlete recipes
+        let caloriesDisplay = recipe.calories;
+        if (!caloriesDisplay && recipe.calories === undefined) {
+            caloriesDisplay = recipe.calories || 'N/A';
+        }
+        
+        // Determine button text and icon based on recipe type
+        const buttonText = isSecretRecipe ? 'Reveal Secret' : 'View Recipe';
+        const buttonIcon = isSecretRecipe ? 'fas fa-lock-open' : 'fas fa-book-open';
+        
+        card.innerHTML = `
+            <div class="recipe-image ${isSecretRecipe ? 'secret-recipe-image' : ''}">
+                <img src="${recipe.image}" alt="${recipe.title}" loading="lazy">
+                <div class="recipe-overlay">
+                    <button class="view-recipe-btn ${isSecretRecipe ? 'secret-btn' : ''}" 
+                            onclick="navigateToRecipe('${recipe.id}', ${JSON.stringify(recipe).replace(/'/g, "\\'")})">
+                        <i class="${buttonIcon}"></i> ${buttonText}
+                    </button>
+                </div>
+                ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
+                <button class="save-recipe active" onclick="removeFromFavorites('${recipe.id}', this)">
+                    <i class="fas fa-heart"></i>
                 </button>
             </div>
-            ${badges ? `<div class="recipe-badges">${badges}</div>` : ''}
-            <button class="save-recipe active" onclick="removeFromFavorites('${recipe.id}', this)">
-                <i class="fas fa-heart"></i>
-            </button>
-        </div>
-        <div class="recipe-content">
-            <h3 class="recipe-title">${recipe.title}</h3>
-            <p class="recipe-description">${recipe.description}</p>
-            <div class="recipe-meta">
-                <span><i class="fas fa-clock"></i> ${timeDisplay}</span>
-                <span><i class="fas fa-fire"></i> ${caloriesDisplay}</span>
-                ${recipe.protein ? `<span><i class="fas fa-dumbbell"></i> ${recipe.protein}g protein</span>` : ''}
-                <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
-            </div>
-            ${userRating ? `
-                <div class="user-has-rated" style="margin-top: 10px; color: #4CAF50; font-size: 0.9rem;">
-                    <i class="fas fa-check-circle"></i> You rated this ${userRating}/5
+            <div class="recipe-content">
+                <h3 class="recipe-title ${isSecretRecipe ? 'secret-title' : ''}">${recipe.title}</h3>
+                <p class="recipe-description">${recipe.description}</p>
+                <div class="recipe-meta">
+                    <span><i class="fas fa-clock"></i> ${timeDisplay}</span>
+                    <span><i class="fas fa-fire"></i> ${caloriesDisplay}</span>
+                    ${recipe.protein ? `<span><i class="fas fa-dumbbell"></i> ${recipe.protein}g protein</span>` : ''}
+                    <span><i class="fas fa-star"></i> ${recipeRating > 0 ? recipeRating.toFixed(1) + '/5' : 'New'}</span>
                 </div>
-            ` : ''}
-        </div>
-    `;
-    
-    return card;
-}
-
-// Update the event listener for existing view recipe buttons
-document.addEventListener('click', function(e) {
-    if (e.target.closest('.view-recipe-btn')) {
-        const card = e.target.closest('.recipe-card');
-        const recipeId = card.dataset.id;
+                ${userRating ? `
+                    <div class="user-has-rated" style="margin-top: 10px; color: #4CAF50; font-size: 0.9rem;">
+                        <i class="fas fa-check-circle"></i> You rated this ${userRating}/5
+                    </div>
+                ` : ''}
+            </div>
+        `;
         
-        // Get recipe data from the card
-        const title = card.querySelector('.recipe-title').textContent;
-        const description = card.querySelector('.recipe-description').textContent;
-        const timeElement = card.querySelector('[class*="fa-clock"]')?.parentElement;
-        const timeText = timeElement?.textContent.replace('⏱️', '').trim() || '';
-        const caloriesElement = card.querySelector('[class*="fa-fire"]')?.parentElement;
-        const caloriesText = caloriesElement?.textContent.replace('🔥', '').trim() || '';
-        const proteinElement = card.querySelector('[class*="fa-dumbbell"]')?.parentElement;
-        const proteinText = proteinElement?.textContent.replace('💪', '').replace('g protein', '').trim() || '';
-        
-        // Create recipe data object
-        const recipeData = {
-            id: recipeId,
-            title: title,
-            description: description,
-            time: timeText,
-            calories: caloriesText,
-            protein: proteinText || undefined
-        };
-        
-        navigateToRecipe(recipeId, recipeData);
+        return card;
     }
-});
-// Notification system
-function showNotification(message, type = 'info') {
-    const existingNotification = document.querySelector('.import-notification');
-    if (existingNotification) existingNotification.remove();
-    
-    const notification = document.createElement('div');
-    notification.className = `import-notification import-notification-${type}`;
-    notification.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-        </div>
-        <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
-}
 
-// Theme toggle
-function initializeThemeToggle() {
-    if (!themeToggle) return;
-    
-    const currentTheme = localStorage.getItem('bestchickenrecipes_theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
-    
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('bestchickenrecipes_theme', newTheme);
-        updateThemeIcon(newTheme);
-        showNotification(`Switched to ${newTheme} theme`, 'info');
-    });
-}
-
-function updateThemeIcon(theme) {
-    if (!themeToggle) return;
-    const icon = themeToggle.querySelector('i');
-    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-}
-
-// Scroll management
-function initializeScrollEvents() {
-    if (!backToTop) return;
-    
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTop.classList.add('show');
+    // ===== NAVIGATE TO RECIPE =====
+    function navigateToRecipe(recipeId, recipeData) {
+        // Check if this is a secret recipe
+        const isSecretRecipe = recipeData.categories && 
+                             (recipeData.categories.includes('secret') || 
+                              recipeData.categories.some(cat => cat && cat.toLowerCase().includes('secret')));
+        
+        // Check if this is an athlete recipe (has protein, carbs, etc.)
+        const isAthleteRecipe = recipeData.protein || recipeData.carbs || recipeData.fat;
+        
+        if (isSecretRecipe) {
+            // For secret recipes, use the query parameter format with secret flag
+            window.location.href = `how-to-make.html?recipe=${recipeId}&secret=true`;
+        } else if (isAthleteRecipe) {
+            // For athlete recipes, use the query parameter format
+            window.location.href = `how-to-make.html?recipe=${recipeId}`;
         } else {
-            backToTop.classList.remove('show');
+            // For regular recipes, use the hash format
+            window.location.href = `how-to-make.html#recipe-${recipeId}`;
+        }
+    }
+
+    // ===== REMOVE FROM FAVORITES =====
+    function removeFromFavorites(recipeId, element) {
+        const favoritesKey = 'bestchickenrecipes_favorites_v2';
+        const savedFavorites = localStorage.getItem(favoritesKey);
+        let favorites = savedFavorites ? JSON.parse(savedFavorites) : [];
+        
+        favorites = favorites.filter(id => id.toString() !== recipeId.toString());
+        localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+        
+        const card = element.closest('.recipe-card');
+        if (card) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.remove();
+                showNotification('Recipe removed from favorites', 'info');
+                
+                if (favorites.length === 0) {
+                    setTimeout(() => showEmptyState(), 300);
+                }
+            }, 400);
+        }
+    }
+
+    // ===== SHOW EMPTY STATE =====
+    function showEmptyState(customMessage = null) {
+        favoritesGrid.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-heart"></i>
+                <h3>${customMessage || 'No Favorite Recipes Yet'}</h3>
+                <p>${customMessage || "You haven't saved any recipes to your favorites. Browse recipes and click the heart icon to save them here."}</p>
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i>
+                    Browse Recipes
+                </a>
+            </div>
+        `;
+    }
+
+    // ===== ADD SECRET STYLES =====
+    function addSecretStylesToFavorites() {
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Secret recipe styling for favorites page */
+            .recipe-card[data-id="krabby-patty-secret"],
+            .recipe-card[data-id="kung-fu-panda-noodles"],
+            .recipe-card[data-id="spongebob-pineapple-house"],
+            .recipe-card.secret-recipe-card {
+                border: 2px solid transparent;
+                background: linear-gradient(135deg, #ffffff, #f8f4ff);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .recipe-card.secret-recipe-card::before {
+                content: 'TOP SECRET';
+                position: absolute;
+                top: 15px;
+                right: -30px;
+                background: linear-gradient(135deg, #9C27B0, #673AB7);
+                color: white;
+                padding: 5px 40px;
+                font-size: 0.7rem;
+                font-weight: bold;
+                transform: rotate(45deg);
+                z-index: 2;
+                letter-spacing: 1px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+            
+            .recipe-card .secret-recipe-image {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .recipe-card .recipe-badges .badge.secret {
+                background: linear-gradient(135deg, #9C27B0, #673AB7);
+                color: white;
+                font-weight: bold;
+                animation: pulse 2s infinite;
+                border: none;
+            }
+            
+            .recipe-card .secret-title {
+                color: #673AB7;
+                font-family: 'Playfair Display', serif;
+            }
+            
+            .recipe-card .view-recipe-btn.secret-btn {
+                background: linear-gradient(135deg, #9C27B0, #673AB7);
+                border: 2px solid #9C27B0;
+            }
+            
+            .recipe-card .view-recipe-btn.secret-btn:hover {
+                background: linear-gradient(135deg, #7B1FA2, #512DA8);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+            }
+            
+            /* Special styling for fictional/humor categories */
+            .recipe-card[data-id="krabby-patty-secret"] {
+                background: linear-gradient(135deg, #ffffff, #e8f4f8);
+            }
+            
+            .recipe-card[data-id="kung-fu-panda-noodles"] {
+                background: linear-gradient(135deg, #ffffff, #f8f4e8);
+            }
+            
+            .recipe-card[data-id="spongebob-pineapple-house"] {
+                background: linear-gradient(135deg, #ffffff, #e8f8f4);
+            }
+            
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(156, 39, 176, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(156, 39, 176, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(156, 39, 176, 0); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // ===== EVENT LISTENER FOR VIEW RECIPE BUTTONS =====
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.view-recipe-btn')) {
+            const card = e.target.closest('.recipe-card');
+            const recipeId = card.dataset.id;
+            const isSecretBtn = e.target.closest('.view-recipe-btn').classList.contains('secret-btn');
+            
+            // Get recipe data from the card
+            const title = card.querySelector('.recipe-title').textContent;
+            const description = card.querySelector('.recipe-description').textContent;
+            const timeElement = card.querySelector('[class*="fa-clock"]')?.parentElement;
+            const timeText = timeElement?.textContent.replace('⏱️', '').trim() || '';
+            const caloriesElement = card.querySelector('[class*="fa-fire"]')?.parentElement;
+            const caloriesText = caloriesElement?.textContent.replace('🔥', '').trim() || '';
+            const proteinElement = card.querySelector('[class*="fa-dumbbell"]')?.parentElement;
+            const proteinText = proteinElement?.textContent.replace('💪', '').replace('g protein', '').trim() || '';
+            
+            // Check if secret badge exists
+            const hasSecretBadge = card.querySelector('.badge.secret');
+            
+            // Create recipe data object
+            const recipeData = {
+                id: recipeId,
+                title: title,
+                description: description,
+                time: timeText,
+                calories: caloriesText,
+                protein: proteinText || undefined,
+                categories: hasSecretBadge ? ['secret'] : []
+            };
+            
+            navigateToRecipe(recipeId, recipeData);
         }
     });
-    
-    backToTop.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-}
+
+    // ===== NOTIFICATION SYSTEM =====
+    function showNotification(message, type = 'info') {
+        const existingNotification = document.querySelector('.import-notification');
+        if (existingNotification) existingNotification.remove();
+        
+        const notification = document.createElement('div');
+        notification.className = `import-notification import-notification-${type}`;
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+
+    // ===== THEME TOGGLE =====
+    function initializeThemeToggle() {
+        if (!themeToggle) return;
+        
+        const currentTheme = localStorage.getItem('bestchickenrecipes_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('bestchickenrecipes_theme', newTheme);
+            updateThemeIcon(newTheme);
+            showNotification(`Switched to ${newTheme} theme`, 'info');
+        });
+    }
+
+    function updateThemeIcon(theme) {
+        if (!themeToggle) return;
+        const icon = themeToggle.querySelector('i');
+        icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // ===== SCROLL MANAGEMENT =====
+    function initializeScrollEvents() {
+        if (!backToTop) return;
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     // ===== KEYBOARD NAVIGATION =====
     function initializeKeyboardNavigation() {
         // Close floating ad with Escape key
